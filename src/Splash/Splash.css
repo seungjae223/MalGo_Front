@@ -1,0 +1,210 @@
+/* 브라우저 기본 여백 제거 */
+html,
+body,
+#root {
+  width: 100%;
+  min-height: 100%;
+  margin: 0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  overflow-x: hidden;
+  background-color: #ddeeff;
+}
+
+/*
+ * 기준 디자인 크기: 390px × 852px
+ * 화면이 작으면 이미지와 위치도 같은 비율로 줄어듭니다.
+ */
+.splash {
+  position: relative;
+
+  width: min(100vw, 390px);
+  height: min(100dvh, 852px);
+  min-height: 600px;
+
+  margin: 0 auto;
+  overflow: hidden;
+
+  /*
+   * 두 번째 사진의 설정
+   * #15BAFC / 투명도 10% + 세로 그라데이션
+   */
+  background:
+    linear-gradient(
+      rgba(21, 186, 252, 0.1),
+      rgba(21, 186, 252, 0.1)
+    ),
+    linear-gradient(
+      180deg,
+      #318ef9 0%,
+      #f3f4ff 100%
+    );
+}
+
+/* 모든 이미지 공통 */
+.splash img {
+  display: block;
+  max-width: none;
+
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-user-drag: none;
+}
+
+/* 오른쪽 위 언어 아이콘 */
+.splash__language {
+  position: absolute;
+  z-index: 3;
+
+  top: 7.16%;
+  right: 8.46%;
+
+  width: 11.28%;
+  height: auto;
+
+  pointer-events: none;
+}
+
+/* 퍼즐 공통 */
+.splash__puzzle {
+  position: absolute;
+  z-index: 1;
+
+  height: auto;
+  pointer-events: none;
+
+  transform-origin: center;
+  will-change: transform;
+}
+
+/* KR 퍼즐 */
+.splash__puzzle--kr {
+  top: 14.91%;
+  left: -1.8%;
+
+  width: 74.62%;
+
+  animation: floatPuzzleKr 5.2s ease-in-out infinite;
+}
+
+/* EN 퍼즐 */
+.splash__puzzle--en {
+  top: 40.49%;
+  left: 23.59%;
+
+  width: 77.44%;
+
+  animation: floatPuzzleEn 6.1s ease-in-out infinite;
+  animation-delay: -2.1s;
+}
+
+/* 위쪽 KR 퍼즐 두둥실 애니메이션 */
+@keyframes floatPuzzleKr {
+  0% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+
+  25% {
+    transform: translate3d(5px, -8px, 0) rotate(1.2deg);
+  }
+
+  50% {
+    transform: translate3d(-2px, -16px, 0) rotate(-0.8deg);
+  }
+
+  75% {
+    transform: translate3d(-6px, -7px, 0) rotate(0.7deg);
+  }
+
+  100% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+}
+
+/* 아래쪽 EN 퍼즐 두둥실 애니메이션 */
+@keyframes floatPuzzleEn {
+  0% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+
+  25% {
+    transform: translate3d(-5px, -7px, 0) rotate(-1deg);
+  }
+
+  50% {
+    transform: translate3d(3px, -14px, 0) rotate(1deg);
+  }
+
+  75% {
+    transform: translate3d(7px, -5px, 0) rotate(-0.5deg);
+  }
+
+  100% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+}
+
+/* 시작하기 버튼 */
+.splash__start-button {
+  position: absolute;
+  z-index: 4;
+
+  top: 74.18%;
+  left: 50%;
+
+  width: 65.9%;
+  height: auto;
+
+  margin: 0;
+  padding: 0;
+
+  border: 0;
+  border-radius: 999px;
+  outline: none;
+
+  appearance: none;
+  background: transparent;
+  cursor: pointer;
+
+  line-height: 0;
+
+  transform: translateX(-50%);
+  transition: transform 0.12s ease;
+  touch-action: manipulation;
+}
+
+.splash__start-button img {
+  width: 100%;
+  height: auto;
+}
+
+/* 버튼을 누르는 순간 */
+.splash__start-button:active {
+  transform: translateX(-50%) scale(0.97);
+}
+
+/* 키보드로 버튼을 선택했을 때 */
+.splash__start-button:focus-visible {
+  outline: 3px solid rgba(255, 255, 255, 0.95);
+  outline-offset: 4px;
+}
+
+/* 모션 감소 설정을 사용하는 경우 애니메이션 정지 */
+@media (prefers-reduced-motion: reduce) {
+  .splash__puzzle--kr,
+  .splash__puzzle--en {
+    animation: none;
+  }
+}
+
+/* 높이가 매우 작은 화면 대응 */
+@media (max-height: 650px) {
+  .splash {
+    min-height: 100dvh;
+  }
+}
