@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import "./Splash.css";
 
 import puzzleKr from "../img/퍼즐1.svg";
@@ -6,9 +7,11 @@ import startButton from "../img/시작하기.png";
 import languageIcon from "../img/언어.png";
 
 function Splash() {
+  const navigate = useNavigate();
+
   const handleStart = () => {
     // 시작하기 버튼 클릭 시 로그인 페이지로 이동
-    window.location.href = "/login";
+    navigate("/login");
   };
 
   return (

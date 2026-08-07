@@ -1,0 +1,459 @@
+/* 브라우저 기본 설정 */
+html,
+body,
+#root {
+  width: 100%;
+  min-height: 100%;
+  margin: 0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  overflow-x: hidden;
+  background-color: #ddeeff;
+
+  font-family:
+    "Pretendard",
+    "Noto Sans KR",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+button,
+img,
+input {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/*
+ * 로그인 화면을 브라우저 중앙에 배치
+ */
+#root {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+/*
+ * 피그마 기준 화면: 445px × 964px
+ *
+ * 화면 높이를 기준으로 로그인 화면을 확대하되,
+ * 항상 445:964 비율을 유지합니다.
+ */
+.login-page {
+  position: relative;
+
+  /* dvh 미지원 브라우저 대응 */
+  width: min(100vw, 46.162vh);
+
+  /* 실제 브라우저 화면 높이 기준 */
+  width: min(100vw, 46.162dvh);
+
+  height: auto;
+  aspect-ratio: 445 / 964;
+
+  flex: 0 0 auto;
+  overflow: hidden;
+  container-type: inline-size;
+
+  background:
+    linear-gradient(
+      180deg,
+      #ffffff 0%,
+      #ffffff 48%,
+      #fbfeff 70%,
+      #f3fcfd 100%
+    );
+}
+
+/* 로그인 화면 이미지 공통 */
+.login-page img {
+  display: block;
+  height: auto;
+
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-user-drag: none;
+}
+
+/* 상단 말고 로고 */
+.login-page__logo {
+  position: absolute;
+  z-index: 1;
+
+  /* 피그마 기준 약 87px */
+  top: 9.03%;
+  left: 50%;
+
+  /* 피그마 기준 약 228px */
+  width: 51.24%;
+  height: auto;
+
+  transform: translateX(-50%);
+}
+
+/* Malgo 제목 */
+.login-page__title {
+  position: absolute;
+  z-index: 2;
+
+  top: 24.74%;
+  left: 50%;
+
+  width: max-content;
+  margin: 0;
+
+  color: #3f4b49;
+
+  font-family:
+    "Pretendard",
+    "Noto Sans KR",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+
+  font-size: 10.11cqw;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.28cqw;
+
+  text-align: center;
+  white-space: nowrap;
+
+  /*
+   * 가로 중앙 정렬만 적용합니다.
+   * 글자 비율이 변형되지 않도록 scaleY는 사용하지 않습니다.
+   */
+  transform: translateX(-50%);
+}
+
+/* 문화까지 번역해주는 이미지 */
+.login-page__description {
+  position: absolute;
+  z-index: 2;
+
+  /* 피그마 기준 약 292px */
+  top: 30.29%;
+  left: 50%;
+
+  /* 피그마 기준 약 176px */
+  width: 39.55%;
+  height: auto;
+
+  transform: translateX(-50%);
+}
+
+/* 로그인 폼 */
+.login-form {
+  position: absolute;
+  z-index: 3;
+
+  top: 34.03%;
+  left: 6.29%;
+
+  width: 87.42%;
+  margin: 0;
+}
+
+/* 입력 영역 */
+.login-form__field {
+  width: 100%;
+}
+
+/* 아이디 영역과 비밀번호 영역 사이 */
+.login-form__field + .login-form__field {
+  margin-top: 3.4cqw;
+}
+
+/* 아이디, 비밀번호 라벨 */
+.login-form__label {
+  display: block;
+
+  margin: 0 0 1.6cqw;
+
+  color: #3f4b49;
+
+  font-size: 4.12cqw;
+  font-weight: 400;
+  line-height: 4.7cqw;
+
+  letter-spacing: -0.1cqw;
+}
+
+/* 아이디 및 비밀번호 입력창 */
+.login-form__input {
+  display: block;
+
+  width: 100%;
+  height: 12.58cqw;
+
+  margin: 0;
+  padding: 0 4.9cqw;
+
+  border: 0.23cqw solid #bfd2d4;
+  border-radius: 3.2cqw;
+  outline: none;
+
+  background-color: #e1f4f6;
+  color: #3f4b49;
+
+  font-size: 3.15cqw;
+  font-weight: 400;
+  letter-spacing: -0.04cqw;
+
+  caret-color: #3f4b49;
+
+  transition:
+    border-color 0.18s ease,
+    box-shadow 0.18s ease,
+    background-color 0.18s ease;
+}
+
+/* 입력창 안내 문구 */
+.login-form__input::placeholder {
+  color: rgba(63, 75, 73, 0.62);
+  opacity: 1;
+}
+
+/* 입력창 선택 상태 */
+.login-form__input:focus {
+  border-color: #75cbd4;
+  background-color: #e6f8fa;
+
+  box-shadow:
+    0 0 0 0.55cqw rgba(21, 186, 252, 0.12);
+}
+
+/* 크롬 자동 완성 배경색 유지 */
+.login-form__input:-webkit-autofill,
+.login-form__input:-webkit-autofill:hover,
+.login-form__input:-webkit-autofill:focus {
+  -webkit-text-fill-color: #3f4b49;
+
+  box-shadow:
+    0 0 0 1000px #e1f4f6 inset;
+
+  transition: background-color 9999s ease-in-out 0s;
+}
+
+/* 자동 로그인 전체 영역 */
+.login-form__auto-login {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+
+  width: fit-content;
+
+  margin-top: 4.47cqw;
+  margin-left: 1.35cqw;
+
+  cursor: pointer;
+  user-select: none;
+}
+
+/* 실제 체크박스 숨기기 */
+.login-form__checkbox-input {
+  position: absolute;
+
+  width: 1px;
+  height: 1px;
+
+  overflow: hidden;
+
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* 화면에 표시되는 체크박스 */
+.login-form__checkbox {
+  position: relative;
+
+  display: block;
+
+  width: 5.4cqw;
+  height: 5.4cqw;
+
+  flex: 0 0 auto;
+
+  border-radius: 1.15cqw;
+
+  background-color: #e7e8e5;
+
+  transition:
+    background-color 0.16s ease,
+    box-shadow 0.16s ease;
+}
+
+/* 자동 로그인 선택 상태 */
+.login-form__checkbox-input:checked
+  + .login-form__checkbox {
+  background-color: #3f4b49;
+}
+
+/* 체크 표시 */
+.login-form__checkbox-input:checked
+  + .login-form__checkbox::after {
+  content: "";
+
+  position: absolute;
+
+  top: 1.05cqw;
+  left: 1.8cqw;
+
+  width: 1.45cqw;
+  height: 2.65cqw;
+
+  border-right: 0.55cqw solid #ffffff;
+  border-bottom: 0.55cqw solid #ffffff;
+
+  transform: rotate(45deg);
+}
+
+/* 키보드 체크박스 포커스 */
+.login-form__checkbox-input:focus-visible
+  + .login-form__checkbox {
+  box-shadow:
+    0 0 0 0.55cqw rgba(21, 186, 252, 0.2);
+}
+
+/* 자동 로그인 글자 */
+.login-form__checkbox-text {
+  margin-left: 2.1cqw;
+
+  color: #536461;
+
+  font-size: 2.75cqw;
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -0.03cqw;
+}
+
+/* 로그인 버튼 */
+.login-form__submit {
+  display: block;
+
+  width: calc(100% - 3.2cqw);
+  height: 12.36cqw;
+
+  margin:
+    5.95cqw
+    1.6cqw
+    0;
+
+  padding: 0;
+
+  border: 0;
+  border-radius: 3.2cqw;
+  outline: none;
+
+  appearance: none;
+
+  background-color: #d3f7fa;
+  color: #3f4b49;
+
+  font-size: 4cqw;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.08cqw;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.12s ease,
+    background-color 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+/* 로그인 버튼 마우스 효과 */
+.login-form__submit:hover {
+  background-color: #c6f2f6;
+}
+
+/* 로그인 버튼을 누르는 순간 */
+.login-form__submit:active {
+  transform: scale(0.985);
+}
+
+/* 키보드 로그인 버튼 포커스 */
+.login-form__submit:focus-visible {
+  box-shadow:
+    0 0 0 0.65cqw rgba(21, 186, 252, 0.2);
+}
+
+/* 아이디 찾기, 비밀번호 찾기, 회원가입 */
+.login-form__account-menu {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 100%;
+
+  margin-top: 4.12cqw;
+
+  white-space: nowrap;
+}
+
+/* 하단 메뉴 버튼 */
+.login-form__account-button {
+  margin: 0;
+  padding: 0;
+
+  border: 0;
+  outline: none;
+
+  background: transparent;
+  color: #647876;
+
+  font-size: 2.7cqw;
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -0.04cqw;
+
+  cursor: pointer;
+}
+
+/* 하단 메뉴 구분선 */
+.login-form__separator {
+  margin: 0 2.35cqw;
+
+  color: #778684;
+
+  font-size: 2.7cqw;
+  font-weight: 300;
+  line-height: 1;
+}
+
+/* 하단 메뉴 버튼 효과 */
+.login-form__account-button:hover {
+  color: #3f4b49;
+}
+
+.login-form__account-button:focus-visible {
+  text-decoration: underline;
+  text-underline-offset: 0.8cqw;
+}
+
+/* 모션 감소 설정 */
+@media (prefers-reduced-motion: reduce) {
+  .login-form__input,
+  .login-form__checkbox,
+  .login-form__submit {
+    transition: none;
+  }
+}
