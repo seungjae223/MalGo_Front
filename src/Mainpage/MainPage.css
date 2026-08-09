@@ -1,0 +1,668 @@
+* {
+  box-sizing: border-box;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+button {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.main-page-scroll {
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+
+  overflow-x: hidden;
+  overflow-y: auto;
+
+  background:
+    linear-gradient(
+      180deg,
+      #edfdff 0%,
+      #e9fbff 72%,
+      #ffffff 100%
+    );
+
+  color: #3b4b50;
+
+  font-family:
+    "Pretendard",
+    "Noto Sans KR",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+}
+
+.main-page {
+  width: min(100%, 470px);
+  min-height: 100%;
+
+  margin: 0 auto;
+  padding: 33px 29px 42px;
+}
+
+/* ==============================
+   상단 로고 영역
+================================ */
+
+.main-header {
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  margin-bottom: 20px;
+}
+
+.main-logo {
+  display: block;
+
+  width: 145px;
+  height: 100px;
+
+  object-fit: contain;
+}
+
+.main-logo-title {
+  margin: -2px 0 0;
+
+  color: #3f5055;
+
+  font-size: 30px;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -1px;
+}
+
+.history-button {
+  position: absolute;
+  top: 6px;
+  right: 0;
+
+  display: grid;
+  place-items: center;
+
+  width: 41px;
+  height: 41px;
+
+  padding: 7px;
+
+  color: #89a5af;
+  background: #dceff5;
+
+  border: none;
+  border-radius: 5px;
+
+  box-shadow:
+    0 4px 5px rgba(83, 113, 124, 0.2);
+
+  cursor: pointer;
+}
+
+.history-icon {
+  width: 100%;
+  height: 100%;
+
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* ==============================
+   메인 채팅 박스
+================================ */
+
+.main-chat-container {
+  overflow: hidden;
+
+  background: rgba(240, 250, 255, 0.78);
+
+  border: 1.5px solid #8edcff;
+  border-radius: 23px;
+
+  box-shadow:
+    0 8px 20px rgba(76, 135, 155, 0.07);
+}
+
+/* ==============================
+   대화 상대 선택
+================================ */
+
+.partner-section {
+  padding: 25px 29px 13px;
+
+  border-bottom: 1.5px solid #8edcff;
+}
+
+.partner-section-title {
+  margin: 0 0 14px 20px;
+
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: -0.4px;
+}
+
+.partner-list {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.partner-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  min-width: 0;
+  padding: 0;
+
+  color: inherit;
+  background: transparent;
+
+  border: none;
+
+  cursor: pointer;
+}
+
+.partner-face-wrapper {
+  display: grid;
+  place-items: center;
+
+  width: 78px;
+  height: 78px;
+
+  border-radius: 50%;
+
+  transition:
+    transform 0.16s ease,
+    box-shadow 0.16s ease;
+}
+
+.partner-item.selected .partner-face-wrapper {
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 0 0 4px rgba(92, 195, 236, 0.2);
+}
+
+.temporary-face {
+  display: block;
+
+  width: 78px;
+  height: 78px;
+}
+
+.partner-name {
+  margin-top: 4px;
+
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 1.2;
+
+  white-space: nowrap;
+}
+
+.partner-information-bar {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+
+  overflow: hidden;
+
+  margin-top: 8px;
+
+  background: #d9e6eb;
+
+  border-radius: 6px;
+}
+
+.partner-information {
+  min-width: 0;
+
+  padding: 6px 3px 5px;
+
+  color: #41545a;
+  background: transparent;
+
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.2;
+  text-align: center;
+
+  border: none;
+
+  cursor: pointer;
+
+  transition:
+    background-color 0.15s ease,
+    font-weight 0.15s ease;
+}
+
+.partner-information.selected {
+  background: #c7e4ef;
+  font-weight: 600;
+}
+
+/* ==============================
+   채팅 내용
+================================ */
+
+.chat-content {
+  min-height: 613px;
+
+  padding: 22px 28px 28px;
+
+  background: rgba(247, 252, 255, 0.32);
+}
+
+.chat-information-row {
+  display: grid;
+  grid-template-columns: 72px 1fr 72px;
+  align-items: start;
+}
+
+.chatbot-icon-box {
+  display: grid;
+  place-items: center;
+
+  width: 66px;
+  height: 66px;
+
+  background:
+    linear-gradient(
+      145deg,
+      #f4fcff,
+      #e6f8ff
+    );
+
+  border: 1px solid #8edcff;
+  border-radius: 11px;
+
+  box-shadow:
+    0 3px 7px rgba(73, 145, 172, 0.16);
+}
+
+.chatbot-icon {
+  display: block;
+
+  width: 39px;
+  height: 41px;
+
+  object-fit: contain;
+}
+
+.chat-date {
+  justify-self: center;
+
+  margin-top: 2px;
+  padding: 4px 13px 3px;
+
+  color: #42555b;
+  background: #dfeff5;
+
+  font-size: 14px;
+  line-height: 1;
+
+  border: 1px solid #c7dce4;
+  border-radius: 999px;
+
+  box-shadow:
+    0 2px 3px rgba(71, 103, 116, 0.08);
+}
+
+.chat-information-empty {
+  width: 72px;
+}
+
+/* ==============================
+   채팅 말풍선
+================================ */
+
+.message-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  max-height: 260px;
+
+  margin-top: 8px;
+
+  overflow-y: auto;
+
+  scrollbar-width: none;
+}
+
+.message-list::-webkit-scrollbar {
+  display: none;
+}
+
+.message-row {
+  display: flex;
+  width: 100%;
+}
+
+.message-row.bot {
+  justify-content: flex-start;
+}
+
+.message-row.user {
+  justify-content: flex-end;
+}
+
+.message-bubble {
+  position: relative;
+
+  max-width: min(80%, 275px);
+
+  padding: 13px 19px 14px;
+
+  font-size: 22px;
+  font-weight: 400;
+  line-height: 1.3;
+  letter-spacing: -0.5px;
+}
+
+.message-row.bot .message-bubble {
+  background: #f2f9fd;
+
+  border: 1px solid #d2e2ea;
+  border-radius: 0 12px 12px 12px;
+
+  box-shadow:
+    0 5px 5px rgba(74, 93, 101, 0.24);
+}
+
+.message-row.bot .message-bubble::before {
+  position: absolute;
+  top: -17px;
+  left: -1px;
+
+  width: 0;
+  height: 0;
+
+  content: "";
+
+  border-right: 21px solid transparent;
+  border-bottom: 18px solid #f2f9fd;
+}
+
+.message-row.user .message-bubble {
+  color: #ffffff;
+  background: #61c6ee;
+
+  border-radius: 12px 0 12px 12px;
+
+  box-shadow:
+    0 4px 8px rgba(63, 147, 180, 0.18);
+}
+
+/* ==============================
+   국가 선택 영역
+================================ */
+
+.country-selection-wrapper {
+  display: grid;
+  gap: 17px;
+
+  margin-top: 31px;
+}
+
+.country-selection-card {
+  padding: 21px 17px 12px;
+
+  background: rgba(246, 251, 255, 0.68);
+
+  border: 1px solid #bfd7ea;
+  border-radius: 34px;
+}
+
+.country-selection-title {
+  margin: 0 0 10px;
+
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: -0.3px;
+}
+
+.country-button-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+
+  gap: 10px 12px;
+}
+
+.country-button {
+  min-width: 67px;
+  height: 38px;
+
+  padding: 0 17px;
+
+  color: #53676e;
+  background: rgba(247, 252, 255, 0.8);
+
+  border: 1px solid #bfd7ea;
+  border-radius: 999px;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.13s ease,
+    background-color 0.13s ease,
+    border-color 0.13s ease;
+}
+
+.country-button:hover {
+  transform: translateY(-1px);
+}
+
+.country-button.selected {
+  background: #d1e3f0;
+  border-color: transparent;
+
+  font-weight: 600;
+}
+
+.area-button {
+  min-width: 78px;
+}
+
+/* ==============================
+   메시지 입력창
+================================ */
+
+.message-input-section {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  min-height: 64px;
+
+  padding: 8px 8px 8px 19px;
+
+  background: rgba(219, 241, 250, 0.94);
+
+  border-top: 1.5px solid #8edcff;
+}
+
+.message-input {
+  width: 100%;
+  min-width: 0;
+
+  padding: 0;
+
+  color: #3b4b50;
+  background: transparent;
+
+  font-size: 15px;
+
+  border: none;
+  outline: none;
+}
+
+.message-input::placeholder {
+  color: #91a8b0;
+}
+
+.message-send-button {
+  display: grid;
+  place-items: center;
+
+  flex: 0 0 auto;
+
+  width: 53px;
+  height: 47px;
+
+  padding: 0;
+
+  background: #cde5ee;
+
+  border: none;
+  border-radius: 12px;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.13s ease,
+    opacity 0.13s ease;
+}
+
+.message-send-button:not(:disabled):active {
+  transform: scale(0.96);
+}
+
+.message-send-button:disabled {
+  opacity: 0.55;
+  cursor: default;
+}
+
+.message-send-icon {
+  display: block;
+
+  width: 29px;
+  height: 29px;
+
+  object-fit: contain;
+}
+
+/* ==============================
+   요약 버튼
+================================ */
+
+.conversation-summary-button {
+  display: block;
+
+  width: min(303px, calc(100% - 40px));
+  min-height: 71px;
+
+  margin: 22px auto 0;
+  padding: 12px 18px;
+
+  color: #ffffff;
+  background: #58c7f2;
+
+  font-size: 28px;
+  font-weight: 500;
+  letter-spacing: -1.1px;
+
+  border: none;
+  border-radius: 13px;
+
+  box-shadow:
+    0 6px 12px rgba(55, 167, 211, 0.12);
+
+  cursor: pointer;
+
+  transition:
+    transform 0.13s ease,
+    background-color 0.13s ease;
+}
+
+.conversation-summary-button:hover {
+  background: #45bde9;
+}
+
+.conversation-summary-button:active {
+  transform: scale(0.98);
+}
+
+/* ==============================
+   작은 모바일 화면 대응
+================================ */
+
+@media (max-width: 420px) {
+  .main-page {
+    padding:
+      28px
+      18px
+      36px;
+  }
+
+  .main-logo {
+    width: 135px;
+    height: 94px;
+  }
+
+  .main-logo-title {
+    font-size: 28px;
+  }
+
+  .partner-section {
+    padding-right: 21px;
+    padding-left: 21px;
+  }
+
+  .partner-list {
+    gap: 8px;
+  }
+
+  .partner-face-wrapper,
+  .temporary-face {
+    width: 70px;
+    height: 70px;
+  }
+
+  .partner-name {
+    font-size: 18px;
+  }
+
+  .partner-information {
+    font-size: 12px;
+  }
+
+  .chat-content {
+    padding-right: 19px;
+    padding-left: 19px;
+  }
+
+  .message-bubble {
+    font-size: 20px;
+  }
+
+  .country-selection-card {
+    padding-right: 13px;
+    padding-left: 13px;
+  }
+
+  .country-button {
+    min-width: 62px;
+
+    padding-right: 13px;
+    padding-left: 13px;
+
+    font-size: 13px;
+  }
+
+  .conversation-summary-button {
+    min-height: 67px;
+
+    font-size: 25px;
+  }
+}

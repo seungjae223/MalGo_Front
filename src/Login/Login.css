@@ -90,13 +90,18 @@ input {
  * 피그마 기준:
  * 너비 353px
  * 높이 538px
- * 위에서 84px
+ *
+ * 전체 영역을 아래로 내리기 위해
+ * 위쪽 위치를 78px에서 98px로 수정
  */
 .login-page__content {
   position: absolute;
+
+  /* 수정된 부분 */
   top: calc(
-    var(--login-frame-width) * 84 / 402
+    var(--login-frame-width) * 150 / 402
   );
+
   left: 50%;
 
   display: flex;
@@ -117,11 +122,12 @@ input {
  * 로고 + Malgo + 설명 문구
  *
  * 피그마 기준: 197 × 202
+ *
+ * 각 요소가 서로 영향을 주지 않도록
+ * branding 영역 안에서 위치를 고정합니다.
  */
 .login-page__branding {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  position: relative;
 
   width: calc(
     var(--login-frame-width) * 197 / 402
@@ -138,6 +144,10 @@ input {
  * 피그마 기준: 197 × 140
  */
 .login-page__logo {
+  position: absolute;
+  top: 0;
+  left: 50%;
+
   display: block;
 
   width: calc(
@@ -149,13 +159,23 @@ input {
 
   object-fit: contain;
   user-select: none;
+
+  transform: translateX(-50%);
 }
 
 /*
  * Malgo 제목
- * 피그마 기준 높이: 42px
+ *
+ * 로고 이미지 아래의 투명 여백 때문에
+ * 제목이 멀어 보이지 않도록 126px 위치에 배치합니다.
  */
 .login-page__title {
+  position: absolute;
+  top: calc(
+    var(--login-frame-width) * 126 / 402
+  );
+  left: 50%;
+
   display: flex;
   align-items: center;
   justify-content: center;
@@ -170,7 +190,7 @@ input {
 
   color: #435252;
   font-size: calc(
-    var(--login-frame-width) * 41 / 402
+    var(--login-frame-width) * 39 / 402
   );
   font-weight: 400;
   line-height: 1;
@@ -178,17 +198,28 @@ input {
     var(--login-frame-width) * -1.4 / 402
   );
   text-align: center;
+  white-space: nowrap;
+
+  transform: translateX(-50%);
 }
 
 /*
  * 문화까지 번역해주는 이미지
- * 피그마 기준: 164 × 20
+ *
+ * 첫 번째 이미지처럼 제목보다 넓지만
+ * 현재 화면보다는 작게 보이도록 146px로 조정합니다.
  */
 .login-page__description {
+  position: absolute;
+  top: calc(
+    var(--login-frame-width) * 182 / 402
+  );
+  left: 50%;
+
   display: block;
 
   width: calc(
-    var(--login-frame-width) * 164 / 402
+    var(--login-frame-width) * 146 / 402
   );
   height: calc(
     var(--login-frame-width) * 20 / 402
@@ -196,6 +227,8 @@ input {
 
   object-fit: contain;
   user-select: none;
+
+  transform: translateX(-50%);
 }
 
 /*
@@ -255,7 +288,9 @@ input {
   height: calc(
     var(--login-frame-width) * 20 / 402
   );
-  margin: 0 0
+  margin:
+    0
+    0
     calc(
       var(--login-frame-width) * 8 / 402
     );
@@ -284,7 +319,8 @@ input {
   height: calc(
     var(--login-frame-width) * 52 / 402
   );
-  padding: 0
+  padding:
+    0
     calc(
       var(--login-frame-width) * 20 / 402
     );
@@ -315,7 +351,8 @@ input {
 
 .login-form__input:focus {
   border-color: #9dbfc3;
-  box-shadow: 0 0 0 2px
+  box-shadow:
+    0 0 0 2px
     rgba(157, 191, 195, 0.16);
 }
 
@@ -530,7 +567,8 @@ input {
   height: calc(
     var(--login-frame-width) * 16 / 402
   );
-  margin: 0
+  margin:
+    0
     calc(
       var(--login-frame-width) * 10 / 402
     );

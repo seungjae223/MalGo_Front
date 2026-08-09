@@ -5,6 +5,17 @@ import "./Login.css";
 import malgoLogo from "../img/말고 로고.png";
 import malgoDescription from "../img/문화까지 번역해주는.png";
 
+/*
+ * 백엔드 연결 전 사용하는 목업 계정
+ */
+const MOCK_USER = {
+  id: 1,
+  identifier: "malgo",
+  email: "malgo@test.com",
+  password: "123456",
+  name: "승재",
+};
+
 function Login() {
   const navigate = useNavigate();
 
@@ -26,32 +37,104 @@ function Login() {
   const handleLogin = (event) => {
     event.preventDefault();
 
-    if (!loginData.identifier.trim()) {
+    const enteredIdentifier = loginData.identifier.trim().toLowerCase();
+    const enteredPassword = loginData.password.trim();
+
+    if (!enteredIdentifier) {
       alert("아이디 또는 이메일 주소를 입력해주세요.");
       return;
     }
 
-    if (!loginData.password.trim()) {
+    if (!enteredPassword) {
       alert("비밀번호를 입력해주세요.");
       return;
     }
 
-    console.log("로그인 정보", loginData);
+    /*
+     * 아이디 또는 이메일 중 하나가 일치하면 됩니다.
+     */
+    const isIdentifierMatched =
+      enteredIdentifier === MOCK_USER.identifier ||
+      enteredIdentifier === MOCK_USER.email;
+
+    const isPasswordMatched =
+      enteredPassword === MOCK_USER.password;
+
+    if (!isIdentifierMatched || !isPasswordMatched) {
+      alert(
+        "아이디 또는 비밀번호가 올바르지 않습니다.\n\n" +
+          "목업 아이디: malgo\n" +
+          "목업 비밀번호: 123456"
+      );
+      return;
+    }
+
+    /*
+     * 실제 백엔드 대신 사용할 임시 로그인 정보
+     */
+    const mockAuthData = {
+      accessToken: "mock-access-token",
+      isLoggedIn: true,
+      loginAt: new Date().toISOString(),
+      user: {
+        id: MOCK_USER.id,
+        identifier: MOCK_USER.identifier,
+        email: MOCK_USER.email,
+        name: MOCK_USER.name,
+      },
+    };
+
+    /*
+     * 자동 로그인 여부에 따라 저장소를 다르게 사용합니다.
+     *
+     * 자동 로그인 체크:
+     * 브라우저를 종료해도 로그인 정보 유지
+     *
+     * 자동 로그인 미체크:
+     * 브라우저 탭을 종료하면 로그인 정보 제거
+     */
+    if (loginData.autoLogin) {
+      localStorage.setItem(
+        "malgoAuth",
+        JSON.stringify(mockAuthData)
+      );
+
+      sessionStorage.removeItem("malgoAuth");
+    } else {
+      sessionStorage.setItem(
+        "malgoAuth",
+        JSON.stringify(mockAuthData)
+      );
+
+      localStorage.removeItem("malgoAuth");
+    }
+
+    /*
+     * 로그인 성공 후 메인 페이지 이동
+     */
+    navigate("/main", {
+      replace: true,
+    });
   };
 
   return (
     <main className="login-page">
       <div className="login-page__content">
         {/* 로고 + 서비스명 + 설명 */}
-        <section className="login-page__branding">
+        <section
+          className="login-page__branding"
+          aria-label="Malgo 서비스 로고"
+        >
           <img
             className="login-page__logo"
             src={malgoLogo}
-            alt="MalGo 로고"
+            alt="Malgo 로고"
             draggable="false"
           />
 
-          <h1 className="login-page__title">Malgo</h1>
+          <h1 className="login-page__title">
+            Malgo
+          </h1>
 
           <img
             className="login-page__description"
@@ -146,7 +229,9 @@ function Login() {
               아이디 찾기
             </button>
 
-            <span className="login-form__separator">|</span>
+            <span className="login-form__separator">
+              |
+            </span>
 
             <button
               className="login-form__account-button"
@@ -155,7 +240,9 @@ function Login() {
               비밀번호 찾기
             </button>
 
-            <span className="login-form__separator">|</span>
+            <span className="login-form__separator">
+              |
+            </span>
 
             <button
               className="login-form__account-button"

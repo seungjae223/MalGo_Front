@@ -8,6 +8,7 @@ import {
 import Splash from "./Splash/Splash";
 import Login from "./Login/Login";
 import Signup from "./Signup/Signup";
+import MainPage from "./Mainpage/MainPage";
 
 function App() {
   return (
@@ -29,6 +30,12 @@ function App() {
         <Route
           path="/signup"
           element={<Signup />}
+        />
+
+        {/* 메인 화면 */}
+        <Route
+          path="/main"
+          element={<MainPage />}
         />
 
         {/* 존재하지 않는 주소는 첫 화면으로 이동 */}
