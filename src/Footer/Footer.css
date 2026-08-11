@@ -1,0 +1,203 @@
+/* ==============================
+   푸터가 콘텐츠를 가리지 않도록
+   확보하는 하단 공간
+================================ */
+
+.malgo-footer-spacer {
+  flex: 0 0 164px;
+
+  width: 100%;
+  height: 164px;
+
+  pointer-events: none;
+}
+
+/* ==============================
+   하단 푸터
+   피그마: 402 × 164
+================================ */
+
+.malgo-footer {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  z-index: 1000;
+
+  display: grid;
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  width: min(100%, 402px);
+  height: 164px;
+
+  padding: 22px 0 18px;
+  overflow: hidden;
+
+  background:
+    linear-gradient(
+      100deg,
+      #effcff 0%,
+      #e5f9ff 52%,
+      #f1fcff 100%
+    );
+
+  border-radius:
+    24px 24px 0 0;
+
+  transform: translateX(-50%);
+}
+
+/* ==============================
+   메뉴 공통
+================================ */
+
+.malgo-footer-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 7px;
+
+  width: 100%;
+  height: 100%;
+
+  padding: 0;
+
+  color: #4b5d61;
+  background: transparent;
+
+  border: none;
+
+  cursor: pointer;
+}
+
+/* ==============================
+   아이콘 원
+================================ */
+
+.malgo-footer-icon-circle {
+  display: grid;
+  place-items: center;
+
+  width: 58px;
+  height: 58px;
+
+  color: #8fa4ab;
+  background: #cbd5d8;
+
+  border-radius: 50%;
+
+  transition:
+    transform 0.15s ease,
+    color 0.15s ease,
+    background-color 0.15s ease;
+}
+
+/* 선택된 메뉴 */
+.malgo-footer-item.active
+.malgo-footer-icon-circle {
+  color: #36c9f6;
+  background: #dcf8ff;
+}
+
+/* ==============================
+   홈 아이콘
+================================ */
+
+.malgo-footer-home-icon {
+  display: block;
+
+  width: 38px;
+  height: 38px;
+
+  object-fit: contain;
+
+  transition:
+    filter 0.15s ease,
+    opacity 0.15s ease;
+}
+
+/* 홈 메뉴가 선택되지 않았을 때 */
+.malgo-footer-item:not(.active)
+.malgo-footer-home-icon {
+  opacity: 0.58;
+
+  filter: grayscale(1);
+}
+
+/* ==============================
+   내정보 아이콘
+================================ */
+
+.malgo-footer-profile-icon {
+  display: block;
+
+  width: 36px;
+  height: 36px;
+}
+
+/* ==============================
+   메뉴 글자
+================================ */
+
+.malgo-footer-label {
+  color: #485a5e;
+
+  font-size: 17px;
+  font-weight: 500;
+  line-height: 22px;
+  letter-spacing: -0.45px;
+}
+
+/* ==============================
+   클릭 및 키보드 효과
+================================ */
+
+.malgo-footer-item:active
+.malgo-footer-icon-circle {
+  transform: scale(0.95);
+}
+
+.malgo-footer-item:focus-visible {
+  outline: none;
+}
+
+.malgo-footer-item:focus-visible
+.malgo-footer-icon-circle {
+  box-shadow:
+    0 0 0 3px
+    rgba(88, 199, 242, 0.24);
+}
+
+/* ==============================
+   작은 모바일 화면
+================================ */
+
+@media (max-width: 360px) {
+  .malgo-footer-spacer {
+    flex-basis: 150px;
+
+    height: 150px;
+  }
+
+  .malgo-footer {
+    height: 150px;
+
+    padding-top: 18px;
+  }
+
+  .malgo-footer-icon-circle {
+    width: 54px;
+    height: 54px;
+  }
+
+  .malgo-footer-home-icon {
+    width: 35px;
+    height: 35px;
+  }
+
+  .malgo-footer-profile-icon {
+    width: 33px;
+    height: 33px;
+  }
+}

@@ -22,8 +22,11 @@ button {
   background:
     linear-gradient(
       180deg,
-      #edfdff 0%,
-      #e9fbff 72%,
+      #e8fbff 0%,
+      #edfbff 30%,
+      #f4fcff 55%,
+      #fbfeff 72%,
+      #ffffff 84%,
       #ffffff 100%
     );
 
@@ -121,15 +124,25 @@ button {
 ================================ */
 
 .main-chat-container {
+  display: flex;
+  flex-direction: column;
+
+  width: min(346px, 100%);
+  height: 752px;
+
+  margin: 0 auto;
   overflow: hidden;
 
-  background: rgba(240, 250, 255, 0.78);
+  background: rgba(209, 235, 250, 0.2);
 
-  border: 1.5px solid #8edcff;
-  border-radius: 23px;
+  border: 1px solid #b0e2ff;
+  border-radius: 19px;
 
   box-shadow:
     0 8px 20px rgba(76, 135, 155, 0.07);
+
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
 }
 
 /* ==============================
@@ -137,23 +150,35 @@ button {
 ================================ */
 
 .partner-section {
-  padding: 25px 29px 13px;
+  flex: 0 0 181px;
 
-  border-bottom: 1.5px solid #8edcff;
+  width: 100%;
+  height: 181px;
+
+  padding: 22px 29px 9px;
+
+  background: rgba(230, 239, 244, 0.2);
+
+  border-bottom: 1px solid #b0e2ff;
 }
 
 .partner-section-title {
-  margin: 0 0 14px 20px;
+  margin: 0 0 13px 12px;
 
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 500;
+  line-height: 18px;
   letter-spacing: -0.4px;
 }
 
 .partner-list {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 18px;
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+
+  gap: 0;
+
+  margin: 0 -16px;
 }
 
 .partner-item {
@@ -176,8 +201,8 @@ button {
   display: grid;
   place-items: center;
 
-  width: 78px;
-  height: 78px;
+  width: 60px;
+  height: 60px;
 
   border-radius: 50%;
 
@@ -196,27 +221,29 @@ button {
 .temporary-face {
   display: block;
 
-  width: 78px;
-  height: 78px;
+  width: 60px;
+  height: 60px;
 }
 
 .partner-name {
-  margin-top: 4px;
+  margin-top: 8px;
 
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 400;
-  line-height: 1.2;
+  line-height: 22px;
 
   white-space: nowrap;
 }
 
 .partner-information-bar {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
 
   overflow: hidden;
 
-  margin-top: 8px;
+  height: 24px;
+  margin-top: 4px;
 
   background: #d9e6eb;
 
@@ -224,16 +251,19 @@ button {
 }
 
 .partner-information {
+  display: grid;
+  place-items: center;
+
   min-width: 0;
 
-  padding: 6px 3px 5px;
+  padding: 0 3px;
 
   color: #41545a;
   background: transparent;
 
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 400;
-  line-height: 1.2;
+  line-height: 1;
   text-align: center;
 
   border: none;
@@ -255,38 +285,127 @@ button {
 ================================ */
 
 .chat-content {
-  min-height: 613px;
+  flex: 1 1 auto;
 
-  padding: 22px 28px 28px;
+  min-height: 0;
+
+  padding: 14px 17px 28px 21px;
+
+  overflow-x: hidden;
+  overflow-y: auto;
 
   background: rgba(247, 252, 255, 0.32);
+
+  scrollbar-width: none;
+}
+
+.chat-content::-webkit-scrollbar {
+  display: none;
 }
 
 .chat-information-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  height: 22px;
+}
+
+.chat-date {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 80px;
+  height: 22px;
+
+  margin: 0;
+  padding: 0;
+
+  color: #42555b;
+  background: #dfeff5;
+
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1;
+
+  border: 1px solid #c7dce4;
+  border-radius: 11px;
+
+  box-shadow:
+    0 2px 3px rgba(71, 103, 116, 0.08);
+}
+
+/* ==============================
+   채팅 메시지
+================================ */
+
+.message-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  width: 100%;
+  max-height: 260px;
+
+  margin-top: 14px;
+
+  overflow-x: hidden;
+  overflow-y: auto;
+
+  scrollbar-width: none;
+}
+
+.message-list::-webkit-scrollbar {
+  display: none;
+}
+
+.message-row {
+  width: 100%;
+}
+
+.message-row.bot {
   display: grid;
-  grid-template-columns: 72px 1fr 72px;
+  grid-template-columns:
+    57px minmax(0, 236px);
+
   align-items: start;
+  column-gap: 13px;
+
+  width: 306px;
+  max-width: 100%;
+}
+
+.message-row.user {
+  display: flex;
+  justify-content: flex-end;
+
+  width: 100%;
 }
 
 .chatbot-icon-box {
   display: grid;
   place-items: center;
 
-  width: 66px;
-  height: 66px;
+  width: 57px;
+  height: 57px;
+
+  overflow: hidden;
 
   background:
     linear-gradient(
       145deg,
-      #f4fcff,
-      #e6f8ff
+      #f5fcff,
+      #e8f7ff
     );
 
-  border: 1px solid #8edcff;
-  border-radius: 11px;
+  border: 1px solid #95e4ff;
+  border-radius: 10px;
 
   box-shadow:
-    0 3px 7px rgba(73, 145, 172, 0.16);
+    0 3px 9px rgba(0, 129, 174, 0.2),
+    inset 0 0 7px rgba(149, 228, 255, 0.35);
 }
 
 .chatbot-icon {
@@ -298,104 +417,59 @@ button {
   object-fit: contain;
 }
 
-.chat-date {
-  justify-self: center;
-
-  margin-top: 2px;
-  padding: 4px 13px 3px;
-
-  color: #42555b;
-  background: #dfeff5;
-
-  font-size: 14px;
-  line-height: 1;
-
-  border: 1px solid #c7dce4;
-  border-radius: 999px;
-
-  box-shadow:
-    0 2px 3px rgba(71, 103, 116, 0.08);
-}
-
-.chat-information-empty {
-  width: 72px;
-}
-
-/* ==============================
-   채팅 말풍선
-================================ */
-
-.message-list {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-
-  max-height: 260px;
-
-  margin-top: 8px;
-
-  overflow-y: auto;
-
-  scrollbar-width: none;
-}
-
-.message-list::-webkit-scrollbar {
-  display: none;
-}
-
-.message-row {
-  display: flex;
-  width: 100%;
-}
-
-.message-row.bot {
-  justify-content: flex-start;
-}
-
-.message-row.user {
-  justify-content: flex-end;
-}
-
 .message-bubble {
   position: relative;
 
-  max-width: min(80%, 275px);
-
-  padding: 13px 19px 14px;
-
-  font-size: 22px;
-  font-weight: 400;
-  line-height: 1.3;
-  letter-spacing: -0.5px;
+  overflow-wrap: anywhere;
+  word-break: keep-all;
 }
 
 .message-row.bot .message-bubble {
-  background: #f2f9fd;
+  width: 236px;
+  max-width: 100%;
+  min-height: 57px;
 
-  border: 1px solid #d2e2ea;
-  border-radius: 0 12px 12px 12px;
+  padding: 7px 16px 6px;
 
-  box-shadow:
-    0 5px 5px rgba(74, 93, 101, 0.24);
+  color: #3a4d4b;
+  background: #f1f9ff;
+
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: -0.35px;
+
+  border: 1px solid #dce5ef;
+  border-radius: 10px;
+
+  box-shadow: none;
+}
+
+.message-row.bot.initial-message .message-bubble {
+  height: 57px;
+}
+
+.message-row.bot:not(.initial-message) .message-bubble {
+  height: auto;
 }
 
 .message-row.bot .message-bubble::before {
-  position: absolute;
-  top: -17px;
-  left: -1px;
-
-  width: 0;
-  height: 0;
-
-  content: "";
-
-  border-right: 21px solid transparent;
-  border-bottom: 18px solid #f2f9fd;
+  display: none;
 }
 
 .message-row.user .message-bubble {
+  width: auto;
+  max-width: 236px;
+
+  padding: 10px 14px;
+
   color: #ffffff;
   background: #61c6ee;
+
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.35;
+  letter-spacing: -0.3px;
 
   border-radius: 12px 0 12px 12px;
 
@@ -403,31 +477,56 @@ button {
     0 4px 8px rgba(63, 147, 180, 0.18);
 }
 
+.message-line {
+  display: inline;
+}
+
+.message-hand-icon {
+  display: inline-block;
+
+  width: 16px;
+  height: 16px;
+
+  margin-left: 4px;
+
+  object-fit: contain;
+  vertical-align: -3px;
+}
+
 /* ==============================
-   국가 선택 영역
+   국가 및 대상 선택 영역
 ================================ */
 
 .country-selection-wrapper {
   display: grid;
+  justify-items: center;
   gap: 17px;
 
   margin-top: 31px;
+  padding-bottom: 4px;
 }
 
 .country-selection-card {
-  padding: 21px 17px 12px;
+  width: 306px;
+  max-width: 100%;
+  height: 127px;
 
-  background: rgba(246, 251, 255, 0.68);
+  padding: 9px 12px 7px;
 
-  border: 1px solid #bfd7ea;
-  border-radius: 34px;
+  background: #f1f9ff;
+
+  border: 1px solid #d2e0f0;
+  border-radius: 10px;
 }
 
 .country-selection-title {
-  margin: 0 0 10px;
+  margin: 0 0 6px;
 
-  font-size: 15px;
+  color: #3b4b50;
+
+  font-size: 13px;
   font-weight: 500;
+  line-height: 16px;
   letter-spacing: -0.3px;
 }
 
@@ -436,20 +535,33 @@ button {
   flex-wrap: wrap;
   justify-content: center;
 
-  gap: 10px 12px;
+  gap: 7px 10px;
 }
 
 .country-button {
-  min-width: 67px;
-  height: 38px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 
-  padding: 0 17px;
+  flex: 0 0 66px;
+
+  width: 66px;
+  min-width: 66px;
+  height: 31px;
+
+  padding: 0 7px;
 
   color: #53676e;
-  background: rgba(247, 252, 255, 0.8);
+  background: #f1f9ff;
 
-  border: 1px solid #bfd7ea;
-  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1;
+  text-align: center;
+  white-space: nowrap;
+
+  border: 1px solid #d2e0f0;
+  border-radius: 15.5px;
 
   cursor: pointer;
 
@@ -465,13 +577,90 @@ button {
 
 .country-button.selected {
   background: #d1e3f0;
-  border-color: transparent;
+  border-color: #d2e0f0;
 
   font-weight: 600;
 }
 
 .area-button {
-  min-width: 78px;
+  width: 66px;
+  min-width: 66px;
+}
+
+.country-button.wide-button {
+  flex-basis: auto;
+
+  width: auto;
+  min-width: 86px;
+
+  padding-right: 11px;
+  padding-left: 11px;
+}
+
+/* ==============================
+   대상 선택 영역
+================================ */
+
+.target-selection-card {
+  height: 178px;
+
+  padding-top: 13px;
+  padding-bottom: 12px;
+}
+
+.target-button-list {
+  gap: 10px 8px;
+}
+
+.target-button {
+  flex-basis: 66px;
+
+  width: 66px;
+  min-width: 66px;
+}
+
+/* ==============================
+   대상 특징 입력창
+================================ */
+
+.target-feature-input {
+  display: block;
+
+  width: 306px;
+  max-width: 100%;
+  height: 47px;
+
+  padding: 0 14px;
+
+  color: #3b4b50;
+  background: #f1f9ff;
+
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 47px;
+
+  border: 1px solid #d2e0f0;
+  border-radius: 10px;
+  outline: none;
+
+  appearance: none;
+  -webkit-appearance: none;
+
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.target-feature-input::placeholder {
+  color: #53676e;
+  opacity: 1;
+}
+
+.target-feature-input:focus {
+  border-color: #a8d5ee;
+
+  box-shadow:
+    0 0 0 3px rgba(176, 226, 255, 0.22);
 }
 
 /* ==============================
@@ -479,32 +668,51 @@ button {
 ================================ */
 
 .message-input-section {
+  position: relative;
+
   display: flex;
   align-items: center;
-  gap: 10px;
+  justify-content: center;
 
-  min-height: 64px;
+  flex: 0 0 55px;
 
-  padding: 8px 8px 8px 19px;
+  width: 100%;
+  height: 55px;
+  min-height: 55px;
 
-  background: rgba(219, 241, 250, 0.94);
+  padding: 0;
+  overflow: hidden;
 
-  border-top: 1.5px solid #8edcff;
+  background: rgba(147, 209, 242, 0.2);
+
+  border-top: 1px solid #b0e2ff;
+  border-radius: 0 0 18px 18px;
+
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
 }
 
 .message-input {
-  width: 100%;
+  display: block;
+
+  width: min(307px, calc(100% - 36px));
+  height: 31px;
   min-width: 0;
 
-  padding: 0;
+  padding: 0 43px 0 12px;
 
   color: #3b4b50;
-  background: transparent;
+  background: #d1e3eb;
 
   font-size: 15px;
+  line-height: 31px;
 
   border: none;
+  border-radius: 7px;
   outline: none;
+
+  appearance: none;
+  -webkit-appearance: none;
 }
 
 .message-input::placeholder {
@@ -512,21 +720,25 @@ button {
 }
 
 .message-send-button {
+  position: absolute;
+  top: 50%;
+  right: 18px;
+
   display: grid;
   place-items: center;
 
-  flex: 0 0 auto;
-
-  width: 53px;
-  height: 47px;
+  width: 31px;
+  height: 31px;
 
   padding: 0;
 
-  background: #cde5ee;
+  color: #8ba6b0;
+  background: transparent;
 
   border: none;
-  border-radius: 12px;
+  border-radius: 7px;
 
+  transform: translateY(-50%);
   cursor: pointer;
 
   transition:
@@ -535,7 +747,9 @@ button {
 }
 
 .message-send-button:not(:disabled):active {
-  transform: scale(0.96);
+  transform:
+    translateY(-50%)
+    scale(0.94);
 }
 
 .message-send-button:disabled {
@@ -546,8 +760,8 @@ button {
 .message-send-icon {
   display: block;
 
-  width: 29px;
-  height: 29px;
+  width: 25px;
+  height: 25px;
 
   object-fit: contain;
 }
@@ -614,50 +828,44 @@ button {
     font-size: 28px;
   }
 
-  .partner-section {
-    padding-right: 21px;
+  .chat-content {
+    padding-right: 17px;
     padding-left: 21px;
   }
 
-  .partner-list {
-    gap: 8px;
+  .message-row.bot {
+    grid-template-columns:
+      57px minmax(0, 236px);
+
+    column-gap: 13px;
   }
 
-  .partner-face-wrapper,
-  .temporary-face {
-    width: 70px;
-    height: 70px;
-  }
+  .message-row.bot .message-bubble {
+    width: 236px;
+    max-width: 100%;
 
-  .partner-name {
-    font-size: 18px;
-  }
-
-  .partner-information {
-    font-size: 12px;
-  }
-
-  .chat-content {
-    padding-right: 19px;
-    padding-left: 19px;
-  }
-
-  .message-bubble {
-    font-size: 20px;
+    font-size: 16px;
+    line-height: 20px;
   }
 
   .country-selection-card {
-    padding-right: 13px;
-    padding-left: 13px;
+    width: 306px;
+    max-width: 100%;
   }
 
   .country-button {
-    min-width: 62px;
-
-    padding-right: 13px;
-    padding-left: 13px;
+    min-width: 66px;
 
     font-size: 13px;
+  }
+
+  .target-selection-card {
+    height: 178px;
+  }
+
+  .target-feature-input {
+    width: 306px;
+    max-width: 100%;
   }
 
   .conversation-summary-button {

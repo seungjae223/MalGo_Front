@@ -1,0 +1,434 @@
+.summary-page-scroll {
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100dvh;
+
+  overflow-x: hidden;
+  overflow-y: auto;
+
+  color: #3d4f52;
+
+  background:
+    linear-gradient(
+      180deg,
+      #e8fbff 0%,
+      #eefcff 46%,
+      #f8fdff 72%,
+      #ffffff 100%
+    );
+
+  font-family:
+    "Pretendard",
+    "Noto Sans KR",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+}
+
+.summary-page-shell {
+  width: min(100%, 470px);
+  min-height: 100%;
+
+  margin: 0 auto;
+  padding: 33px 29px 42px;
+}
+
+/* ==============================
+   상단 로고
+================================ */
+
+.summary-header {
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  margin-bottom: 20px;
+}
+
+.summary-main-logo {
+  display: block;
+
+  width: 145px;
+  height: 100px;
+
+  object-fit: contain;
+}
+
+.summary-logo-title {
+  margin: -2px 0 0;
+
+  color: #3f5055;
+
+  font-size: 30px;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -1px;
+}
+
+.summary-history-button {
+  position: absolute;
+  top: 6px;
+  right: 0;
+
+  display: grid;
+  place-items: center;
+
+  width: 41px;
+  height: 41px;
+
+  padding: 7px;
+
+  color: #89a5af;
+  background: #dceff5;
+
+  border: none;
+  border-radius: 5px;
+
+  box-shadow:
+    0 4px 5px rgba(83, 113, 124, 0.2);
+
+  cursor: pointer;
+}
+
+.summary-history-icon {
+  width: 100%;
+  height: 100%;
+
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* ==============================
+   요약 화면 전체 영역
+   346 × 605
+================================ */
+
+.summary-main {
+  width: min(346px, 100%);
+
+  margin: 0 auto;
+}
+
+.summary-panel {
+  position: relative;
+
+  width: 346px;
+  max-width: 100%;
+  height: 605px;
+
+  padding-top: 31px;
+  overflow: hidden;
+
+  background: rgba(209, 235, 250, 0.2);
+
+  border: 1px solid #b0e2ff;
+  border-radius: 19px;
+
+  box-shadow:
+    0 8px 20px rgba(76, 135, 155, 0.05);
+
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+}
+
+/* ==============================
+   뒤로가기
+================================ */
+
+.summary-back-button {
+  position: absolute;
+  top: 16px;
+  left: 12px;
+
+  z-index: 2;
+
+  display: grid;
+  place-items: center;
+
+  width: 28px;
+  height: 28px;
+
+  padding: 0;
+
+  background: transparent;
+
+  border: none;
+
+  cursor: pointer;
+}
+
+.summary-back-icon {
+  display: block;
+
+  width: 23px;
+  height: 23px;
+
+  object-fit: contain;
+}
+
+/* ==============================
+   요약 상황 카드
+   256 × 94
+================================ */
+
+.summary-situation-card {
+  position: relative;
+
+  width: 256px;
+  height: 94px;
+
+  margin: 0 auto 20px;
+  padding: 33px 14px 8px;
+
+  background: rgba(241, 249, 255, 0.72);
+
+  border: 5px solid #c7e0ed;
+  border-radius: 10px;
+}
+
+.summary-date {
+  position: absolute;
+  top: 5px;
+  left: 14px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 80px;
+  height: 22px;
+
+  color: #42555b;
+  background: #dfeff5;
+
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 1;
+
+  border: 1px solid #c7dce4;
+  border-radius: 11px;
+}
+
+.summary-situation-text {
+  display: -webkit-box;
+
+  margin: 0;
+  overflow: hidden;
+
+  color: #3d4f52;
+
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 18px;
+  letter-spacing: -0.3px;
+
+  word-break: keep-all;
+
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+/* ==============================
+   요약된 대화 내용
+================================ */
+
+.summary-context-card {
+  display: flex;
+  align-items: center;
+
+  width: 290px;
+  max-width: calc(100% - 34px);
+  min-height: 73px;
+
+  margin: 0 auto 18px;
+  padding: 10px 13px;
+
+  color: #ffffff;
+  background: #58c7f2;
+
+  border-radius: 10px;
+
+  box-shadow:
+    0 5px 10px rgba(65, 169, 211, 0.12);
+}
+
+.summary-context-text {
+  margin: 0;
+
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 18px;
+  letter-spacing: -0.25px;
+
+  word-break: keep-all;
+}
+
+/* ==============================
+   추천 번역 결과
+================================ */
+
+.summary-result-card {
+  width: 290px;
+  max-width: calc(100% - 34px);
+  min-height: 138px;
+
+  margin: 0 auto;
+  padding: 10px 13px 11px;
+
+  background: #f1f9ff;
+
+  border: 1px solid #d2e0f0;
+  border-radius: 10px;
+}
+
+.summary-result-title {
+  margin: 0 0 9px;
+
+  color: #4a5e63;
+
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 16px;
+}
+
+.summary-result-divider {
+  width: 100%;
+  height: 1px;
+
+  margin-bottom: 8px;
+
+  background: #b9d4e4;
+}
+
+.summary-recommendation-row {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+
+  margin-bottom: 6px;
+}
+
+.summary-recommendation-icon {
+  width: 23px;
+  height: 23px;
+
+  color: #168ee0;
+}
+
+.summary-recommendation-title {
+  color: #3d4f52;
+
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1;
+}
+
+.summary-translation-text {
+  margin: 0;
+
+  color: #3d4f52;
+
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 16px;
+  letter-spacing: -0.15px;
+
+  white-space: pre-line;
+}
+
+/* ==============================
+   메모 영역
+   346 × 151
+================================ */
+
+.summary-memo-card {
+  width: 346px;
+  max-width: 100%;
+  height: 151px;
+
+  margin-top: 17px;
+  padding: 13px 15px;
+
+  background: #ecf5fb;
+
+  border-radius: 17px;
+}
+
+.summary-memo-input {
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  padding: 0 7px;
+
+  resize: none;
+
+  color: #3d4f52;
+  background:
+    repeating-linear-gradient(
+      180deg,
+      transparent 0,
+      transparent 20px,
+      #d4e5ee 21px,
+      transparent 22px
+    );
+
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 22px;
+
+  border: none;
+  outline: none;
+
+  scrollbar-width: none;
+}
+
+.summary-memo-input::-webkit-scrollbar {
+  display: none;
+}
+
+.summary-memo-input::placeholder {
+  color: #53676e;
+  opacity: 1;
+}
+
+/* ==============================
+   모바일 대응
+================================ */
+
+@media (max-width: 420px) {
+  .summary-page-shell {
+    padding:
+      28px
+      18px
+      36px;
+  }
+
+  .summary-main-logo {
+    width: 135px;
+    height: 94px;
+  }
+
+  .summary-logo-title {
+    font-size: 28px;
+  }
+
+  .summary-main,
+  .summary-panel,
+  .summary-memo-card {
+    width: 346px;
+    max-width: 100%;
+  }
+
+  .summary-situation-card {
+    width: 256px;
+    max-width: calc(100% - 58px);
+  }
+}
