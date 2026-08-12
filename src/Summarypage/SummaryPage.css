@@ -1,7 +1,55 @@
+/* ==============================
+   요약 페이지 외부 스크롤 제거
+
+   body와 root에서 발생하는 바깥 스크롤을 막고,
+   summary-page-scroll 내부에서만 스크롤합니다.
+================================ */
+
+html:has(.summary-page-scroll),
+body:has(.summary-page-scroll),
+#root:has(.summary-page-scroll) {
+  width: 100%;
+  height: 100%;
+
+  margin: 0;
+  overflow: hidden;
+
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+html:has(.summary-page-scroll)::-webkit-scrollbar,
+body:has(.summary-page-scroll)::-webkit-scrollbar,
+#root:has(.summary-page-scroll)::-webkit-scrollbar {
+  display: none;
+
+  width: 0;
+  height: 0;
+}
+
+/* Footer 레이아웃에 스크롤바가 생기는 경우도 숨김 */
+
+body:has(.summary-page-scroll) .footer-layout {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+body:has(.summary-page-scroll) .footer-layout::-webkit-scrollbar {
+  display: none;
+
+  width: 0;
+  height: 0;
+}
+
+/* ==============================
+   요약 페이지 스크롤 영역
+================================ */
+
 .summary-page-scroll {
   width: 100%;
-  min-height: 100vh;
-  min-height: 100dvh;
+  height: 100vh;
+  height: 100dvh;
+  min-height: 0;
 
   overflow-x: hidden;
   overflow-y: auto;
@@ -24,6 +72,27 @@
     BlinkMacSystemFont,
     "Segoe UI",
     sans-serif;
+
+  overscroll-behavior-y: contain;
+
+  -webkit-overflow-scrolling: touch;
+
+  /* Firefox */
+  scrollbar-width: none;
+
+  /* 구형 Edge */
+  -ms-overflow-style: none;
+}
+
+/* Chrome, Edge, Safari */
+
+.summary-page-scroll::-webkit-scrollbar {
+  display: none;
+
+  width: 0;
+  height: 0;
+
+  background: transparent;
 }
 
 .summary-page-shell {
@@ -31,7 +100,11 @@
   min-height: 100%;
 
   margin: 0 auto;
-  padding: 33px 29px 42px;
+
+  padding:
+    33px
+    29px
+    calc(42px + env(safe-area-inset-bottom));
 }
 
 /* ==============================
@@ -388,10 +461,14 @@
   outline: none;
 
   scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
 .summary-memo-input::-webkit-scrollbar {
   display: none;
+
+  width: 0;
+  height: 0;
 }
 
 .summary-memo-input::placeholder {
@@ -408,7 +485,7 @@
     padding:
       28px
       18px
-      36px;
+      calc(36px + env(safe-area-inset-bottom));
   }
 
   .summary-main-logo {

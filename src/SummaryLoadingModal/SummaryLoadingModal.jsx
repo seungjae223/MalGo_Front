@@ -1,31 +1,12 @@
-import { useEffect } from "react";
+import { createPortal } from "react-dom";
+
 import "./SummaryLoadingModal.css";
 
-import krPuzzle from "../img/퍼즐1.svg";
-import enPuzzle from "../img/퍼즐2.svg";
+import { ReactComponent as PuzzleKr } from "../img/퍼즐1.svg";
+import { ReactComponent as PuzzleEn } from "../img/퍼즐2.svg";
 
-function SummaryLoadingModal({ isOpen }) {
-  useEffect(() => {
-    if (!isOpen) {
-      return undefined;
-    }
-
-    const previousOverflow =
-      document.body.style.overflow;
-
-    document.body.style.overflow = "hidden";
-
-    return () => {
-      document.body.style.overflow =
-        previousOverflow;
-    };
-  }, [isOpen]);
-
-  if (!isOpen) {
-    return null;
-  }
-
-  return (
+function SummaryLoadingModal() {
+  return createPortal(
     <div
       className="summary-loading-overlay"
       role="dialog"
@@ -37,7 +18,6 @@ function SummaryLoadingModal({ isOpen }) {
         className="summary-loading-modal"
         aria-busy="true"
       >
-        {/* 파도처럼 움직이는 점 */}
         <div
           className="summary-loading-dots"
           aria-hidden="true"
@@ -47,27 +27,20 @@ function SummaryLoadingModal({ isOpen }) {
           <span className="summary-loading-dot" />
         </div>
 
-        {/* KR / EN 퍼즐 */}
         <div
           className="summary-loading-puzzle-stage"
           aria-hidden="true"
         >
-          <img
-            src={krPuzzle}
-            alt=""
-            className="
-              summary-loading-puzzle
-              summary-loading-puzzle-kr
-            "
+          <PuzzleKr
+            className="summary-loading-puzzle summary-loading-puzzle-kr"
+            aria-hidden="true"
+            focusable="false"
           />
 
-          <img
-            src={enPuzzle}
-            alt=""
-            className="
-              summary-loading-puzzle
-              summary-loading-puzzle-en
-            "
+          <PuzzleEn
+            className="summary-loading-puzzle summary-loading-puzzle-en"
+            aria-hidden="true"
+            focusable="false"
           />
         </div>
 
@@ -78,21 +51,20 @@ function SummaryLoadingModal({ isOpen }) {
           내용 요약 정리중입니다.
         </p>
 
-        <h2
+        <p
           id="summary-loading-title"
           className="summary-loading-title"
-        >
-          잠시만 기다려주세요
-        </h2>
-
-        <span
-          className="summary-loading-screen-reader"
           aria-live="polite"
         >
-          대화 내용을 요약하고 있습니다.
+          잠시만 기다려주세요
+        </p>
+
+        <span className="summary-loading-screen-reader">
+          내용 요약 정리중입니다. 잠시만 기다려주세요.
         </span>
       </section>
-    </div>
+    </div>,
+    document.body
   );
 }
 

@@ -8,13 +8,12 @@ import {
 import "./MainPage.css";
 
 import SummaryPage from "../Summarypage/SummaryPage";
+import SummaryLoadingModal from "../SummaryLoadingModal/SummaryLoadingModal";
 
 import mainLogo from "../img/메인페이지 로고.png";
 import sendIcon from "../img/메세지.png";
 import chatbotIcon from "../img/챗봇아이콘.svg";
 import handIcon from "../img/손.png";
-import puzzleKr from "../img/퍼즐1.svg";
-import puzzleEn from "../img/퍼즐2.svg";
 
 const PARTNERS = [
   {
@@ -429,10 +428,6 @@ function MainPage() {
         targetFeatureText,
     };
 
-    /*
-     * 사용자 메시지가 추가되면
-     * 설정 영역이 사라집니다.
-     */
     setMessages(
       (previousMessages) => [
         ...previousMessages,
@@ -610,7 +605,13 @@ function MainPage() {
             </div>
           </section>
 
-          <section className="chat-content">
+          <section
+            className={`chat-content ${
+              hasStartedChat
+                ? "chat-started"
+                : ""
+            }`}
+          >
             <div className="chat-information-row">
               <time className="chat-date">
                 {formatDate(new Date())}
@@ -618,7 +619,11 @@ function MainPage() {
             </div>
 
             <div
-              className="message-list"
+              className={`message-list ${
+                hasStartedChat
+                  ? "expanded"
+                  : ""
+              }`}
               ref={messageListRef}
             >
               {messages.map(
@@ -887,72 +892,8 @@ function MainPage() {
         </button>
       </div>
 
-      {/*
-       * 대화 요약 로딩 모달
-       */}
-      {isSummaryLoading && (
-        <div
-          className="summary-loading-overlay"
-          role="dialog"
-          aria-modal="true"
-          aria-labelledby="summary-loading-title"
-          aria-describedby="summary-loading-description"
-        >
-          <section
-            className="summary-loading-modal"
-            aria-busy="true"
-          >
-            <div
-              className="summary-loading-dots"
-              aria-hidden="true"
-            >
-              <span className="summary-loading-dot" />
-              <span className="summary-loading-dot" />
-              <span className="summary-loading-dot" />
-            </div>
-
-            <div
-              className="summary-loading-puzzle-stage"
-              aria-hidden="true"
-            >
-              <img
-                src={puzzleKr}
-                alt=""
-                className="
-                  summary-loading-puzzle
-                  summary-loading-puzzle-kr
-                "
-              />
-
-              <img
-                src={puzzleEn}
-                alt=""
-                className="
-                  summary-loading-puzzle
-                  summary-loading-puzzle-en
-                "
-              />
-            </div>
-
-            <div className="summary-loading-copy">
-              <p
-                id="summary-loading-title"
-                className="summary-loading-text"
-              >
-                내용 요약 정리중입니다.
-              </p>
-
-              <p
-                id="summary-loading-description"
-                className="summary-loading-subtext"
-                aria-live="polite"
-              >
-                잠시만 기다려주세요
-              </p>
-            </div>
-          </section>
-        </div>
-      )}
+      {/* 대화 요약 로딩 모달 */}
+      {isSummaryLoading && <SummaryLoadingModal />}
     </div>
   );
 }

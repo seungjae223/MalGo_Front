@@ -12,9 +12,13 @@ button {
 }
 
 .main-page-scroll {
-  width: 100%;
+  position: relative;
+
+  width: min(100%, 402px);
   height: 100vh;
   height: 100dvh;
+
+  margin: 0 auto;
 
   overflow-x: hidden;
   overflow-y: auto;
@@ -39,14 +43,24 @@ button {
     BlinkMacSystemFont,
     "Segoe UI",
     sans-serif;
+
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.main-page-scroll::-webkit-scrollbar {
+  display: none;
+
+  width: 0;
+  height: 0;
 }
 
 .main-page {
-  width: min(100%, 470px);
+  width: 100%;
   min-height: 100%;
 
   margin: 0 auto;
-  padding: 33px 29px 42px;
+  padding: 33px 28px 42px;
 }
 
 /* ==============================
@@ -285,6 +299,8 @@ button {
 ================================ */
 
 .chat-content {
+  display: flex;
+  flex-direction: column;
   flex: 1 1 auto;
 
   min-height: 0;
@@ -297,16 +313,29 @@ button {
   background: rgba(247, 252, 255, 0.32);
 
   scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
 .chat-content::-webkit-scrollbar {
   display: none;
+
+  width: 0;
+  height: 0;
+}
+
+/*
+ * 대화를 시작하면 설정 카드가 사라지므로
+ * 채팅 내용 자체가 남은 공간을 모두 사용합니다.
+ */
+.chat-content.chat-started {
+  overflow-y: hidden;
 }
 
 .chat-information-row {
   display: flex;
   align-items: center;
   justify-content: center;
+  flex: 0 0 22px;
 
   width: 100%;
   height: 22px;
@@ -344,9 +373,11 @@ button {
 .message-list {
   display: flex;
   flex-direction: column;
+  flex: 0 0 auto;
   gap: 12px;
 
   width: 100%;
+  min-height: 0;
   max-height: 260px;
 
   margin-top: 14px;
@@ -355,13 +386,33 @@ button {
   overflow-y: auto;
 
   scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
 .message-list::-webkit-scrollbar {
   display: none;
+
+  width: 0;
+  height: 0;
+}
+
+/*
+ * 첫 사용자 메시지가 전송된 후에는
+ * 남은 채팅 공간 전체를 메시지 목록이 사용합니다.
+ */
+.chat-content.chat-started .message-list,
+.message-list.expanded {
+  flex: 1 1 auto;
+
+  min-height: 0;
+  max-height: none;
+
+  padding-bottom: 6px;
 }
 
 .message-row {
+  flex: 0 0 auto;
+
   width: 100%;
 }
 
@@ -500,6 +551,7 @@ button {
 .country-selection-wrapper {
   display: grid;
   justify-items: center;
+  flex: 0 0 auto;
   gap: 17px;
 
   margin-top: 31px;
@@ -872,5 +924,50 @@ button {
     min-height: 67px;
 
     font-size: 25px;
+  }
+}
+
+/* ==============================
+   노트북 및 데스크톱 화면 대응
+================================ */
+
+@media (hover: hover) and (pointer: fine) {
+  body .footer-layout .main-page-scroll {
+    padding-bottom: 104px;
+    scroll-padding-bottom: 104px;
+  }
+
+  body .footer-layout .malgo-footer {
+    height: 96px;
+    min-height: 96px;
+
+    padding: 10px 0 8px;
+
+    border-radius: 24px 24px 0 0;
+  }
+
+  body .footer-layout .malgo-footer-item {
+    gap: 4px;
+    min-height: 0;
+  }
+
+  body .footer-layout .malgo-footer-icon-circle {
+    width: 48px;
+    height: 48px;
+  }
+
+  body .footer-layout .malgo-footer-home-icon {
+    width: 31px;
+    height: 31px;
+  }
+
+  body .footer-layout .malgo-footer-profile-icon {
+    width: 29px;
+    height: 29px;
+  }
+
+  body .footer-layout .malgo-footer-label {
+    font-size: 15px;
+    line-height: 18px;
   }
 }
