@@ -2,119 +2,117 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Login.css";
 
+import { saveStoredAuth } from "../api/auth";
+import { getNetworkErrorMessage } from "../api/client";
+import { authApi } from "../api/malgoApi";
+import HomeLogoLink from "../HomeLogoLink/HomeLogoLink";
+
 import malgoLogo from "../img/말고 로고.png";
 import malgoDescription from "../img/문화까지 번역해주는.png";
-
-/*
- * 백엔드 연결 전 사용하는 목업 계정
- */
-const MOCK_USER = {
-  id: 1,
-  identifier: "malgo",
-  email: "malgo@test.com",
-  password: "123456",
-  name: "승재",
-};
 
 function Login() {
   const navigate = useNavigate();
 
   const [loginData, setLoginData] = useState({
-    identifier: "",
+    username: "",
     password: "",
     autoLogin: false,
   });
 
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   const handleInputChange = (event) => {
-    const { name, value, checked, type } = event.target;
+    const {
+      name,
+      value,
+      checked,
+      type,
+    } = event.target;
 
     setLoginData((previousData) => ({
       ...previousData,
-      [name]: type === "checkbox" ? checked : value,
+      [name]:
+        type === "checkbox"
+          ? checked
+          : value,
     }));
   };
 
-  const handleLogin = (event) => {
+  const handleLogin = async (event) => {
     event.preventDefault();
 
-    const enteredIdentifier = loginData.identifier.trim().toLowerCase();
-    const enteredPassword = loginData.password.trim();
-
-    if (!enteredIdentifier) {
-      alert("아이디 또는 이메일 주소를 입력해주세요.");
+    if (isSubmitting) {
       return;
     }
 
-    if (!enteredPassword) {
+    const username = loginData.username.trim();
+
+    const password = loginData.password;
+
+    if (!username) {
+      alert("아이디를 입력해주세요.");
+      return;
+    }
+
+    if (!password) {
       alert("비밀번호를 입력해주세요.");
       return;
     }
 
-    /*
-     * 아이디 또는 이메일 중 하나가 일치하면 됩니다.
-     */
-    const isIdentifierMatched =
-      enteredIdentifier === MOCK_USER.identifier ||
-      enteredIdentifier === MOCK_USER.email;
+    setIsSubmitting(true);
 
-    const isPasswordMatched =
-      enteredPassword === MOCK_USER.password;
+    try {
+      const memberId = await authApi.login({
+        username,
+        password,
+      });
 
-    if (!isIdentifierMatched || !isPasswordMatched) {
-      alert(
-        "아이디 또는 비밀번호가 올바르지 않습니다.\n\n" +
-          "목업 아이디: malgo\n" +
-          "목업 비밀번호: 123456"
-      );
-      return;
+      /*
+       * 로그인 명세서상 성공 응답:
+       * JSON 객체가 아닌 회원 ID 숫자 하나를 반환합니다.
+       * 예: 1
+       */
+
+      /*
+       * 명세서에는 accessToken이 없으므로
+       * 임의의 토큰을 만들어 저장하지 않습니다.
+       *
+       * 이후 회원별 API 요청에 사용할
+       * memberId를 로그인 정보에 저장합니다.
+       */
+      const authData = {
+        isLoggedIn: true,
+        memberId,
+        loginAt: new Date().toISOString(),
+
+        user: {
+          id: memberId,
+          username,
+        },
+      };
+
+      /*
+       * 자동 로그인 체크:
+       * 브라우저를 종료해도 로그인 정보 유지
+       *
+       * 자동 로그인 미체크:
+       * 브라우저 탭을 종료하면 로그인 정보 제거
+       */
+      saveStoredAuth(authData, loginData.autoLogin);
+
+      /*
+       * 로그인 성공 후 메인 페이지 이동
+       */
+      navigate("/main", {
+        replace: true,
+      });
+    } catch (error) {
+      console.error("로그인 요청 실패:", error);
+
+      alert(getNetworkErrorMessage(error));
+    } finally {
+      setIsSubmitting(false);
     }
-
-    /*
-     * 실제 백엔드 대신 사용할 임시 로그인 정보
-     */
-    const mockAuthData = {
-      accessToken: "mock-access-token",
-      isLoggedIn: true,
-      loginAt: new Date().toISOString(),
-      user: {
-        id: MOCK_USER.id,
-        identifier: MOCK_USER.identifier,
-        email: MOCK_USER.email,
-        name: MOCK_USER.name,
-      },
-    };
-
-    /*
-     * 자동 로그인 여부에 따라 저장소를 다르게 사용합니다.
-     *
-     * 자동 로그인 체크:
-     * 브라우저를 종료해도 로그인 정보 유지
-     *
-     * 자동 로그인 미체크:
-     * 브라우저 탭을 종료하면 로그인 정보 제거
-     */
-    if (loginData.autoLogin) {
-      localStorage.setItem(
-        "malgoAuth",
-        JSON.stringify(mockAuthData)
-      );
-
-      sessionStorage.removeItem("malgoAuth");
-    } else {
-      sessionStorage.setItem(
-        "malgoAuth",
-        JSON.stringify(mockAuthData)
-      );
-
-      localStorage.removeItem("malgoAuth");
-    }
-
-    /*
-     * 로그인 성공 후 메인 페이지 이동
-     */
-    navigate("/main", {
-      replace: true,
-    });
   };
 
   return (
@@ -125,16 +123,18 @@ function Login() {
           className="login-page__branding"
           aria-label="Malgo 서비스 로고"
         >
-          <img
-            className="login-page__logo"
-            src={malgoLogo}
-            alt="Malgo 로고"
-            draggable="false"
-          />
+          <HomeLogoLink>
+            <img
+              className="login-page__logo"
+              src={malgoLogo}
+              alt="Malgo 로고"
+              draggable="false"
+            />
 
-          <h1 className="login-page__title">
-            Malgo
-          </h1>
+            <h1 className="login-page__title">
+              Malgo
+            </h1>
+          </HomeLogoLink>
 
           <img
             className="login-page__description"
@@ -153,20 +153,21 @@ function Login() {
           <div className="login-form__field">
             <label
               className="login-form__label"
-              htmlFor="identifier"
+              htmlFor="username"
             >
               아이디
             </label>
 
             <input
-              id="identifier"
+              id="username"
               className="login-form__input"
               type="text"
-              name="identifier"
-              value={loginData.identifier}
+              name="username"
+              value={loginData.username}
               onChange={handleInputChange}
-              placeholder="아이디 또는 이메일 주소"
+              placeholder="아이디"
               autoComplete="username"
+              disabled={isSubmitting}
             />
           </div>
 
@@ -185,10 +186,9 @@ function Login() {
               name="password"
               value={loginData.password}
               onChange={handleInputChange}
-              placeholder="비밀번호(영문+숫자 6~16자)"
-              minLength={6}
-              maxLength={16}
+              placeholder="비밀번호"
               autoComplete="current-password"
+              disabled={isSubmitting}
             />
           </div>
 
@@ -199,6 +199,7 @@ function Login() {
               name="autoLogin"
               checked={loginData.autoLogin}
               onChange={handleInputChange}
+              disabled={isSubmitting}
             />
 
             <span
@@ -214,8 +215,12 @@ function Login() {
           <button
             className="login-form__submit"
             type="submit"
+            disabled={isSubmitting}
+            aria-busy={isSubmitting}
           >
-            로그인
+            {isSubmitting
+              ? "로그인 중..."
+              : "로그인"}
           </button>
 
           <nav
@@ -225,6 +230,7 @@ function Login() {
             <button
               className="login-form__account-button"
               type="button"
+              disabled={isSubmitting}
             >
               아이디 찾기
             </button>
@@ -236,6 +242,7 @@ function Login() {
             <button
               className="login-form__account-button"
               type="button"
+              disabled={isSubmitting}
             >
               비밀번호 찾기
             </button>
@@ -248,6 +255,7 @@ function Login() {
               className="login-form__account-button"
               type="button"
               onClick={() => navigate("/signup")}
+              disabled={isSubmitting}
             >
               회원가입
             </button>

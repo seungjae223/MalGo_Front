@@ -1,4 +1,6 @@
-* {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
@@ -11,30 +13,144 @@ button {
   -webkit-tap-highlight-color: transparent;
 }
 
-.main-page-scroll {
-  position: relative;
+/* ==============================
+   메인페이지가 포함된 공통 스크롤 영역
 
-  width: min(100%, 402px);
+   App.css의 레이아웃 값과 충돌하지 않도록
+   footer-layout 하나가 화면 전체 스크롤을 담당합니다.
+   푸터는 페이지 내용 바로 다음에 이어집니다.
+================================ */
+
+#root
+  .footer-layout:has(
+    > .app-page-content
+    > .main-page-scroll
+  ) {
+  display: block;
+
+  width: min(100%, var(--malgo-frame-width));
   height: 100vh;
   height: 100dvh;
+  min-height: 0;
 
   margin: 0 auto;
+  padding: 0;
 
   overflow-x: hidden;
   overflow-y: auto;
 
-  background:
-    linear-gradient(
-      180deg,
-      #e8fbff 0%,
-      #edfbff 30%,
-      #f4fcff 55%,
-      #fbfeff 72%,
-      #ffffff 84%,
-      #ffffff 100%
-    );
+  overscroll-behavior-y: contain;
+  touch-action: pan-y;
+  -webkit-overflow-scrolling: touch;
 
-  color: #3b4b50;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+#root
+  .footer-layout:has(
+    > .app-page-content
+    > .main-page-scroll
+  )::-webkit-scrollbar,
+.chat-content::-webkit-scrollbar,
+.message-list::-webkit-scrollbar {
+  display: none;
+
+  width: 0;
+  height: 0;
+}
+
+#root
+  .footer-layout:has(
+    > .app-page-content
+    > .main-page-scroll
+  )
+  > .app-page-content {
+  display: block;
+  flex: none;
+
+  width: 100%;
+  height: auto;
+  min-height: 0;
+
+  margin: 0;
+  padding: 0;
+
+  overflow: visible;
+}
+
+#root
+  .footer-layout:has(
+    > .app-page-content
+    > .main-page-scroll
+  )
+  > .app-page-content
+  > .main-page-scroll {
+  display: block;
+  flex: none;
+
+  width: 100%;
+  height: auto;
+  min-height: 0;
+
+  margin: 0;
+  padding: 0;
+
+  overflow: visible;
+
+  scroll-padding-bottom: 0;
+}
+
+#root
+  .footer-layout:has(
+    > .app-page-content
+    > .main-page-scroll
+  )
+  .page-with-footer {
+  padding-bottom: 0;
+  scroll-padding-bottom: 0;
+}
+
+#root
+  .footer-layout:has(
+    > .app-page-content
+    > .main-page-scroll
+  )
+  > .malgo-footer {
+  position: static;
+  flex: none;
+
+  width: 100%;
+  max-width: 100%;
+
+  margin: 0;
+
+  transform: none;
+}
+
+/* ==============================
+   메인페이지 전체 영역
+================================ */
+
+.main-page-scroll {
+  position: relative;
+
+  width: min(100%, var(--malgo-frame-width));
+  height: auto;
+  min-height: 0;
+
+  margin: 0 auto;
+  padding: 0;
+
+  overflow: visible;
+
+  background: linear-gradient(
+    to top,
+    #ffffff 21.212%,
+    #e4fcff 103.06%
+  );
+
+  color: #344846;
 
   font-family:
     "Pretendard",
@@ -43,24 +159,57 @@ button {
     BlinkMacSystemFont,
     "Segoe UI",
     sans-serif;
-
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-}
-
-.main-page-scroll::-webkit-scrollbar {
-  display: none;
-
-  width: 0;
-  height: 0;
 }
 
 .main-page {
   width: 100%;
-  min-height: 100%;
+  min-height: 0;
 
   margin: 0 auto;
-  padding: 33px 28px 42px;
+  padding: 0 26px 17px;
+}
+
+.main-page.ai-customization-active {
+  padding: 0;
+}
+
+.main-page.ai-customization-active .main-header {
+  height: min(
+    calc(var(--malgo-frame-width) * 212 / 402),
+    52.7363vw
+  );
+}
+
+.main-page.ai-customization-active .main-logo {
+  top: min(
+    calc(var(--malgo-frame-width) * 59 / 402),
+    14.6766vw
+  );
+
+  width: min(
+    calc(var(--malgo-frame-width) * 122 / 402),
+    30.3483vw
+  );
+  height: min(
+    calc(var(--malgo-frame-width) * 93 / 402),
+    23.1343vw
+  );
+}
+
+.main-page.ai-customization-active .main-logo-title {
+  top: min(
+    calc(var(--malgo-frame-width) * 140 / 402),
+    34.8259vw
+  );
+
+  font-size: min(
+    calc(var(--malgo-frame-width) * 24 / 402),
+    5.9701vw
+  );
+  line-height: min(
+    calc(var(--malgo-frame-width) * 29 / 402),
+    7.2139vw
+  );
 }
 
 /* ==============================
@@ -69,68 +218,62 @@ button {
 
 .main-header {
   position: relative;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  margin-bottom: 20px;
+  width: 100%;
+  height: 185px;
+  margin: 0;
 }
 
 .main-logo {
+  position: absolute;
+  top: 59px;
+  left: calc(50% - 8px);
   display: block;
-
-  width: 145px;
-  height: 100px;
-
+  width: 122px;
+  height: 93px;
   object-fit: contain;
+  transform: translateX(-50%);
 }
 
 .main-logo-title {
-  margin: -2px 0 0;
-
-  color: #3f5055;
-
-  font-size: 30px;
+  position: absolute;
+  top: 140px;
+  left: calc(50% - 8px);
+  margin: 0;
+  color: #445150;
+  font-size: 24px;
   font-weight: 500;
-  line-height: 1;
-  letter-spacing: -1px;
+  line-height: 29px;
+  letter-spacing: -0.5px;
+  white-space: nowrap;
+  transform: translateX(-50%);
 }
 
 .history-button {
   position: absolute;
-  top: 6px;
-  right: 0;
+  top: 64px;
+  right: 4px;
 
   display: grid;
   place-items: center;
 
-  width: 41px;
-  height: 41px;
+  width: 36px;
+  height: 37px;
+  margin: 0;
+  padding: 0;
 
-  padding: 7px;
-
-  color: #89a5af;
-  background: #dceff5;
+  background: transparent;
 
   border: none;
-  border-radius: 5px;
-
-  box-shadow:
-    0 4px 5px rgba(83, 113, 124, 0.2);
+  border-radius: 0;
+  box-shadow: none;
 
   cursor: pointer;
 }
 
-.history-icon {
-  width: 100%;
-  height: 100%;
-
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 2.2;
-  stroke-linecap: round;
-  stroke-linejoin: round;
+.subscription-benefits-icon {
+  display: block;
+  width: 36px;
+  height: 37px;
 }
 
 /* ==============================
@@ -138,12 +281,11 @@ button {
 ================================ */
 
 .main-chat-container {
-  display: flex;
-  flex-direction: column;
-
+  position: relative;
+  display: block;
   width: min(346px, 100%);
-  height: 752px;
-
+  height: 634px;
+  /* Keep the 346px Figma card centered inside the shared 402px app frame. */
   margin: 0 auto;
   overflow: hidden;
 
@@ -152,11 +294,36 @@ button {
   border: 1px solid #b0e2ff;
   border-radius: 19px;
 
-  box-shadow:
-    0 8px 20px rgba(76, 135, 155, 0.07);
+  box-shadow: none;
 
   -webkit-backdrop-filter: blur(12px);
   backdrop-filter: blur(12px);
+}
+
+.main-chat-container.ai-customization-active {
+  width: 100%;
+  height: min(
+    calc(var(--malgo-frame-width) * 844 / 402),
+    209.9503vw
+  );
+
+  background: #e5f7fd;
+
+  border: 0;
+  border-radius:
+    min(
+      calc(var(--malgo-frame-width) * 19 / 402),
+      4.7264vw
+    )
+    min(
+      calc(var(--malgo-frame-width) * 19 / 402),
+      4.7264vw
+    )
+    0
+    0;
+
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
 }
 
 /* ==============================
@@ -164,35 +331,78 @@ button {
 ================================ */
 
 .partner-section {
-  flex: 0 0 181px;
-
-  width: 100%;
-  height: 181px;
-
-  padding: 22px 29px 9px;
+  position: absolute;
+  top: -1px;
+  left: -1px;
+  width: calc(100% + 2px);
+  height: 174px;
+  padding: 19px 24px 6px 20px;
 
   background: rgba(230, 239, 244, 0.2);
 
-  border-bottom: 1px solid #b0e2ff;
+  border: 1px solid #b0e2ff;
+  border-radius: 10px 10px 0 0;
 }
 
 .partner-section-title {
-  margin: 0 0 13px 12px;
-
+  height: 18px;
+  margin: 0 0 13px;
+  color: #344846;
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 600;
   line-height: 18px;
-  letter-spacing: -0.4px;
+  letter-spacing: -0.35px;
+}
+
+.partner-customization-button {
+  position: absolute;
+  top: 3px;
+  right: 6px;
+
+  display: grid;
+  place-items: center;
+
+  width: 40px;
+  height: 40px;
+  margin: 0;
+  padding: 0;
+
+  background: transparent;
+  border: 0;
+  border-radius: 50%;
+
+  cursor: pointer;
+}
+
+.partner-customization-icon {
+  display: block;
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+  opacity: 0.45;
+}
+
+.partner-customization-button:active:not(:disabled) {
+  transform: scale(0.94);
+}
+
+.partner-customization-button:focus-visible {
+  outline: 2px solid #58c7f2;
+  outline-offset: 2px;
+}
+
+.partner-customization-button:disabled {
+  opacity: 0.48;
+  cursor: default;
 }
 
 .partner-list {
   display: grid;
-  grid-template-columns:
-    repeat(3, minmax(0, 1fr));
-
-  gap: 0;
-
-  margin: 0 -16px;
+  grid-template-columns: repeat(3, 60px);
+  justify-content: space-between;
+  width: 272px;
+  height: 87px;
+  margin: 0 0 0 16px;
 }
 
 .partner-item {
@@ -200,7 +410,10 @@ button {
   flex-direction: column;
   align-items: center;
 
+  width: 60px;
   min-width: 0;
+  height: 87px;
+  margin: 0;
   padding: 0;
 
   color: inherit;
@@ -215,6 +428,7 @@ button {
   display: grid;
   place-items: center;
 
+  flex: 0 0 60px;
   width: 60px;
   height: 60px;
 
@@ -239,14 +453,30 @@ button {
   height: 60px;
 }
 
-.partner-name {
-  margin-top: 8px;
+.figma-selected-face {
+  object-fit: contain;
+}
 
-  font-size: 18px;
+.partner-name {
+  display: block;
+  margin-top: 7px;
+  color: #344846;
+  font-size: 17px;
   font-weight: 400;
-  line-height: 22px;
+  line-height: 20px;
 
   white-space: nowrap;
+}
+
+.partner-status-message {
+  grid-column: 1 / -1;
+  align-self: center;
+  width: 100%;
+  margin: 0;
+  color: #53676e;
+  font-size: 13px;
+  line-height: 18px;
+  text-align: center;
 }
 
 .partner-information-bar {
@@ -254,14 +484,12 @@ button {
   grid-template-columns:
     repeat(3, minmax(0, 1fr));
 
-  overflow: hidden;
-
+  width: 294px;
   height: 24px;
-  margin-top: 4px;
-
-  background: #d9e6eb;
-
-  border-radius: 6px;
+  margin: 5px 0 0 6px;
+  overflow: hidden;
+  background: #d4e3e8;
+  border-radius: 4px;
 }
 
 .partner-information {
@@ -272,12 +500,12 @@ button {
 
   padding: 0 3px;
 
-  color: #41545a;
+  color: #344846;
   background: transparent;
 
   font-size: 12px;
   font-weight: 400;
-  line-height: 1;
+  line-height: 16.8px;
   text-align: center;
 
   border: none;
@@ -290,8 +518,8 @@ button {
 }
 
 .partner-information.selected {
-  background: #c7e4ef;
-  font-weight: 600;
+  background: transparent;
+  font-weight: 400;
 }
 
 /* ==============================
@@ -299,18 +527,20 @@ button {
 ================================ */
 
 .chat-content {
+  position: absolute;
+  top: 173px;
+  left: 0;
   display: flex;
   flex-direction: column;
-  flex: 1 1 auto;
-
+  width: 100%;
+  height: 405px;
   min-height: 0;
-
-  padding: 14px 17px 28px 21px;
+  padding: 15px 12px 14px 16px;
 
   overflow-x: hidden;
   overflow-y: auto;
 
-  background: rgba(247, 252, 255, 0.32);
+  background: rgba(247, 252, 255, 0.18);
 
   scrollbar-width: none;
   -ms-overflow-style: none;
@@ -327,6 +557,7 @@ button {
  * 대화를 시작하면 설정 카드가 사라지므로
  * 채팅 내용 자체가 남은 공간을 모두 사용합니다.
  */
+
 .chat-content.chat-started {
   overflow-y: hidden;
 }
@@ -352,18 +583,16 @@ button {
   margin: 0;
   padding: 0;
 
-  color: #42555b;
-  background: #dfeff5;
+  color: #3d4342;
+  background: #def0f6;
 
-  font-size: 13px;
-  font-weight: 400;
+  font-size: 12px;
+  font-weight: 500;
   line-height: 1;
 
-  border: 1px solid #c7dce4;
-  border-radius: 11px;
-
-  box-shadow:
-    0 2px 3px rgba(71, 103, 116, 0.08);
+  border: 1px solid #d3dee6;
+  border-radius: 13px;
+  box-shadow: none;
 }
 
 /* ==============================
@@ -380,7 +609,7 @@ button {
   min-height: 0;
   max-height: 260px;
 
-  margin-top: 14px;
+  margin-top: 12px;
 
   overflow-x: hidden;
   overflow-y: auto;
@@ -400,6 +629,7 @@ button {
  * 첫 사용자 메시지가 전송된 후에는
  * 남은 채팅 공간 전체를 메시지 목록이 사용합니다.
  */
+
 .chat-content.chat-started .message-list,
 .message-list.expanded {
   flex: 1 1 auto;
@@ -419,7 +649,7 @@ button {
 .message-row.bot {
   display: grid;
   grid-template-columns:
-    57px minmax(0, 236px);
+    29px minmax(0, 236px);
 
   align-items: start;
   column-gap: 13px;
@@ -439,31 +669,26 @@ button {
   display: grid;
   place-items: center;
 
-  width: 57px;
-  height: 57px;
+  width: 29px;
+  height: 29px;
 
   overflow: hidden;
 
-  background:
-    linear-gradient(
-      145deg,
-      #f5fcff,
-      #e8f7ff
-    );
+  background: #f5fcff;
 
   border: 1px solid #95e4ff;
   border-radius: 10px;
 
   box-shadow:
-    0 3px 9px rgba(0, 129, 174, 0.2),
-    inset 0 0 7px rgba(149, 228, 255, 0.35);
+    inset 0 0 5.2px #66c9ff,
+    0 3px 9px rgba(0, 129, 174, 0.08);
 }
 
 .chatbot-icon {
   display: block;
 
-  width: 39px;
-  height: 41px;
+  width: 19.175px;
+  height: 20.047px;
 
   object-fit: contain;
 }
@@ -480,24 +705,28 @@ button {
   max-width: 100%;
   min-height: 57px;
 
-  padding: 7px 16px 6px;
+  padding: 8px 15px 6px 16px;
 
   color: #3a4d4b;
   background: #f1f9ff;
 
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 400;
-  line-height: 20px;
-  letter-spacing: -0.35px;
+  line-height: 18px;
+  letter-spacing: -0.2px;
 
-  border: 1px solid #dce5ef;
+  border: 1px solid #d2e0f0;
   border-radius: 10px;
 
   box-shadow: none;
 }
 
 .message-row.bot.initial-message .message-bubble {
-  height: 57px;
+  /*
+   * 말투별 첫 인사말은 2~3줄이 될 수 있습니다. 고정 높이를 두면
+   * 긴 인사말이 말풍선 밖으로 넘치므로 최소 높이만 유지합니다.
+   */
+  height: auto;
 }
 
 .message-row.bot:not(.initial-message) .message-bubble {
@@ -509,18 +738,28 @@ button {
 }
 
 .message-row.user .message-bubble {
-  width: auto;
-  max-width: 236px;
+  /*
+   * 긴 사용자 문장은 말풍선의 최대 너비를 넘지 않고 줄바꿈합니다.
+   * `fit-content`로 짧은 문장은 내용만큼, 긴 문장은 제한 너비만큼만
+   * 차지하도록 해 파란 박스 밖으로 글자가 빠져나가지 않게 합니다.
+   */
+  width: fit-content;
+  min-width: 0;
+  max-width: min(236px, 100%);
 
   padding: 10px 14px;
 
   color: #ffffff;
   background: #61c6ee;
 
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 400;
   line-height: 1.35;
-  letter-spacing: -0.3px;
+  letter-spacing: -0.2px;
+
+  overflow-wrap: anywhere;
+  word-break: normal;
+  white-space: pre-wrap;
 
   border-radius: 12px 0 12px 12px;
 
@@ -535,8 +774,8 @@ button {
 .message-hand-icon {
   display: inline-block;
 
-  width: 16px;
-  height: 16px;
+  width: 14.3px;
+  height: 15.3px;
 
   margin-left: 4px;
 
@@ -550,20 +789,20 @@ button {
 
 .country-selection-wrapper {
   display: grid;
-  justify-items: center;
+  justify-items: start;
   flex: 0 0 auto;
-  gap: 17px;
-
-  margin-top: 31px;
-  padding-bottom: 4px;
+  gap: 15px;
+  width: 100%;
+  margin-top: 17px;
+  padding: 0;
 }
 
 .country-selection-card {
+  position: relative;
   width: 306px;
   max-width: 100%;
   height: 127px;
-
-  padding: 9px 12px 7px;
+  padding: 11px 10px 7px 14px;
 
   background: #f1f9ff;
 
@@ -572,22 +811,21 @@ button {
 }
 
 .country-selection-title {
-  margin: 0 0 6px;
-
-  color: #3b4b50;
-
-  font-size: 13px;
-  font-weight: 500;
-  line-height: 16px;
-  letter-spacing: -0.3px;
+  height: 17px;
+  margin: 0 0 12px;
+  color: #3a4d4b;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 17px;
+  letter-spacing: -0.25px;
+  white-space: nowrap;
 }
 
 .country-button-list {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
-
-  gap: 7px 10px;
+  justify-content: flex-start;
+  gap: 9px 5px;
 }
 
 .country-button {
@@ -603,10 +841,10 @@ button {
 
   padding: 0 7px;
 
-  color: #53676e;
+  color: #3a4d4b;
   background: #f1f9ff;
 
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 400;
   line-height: 1;
   text-align: center;
@@ -628,25 +866,50 @@ button {
 }
 
 .country-button.selected {
-  background: #d1e3f0;
+  background: #f1f9ff;
   border-color: #d2e0f0;
+  font-weight: 400;
+}
 
+/* 업무 분야는 실제 선택 상태가 눈에 보이도록 표시합니다. */
+.area-button.selected {
+  color: #168fc8;
+  background: #d9f5ff;
+  border-color: #62caf1;
+  box-shadow: 0 0 0 1px rgba(98, 202, 241, 0.16);
   font-weight: 600;
 }
 
+.area-button:focus-visible {
+  outline: 2px solid rgba(52, 190, 241, 0.55);
+  outline-offset: 2px;
+}
+
+.area-button:not(:disabled):active {
+  transform: scale(0.97);
+}
+
+.area-button:disabled {
+  cursor: default;
+}
+
 .area-button {
+  flex-basis: 66px;
   width: 66px;
   min-width: 66px;
 }
 
-.country-button.wide-button {
-  flex-basis: auto;
+.area-list .country-button.wide-button {
+  flex-basis: 80px;
+  width: 80px;
+  min-width: 80px;
+  padding-right: 7px;
+  padding-left: 7px;
+}
 
-  width: auto;
-  min-width: 86px;
-
-  padding-right: 11px;
-  padding-left: 11px;
+.country-selection-wrapper
+  > .country-selection-card:nth-of-type(2) {
+  height: 125px;
 }
 
 /* ==============================
@@ -720,43 +983,41 @@ button {
 ================================ */
 
 .message-input-section {
-  position: relative;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  flex: 0 0 55px;
-
-  width: 100%;
+  position: absolute;
+  top: 578px;
+  left: -1px;
+  display: block;
+  width: calc(100% + 2px);
   height: 55px;
-  min-height: 55px;
-
+  margin: 0;
   padding: 0;
   overflow: hidden;
 
   background: rgba(147, 209, 242, 0.2);
 
   border-top: 1px solid #b0e2ff;
-  border-radius: 0 0 18px 18px;
+  border-radius: 0 0 19px 19px;
 
   -webkit-backdrop-filter: blur(12px);
   backdrop-filter: blur(12px);
 }
 
 .message-input {
+  position: absolute;
+  top: 11px;
+  left: 17px;
   display: block;
-
-  width: min(307px, calc(100% - 36px));
+  width: min(306px, calc(100% - 40px));
   height: 31px;
   min-width: 0;
 
-  padding: 0 43px 0 12px;
+  margin: 0;
+  padding: 0 39px 0 12px;
 
   color: #3b4b50;
   background: #d1e3eb;
 
-  font-size: 15px;
+  font-size: 14px;
   line-height: 31px;
 
   border: none;
@@ -768,13 +1029,13 @@ button {
 }
 
 .message-input::placeholder {
-  color: #91a8b0;
+  color: transparent;
 }
 
 .message-send-button {
   position: absolute;
-  top: 50%;
-  right: 18px;
+  top: 11px;
+  right: 28px;
 
   display: grid;
   place-items: center;
@@ -790,7 +1051,7 @@ button {
   border: none;
   border-radius: 7px;
 
-  transform: translateY(-50%);
+  transform: none;
   cursor: pointer;
 
   transition:
@@ -799,9 +1060,7 @@ button {
 }
 
 .message-send-button:not(:disabled):active {
-  transform:
-    translateY(-50%)
-    scale(0.94);
+  transform: scale(0.94);
 }
 
 .message-send-button:disabled {
@@ -812,8 +1071,8 @@ button {
 .message-send-icon {
   display: block;
 
-  width: 25px;
-  height: 25px;
+  width: 17px;
+  height: 17px;
 
   object-fit: contain;
 }
@@ -825,24 +1084,25 @@ button {
 .conversation-summary-button {
   display: block;
 
-  width: min(303px, calc(100% - 40px));
-  min-height: 71px;
+  width: min(254px, calc(100% - 40px));
+  height: 50px;
+  min-height: 50px;
 
-  margin: 22px auto 0;
-  padding: 12px 18px;
+  /* Align the summary action to the same center line as the chat card. */
+  margin: 17px auto 0;
+  padding: 0 16px;
 
   color: #ffffff;
-  background: #58c7f2;
+  background: #5ed1ff;
 
-  font-size: 28px;
+  font-size: 20px;
   font-weight: 500;
-  letter-spacing: -1.1px;
+  line-height: 1;
+  letter-spacing: -0.45px;
 
   border: none;
-  border-radius: 13px;
-
-  box-shadow:
-    0 6px 12px rgba(55, 167, 211, 0.12);
+  border-radius: 11px;
+  box-shadow: none;
 
   cursor: pointer;
 
@@ -851,123 +1111,276 @@ button {
     background-color 0.13s ease;
 }
 
-.conversation-summary-button:hover {
-  background: #45bde9;
+.conversation-summary-button:hover:not(:disabled) {
+  background: #45c8fa;
 }
 
-.conversation-summary-button:active {
+.conversation-summary-button:active:not(:disabled) {
   transform: scale(0.98);
 }
 
-/* ==============================
-   작은 모바일 화면 대응
-================================ */
+/* 메인 화면에서 푸터 모서리 밖으로 비치는 전역 배경도 흰색으로 통일합니다. */
+#root:has(.main-page-scroll) {
+  background: #ffffff;
+}
 
-@media (max-width: 420px) {
+/* 최신 Figma 메인 프레임에서 보이는 101px 푸터 영역입니다. */
+#root
+  .footer-layout:has(
+    > .app-page-content
+    > .main-page-scroll
+  ) {
+  width: min(100%, var(--malgo-frame-width));
+  max-width: var(--malgo-frame-width);
+  margin: 0 auto;
+  background: #ffffff;
+}
+
+#root
+  .footer-layout:has(
+    > .app-page-content
+    > .main-page-scroll
+  )
+  > .malgo-footer {
+  position: static;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  flex: 0 0 auto;
+  width: 100%;
+  max-width: var(--malgo-frame-width);
+  height: var(--malgo-footer-height);
+  min-height: var(--malgo-footer-height);
+  max-height: var(--malgo-footer-height);
+  margin: 0 auto;
+  padding: 20px 16px 0 18px;
+  overflow: hidden;
+  background-color: #f2fcff;
+  background-image: linear-gradient(
+    180deg,
+    #ccf2ff 0%,
+    #ffffff 100%
+  );
+  background-repeat: no-repeat;
+  background-position: 0 -118px;
+  background-size: 100% 296px;
+  border-radius: 19px 22px 0 0;
+  transform: none;
+}
+
+#root
+  .footer-layout:has(
+    > .app-page-content
+    > .main-page-scroll
+  )
+  > .malgo-footer
+  .malgo-footer-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 6px;
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+  color: #344846;
+}
+
+#root
+  .footer-layout:has(
+    > .app-page-content
+    > .main-page-scroll
+  )
+  > .malgo-footer
+  .malgo-footer-icon-circle {
+  position: relative;
+  display: block;
+  flex: 0 0 46px;
+  width: 46px;
+  height: 46px;
+}
+
+#root
+  .footer-layout:has(
+    > .app-page-content
+    > .main-page-scroll
+  )
+  > .malgo-footer
+  .malgo-footer-item:first-child
+  .malgo-footer-icon-circle {
+  background: #ccf2ff;
+}
+
+#root
+  .footer-layout:has(
+    > .app-page-content
+    > .main-page-scroll
+  )
+  > .malgo-footer
+  .malgo-footer-item:last-child
+  .malgo-footer-icon-circle {
+  background: #c4cdd0;
+}
+
+#root
+  .footer-layout:has(
+    > .app-page-content
+    > .main-page-scroll
+  )
+  > .malgo-footer
+  :is(
+    .malgo-footer-home-icon,
+    .malgo-footer-profile-icon
+  ) {
+  display: none;
+}
+
+#root
+  .footer-layout:has(
+    > .app-page-content
+    > .main-page-scroll
+  )
+  > .malgo-footer
+  .malgo-footer-item:first-child
+  .malgo-footer-icon-circle::before,
+#root
+  .footer-layout:has(
+    > .app-page-content
+    > .main-page-scroll
+  )
+  > .malgo-footer
+  .malgo-footer-item:first-child
+  .malgo-footer-icon-circle::after,
+#root
+  .footer-layout:has(
+    > .app-page-content
+    > .main-page-scroll
+  )
+  > .malgo-footer
+  .malgo-footer-item:last-child
+  .malgo-footer-icon-circle::before,
+#root
+  .footer-layout:has(
+    > .app-page-content
+    > .main-page-scroll
+  )
+  > .malgo-footer
+  .malgo-footer-item:last-child
+  .malgo-footer-icon-circle::after {
+  position: absolute;
+  display: block;
+  content: "";
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 100% 100%;
+}
+
+#root
+  .footer-layout:has(
+    > .app-page-content
+    > .main-page-scroll
+  )
+  > .malgo-footer
+  .malgo-footer-item:first-child
+  .malgo-footer-icon-circle::before {
+  top: 7px;
+  left: 8px;
+  width: 30px;
+  height: 29px;
+  background-image: url("../img/figma-footer-home-icon.svg");
+}
+
+#root
+  .footer-layout:has(
+    > .app-page-content
+    > .main-page-scroll
+  )
+  > .malgo-footer
+  .malgo-footer-item:first-child
+  .malgo-footer-icon-circle::after {
+  top: 20px;
+  left: 18px;
+  width: 10px;
+  height: 4px;
+  background-image: url("../img/figma-footer-home-detail.svg");
+}
+
+#root
+  .footer-layout:has(
+    > .app-page-content
+    > .main-page-scroll
+  )
+  > .malgo-footer
+  .malgo-footer-item:last-child
+  .malgo-footer-icon-circle::before {
+  top: 8px;
+  left: 17px;
+  width: 11.5594px;
+  height: 11.5594px;
+  background-image: url("../img/figma-footer-profile-head.svg");
+}
+
+#root
+  .footer-layout:has(
+    > .app-page-content
+    > .main-page-scroll
+  )
+  > .malgo-footer
+  .malgo-footer-item:last-child
+  .malgo-footer-icon-circle::after {
+  top: 22px;
+  left: 14px;
+  width: 18px;
+  height: 10px;
+  background-image: url("../img/figma-footer-profile-body.svg");
+}
+
+#root
+  .footer-layout:has(
+    > .app-page-content
+    > .main-page-scroll
+  )
+  > .malgo-footer
+  .malgo-footer-label {
+  color: #344846;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 17px;
+  letter-spacing: -0.3px;
+}
+
+@media (max-width: 380px) {
   .main-page {
-    padding:
-      28px
-      18px
-      36px;
+    padding-right: 18px;
+    padding-left: 18px;
   }
 
-  .main-logo {
-    width: 135px;
-    height: 94px;
+  .partner-list {
+    width: min(272px, calc(100% - 16px));
   }
 
-  .main-logo-title {
-    font-size: 28px;
-  }
-
-  .chat-content {
-    padding-right: 17px;
-    padding-left: 21px;
+  .partner-information-bar {
+    width: min(294px, calc(100% - 6px));
   }
 
   .message-row.bot {
-    grid-template-columns:
-      57px minmax(0, 236px);
-
-    column-gap: 13px;
+    grid-template-columns: 29px minmax(0, 1fr);
   }
 
   .message-row.bot .message-bubble {
-    width: 236px;
-    max-width: 100%;
-
-    font-size: 16px;
-    line-height: 20px;
+    width: 100%;
   }
 
-  .country-selection-card {
-    width: 306px;
-    max-width: 100%;
-  }
-
-  .country-button {
-    min-width: 66px;
-
+  .country-selection-title {
     font-size: 13px;
-  }
-
-  .target-selection-card {
-    height: 178px;
-  }
-
-  .target-feature-input {
-    width: 306px;
-    max-width: 100%;
-  }
-
-  .conversation-summary-button {
-    min-height: 67px;
-
-    font-size: 25px;
   }
 }
 
-/* ==============================
-   노트북 및 데스크톱 화면 대응
-================================ */
-
-@media (hover: hover) and (pointer: fine) {
-  body .footer-layout .main-page-scroll {
-    padding-bottom: 104px;
-    scroll-padding-bottom: 104px;
-  }
-
-  body .footer-layout .malgo-footer {
-    height: 96px;
-    min-height: 96px;
-
-    padding: 10px 0 8px;
-
-    border-radius: 24px 24px 0 0;
-  }
-
-  body .footer-layout .malgo-footer-item {
-    gap: 4px;
-    min-height: 0;
-  }
-
-  body .footer-layout .malgo-footer-icon-circle {
-    width: 48px;
-    height: 48px;
-  }
-
-  body .footer-layout .malgo-footer-home-icon {
-    width: 31px;
-    height: 31px;
-  }
-
-  body .footer-layout .malgo-footer-profile-icon {
-    width: 29px;
-    height: 29px;
-  }
-
-  body .footer-layout .malgo-footer-label {
-    font-size: 15px;
-    line-height: 18px;
+@media (max-width: 340px) {
+  .conversation-summary-button {
+    margin-right: auto;
+    margin-left: auto;
   }
 }

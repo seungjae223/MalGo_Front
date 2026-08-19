@@ -41,18 +41,69 @@ body:has(.summary-page-scroll) .footer-layout::-webkit-scrollbar {
   height: 0;
 }
 
+/*
+ * 피그마 프레임처럼 요약 콘텐츠와 공통 푸터를
+ * 하나의 402px 모바일 화면 안에서 이어서 스크롤합니다.
+ */
+
+#root
+  .footer-layout:has(
+    > .app-page-content
+    > .summary-page-scroll
+  ) {
+  display: block;
+
+  width: min(100%, var(--malgo-frame-width));
+  height: 100vh;
+  height: 100dvh;
+  min-height: 0;
+
+  margin: 0 auto;
+  padding: 0;
+
+  overflow-x: hidden;
+  overflow-y: auto;
+
+  overscroll-behavior-y: contain;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+#root
+  .footer-layout:has(
+    > .app-page-content
+    > .summary-page-scroll
+  )::-webkit-scrollbar {
+  display: none;
+
+  width: 0;
+  height: 0;
+}
+
+#root
+  .footer-layout:has(
+    > .app-page-content
+    > .summary-page-scroll
+  )
+  > .app-page-content {
+  width: 100%;
+  height: auto;
+  min-height: 0;
+
+  overflow: visible;
+}
+
 /* ==============================
    요약 페이지 스크롤 영역
 ================================ */
 
 .summary-page-scroll {
   width: 100%;
-  height: 100vh;
-  height: 100dvh;
+  height: auto;
   min-height: 0;
 
-  overflow-x: hidden;
-  overflow-y: auto;
+  overflow: visible;
 
   color: #3d4f52;
 
@@ -73,15 +124,7 @@ body:has(.summary-page-scroll) .footer-layout::-webkit-scrollbar {
     "Segoe UI",
     sans-serif;
 
-  overscroll-behavior-y: contain;
-
-  -webkit-overflow-scrolling: touch;
-
-  /* Firefox */
-  scrollbar-width: none;
-
-  /* 구형 Edge */
-  -ms-overflow-style: none;
+  overscroll-behavior-y: auto;
 }
 
 /* Chrome, Edge, Safari */
@@ -96,7 +139,8 @@ body:has(.summary-page-scroll) .footer-layout::-webkit-scrollbar {
 }
 
 .summary-page-shell {
-  width: min(100%, 470px);
+  width: 100%;
+  max-width: var(--malgo-frame-width);
   min-height: 100%;
 
   margin: 0 auto;
@@ -416,6 +460,176 @@ body:has(.summary-page-scroll) .footer-layout::-webkit-scrollbar {
 }
 
 /* ==============================
+   직역·추천 번역 점수 그래프
+================================ */
+
+.summary-score-graph {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 106px 31px;
+  column-gap: 5px;
+  align-items: center;
+
+  width: 346px;
+  max-width: 100%;
+  height: 166px;
+
+  margin-top: 20px;
+}
+
+.summary-radar-chart {
+  display: grid;
+  place-items: center;
+
+  min-width: 0;
+  height: 160px;
+}
+
+.summary-radar-chart svg {
+  display: block;
+
+  width: 100%;
+  height: 160px;
+
+  overflow: visible;
+}
+
+.summary-radar-chart text {
+  fill: #51666a;
+
+  font-family: inherit;
+  font-size: 8px;
+}
+
+.summary-radar-level {
+  stroke: #8fcfe9;
+  stroke-width: 1;
+}
+
+.summary-radar-level--outer {
+  fill: rgba(89, 193, 234, 0.32);
+}
+
+.summary-radar-level--middle {
+  fill: rgba(89, 193, 234, 0.24);
+}
+
+.summary-radar-level--inner {
+  fill: rgba(89, 193, 234, 0.18);
+}
+
+.summary-radar-axis {
+  stroke: rgba(128, 191, 218, 0.72);
+  stroke-width: 0.7;
+}
+
+.summary-radar-score {
+  fill: rgba(116, 207, 245, 0.34);
+  stroke: #ffffff;
+  stroke-width: 1.4;
+}
+
+.summary-radar-point {
+  fill: #73ccef;
+  stroke: #ffffff;
+  stroke-width: 1;
+}
+
+.summary-score-list {
+  display: grid;
+  align-content: center;
+  gap: 7px;
+
+  height: 151px;
+  margin: 0;
+  padding: 15px 12px;
+
+  list-style: none;
+
+  background: rgba(247, 251, 252, 0.66);
+  border-radius: 15px;
+  box-shadow: 0 7px 18px rgba(87, 129, 149, 0.05);
+}
+
+.summary-score-list li {
+  min-width: 0;
+}
+
+.summary-score-list li > span {
+  display: block;
+
+  overflow: hidden;
+
+  color: #526a70;
+
+  font-size: 7px;
+  line-height: 9px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.summary-score-track {
+  position: relative;
+
+  width: 100%;
+  height: 5px;
+  margin-top: 2px;
+  overflow: hidden;
+
+  background: #e7f1f3;
+  border-radius: 999px;
+}
+
+.summary-score-fill {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+
+  background: #51c7f4;
+  border-radius: inherit;
+
+  transition: width 0.2s ease;
+}
+
+.summary-score-next {
+  display: grid;
+  place-items: center;
+
+  width: 31px;
+  height: 31px;
+  margin: 0;
+  padding: 0;
+
+  color: #b6d9e8;
+  background: transparent;
+
+  border: 0;
+
+  cursor: pointer;
+}
+
+.summary-score-next svg {
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  fill: none;
+  stroke: currentColor;
+  stroke-linejoin: round;
+  stroke-width: 1.4;
+}
+
+.summary-score-next:focus-visible {
+  outline: 2px solid #58c7f2;
+  outline-offset: 2px;
+}
+
+.summary-score-next:active {
+  transform: scale(0.94);
+}
+
+/* ==============================
    메모 영역
    346 × 151
 ================================ */
@@ -425,7 +639,7 @@ body:has(.summary-page-scroll) .footer-layout::-webkit-scrollbar {
   max-width: 100%;
   height: 151px;
 
-  margin-top: 17px;
+  margin-top: 20px;
   padding: 13px 15px;
 
   background: #ecf5fb;

@@ -1,0 +1,673 @@
+/* =====================================
+   MalGo 마이페이지
+   기준 시안: 380 × 1006
+===================================== */
+
+.malgo-my-page,
+.malgo-my-page * {
+  box-sizing: border-box;
+}
+
+.malgo-my-page {
+  position: relative;
+
+  width: min(100%, var(--malgo-frame-width));
+  height: 100vh;
+  height: 100dvh;
+  margin: 0 auto;
+
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior-y: contain;
+
+  color: #46595d;
+  background:
+    linear-gradient(
+      180deg,
+      #e5fcff 0%,
+      #effdff 37%,
+      #ffffff 82%,
+      #ffffff 100%
+    );
+
+  font-family:
+    "Pretendard",
+    "Noto Sans KR",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.malgo-my-page::-webkit-scrollbar {
+  display: none;
+}
+
+.malgo-my-page button {
+  margin: 0;
+  padding: 0;
+
+  color: inherit;
+  font: inherit;
+  background: transparent;
+
+  border: 0;
+
+  cursor: pointer;
+
+  -webkit-tap-highlight-color: transparent;
+}
+
+.malgo-my-page img,
+.malgo-my-page svg {
+  display: block;
+}
+
+/* =====================================
+   스크롤 콘텐츠
+===================================== */
+
+.malgo-my-page-content {
+  position: relative;
+
+  min-height: 100%;
+
+  padding: 57px 0 108px;
+}
+
+/* =====================================
+   우측 상단 아이콘
+===================================== */
+
+.my-page-sync-badge {
+  position: absolute;
+  top: 58px;
+  right: 25px;
+  z-index: 2;
+
+  display: grid;
+  place-items: center;
+
+  width: 36px;
+  height: 37px;
+
+  background: transparent;
+
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.my-page-sync-badge img {
+  display: block;
+  width: 36px;
+  height: 37px;
+}
+
+.my-page-sync-badge:active {
+  transform: scale(0.94);
+}
+
+.my-page-sync-badge:focus-visible {
+  outline: 2px solid #58c7f2;
+  outline-offset: 3px;
+}
+
+.malgo-my-page .my-page-logout-button {
+  position: absolute;
+  top: 63px;
+  left: 22px;
+  z-index: 2;
+
+  min-width: 66px;
+  padding: 7px 10px;
+
+  color: #5f777d;
+  background: rgba(255, 255, 255, 0.72);
+
+  border: 1px solid #b9dfe9;
+  border-radius: 999px;
+
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 16px;
+}
+
+.malgo-my-page .my-page-logout-button:disabled {
+  cursor: wait;
+  opacity: 0.65;
+}
+
+/* =====================================
+   상단 로고
+===================================== */
+
+.my-page-brand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  width: 100%;
+  height: 102px;
+}
+
+.my-page-brand-logo {
+  width: 112px;
+  height: 67px;
+
+  object-fit: contain;
+  user-select: none;
+}
+
+.my-page-brand-name {
+  margin: 6px 0 0;
+
+  color: #435255;
+
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 29px;
+  letter-spacing: -0.7px;
+}
+
+/* =====================================
+   분석 카드
+===================================== */
+
+.my-page-analysis-card {
+  width: calc(100% - 46px);
+  max-width: 356px;
+  min-height: 760px;
+  margin: 12px auto 0;
+  padding: 26px 17px 22px;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(224, 244, 248, 0.9) 0%,
+      rgba(245, 250, 253, 0.9) 100%
+    );
+
+  border: 1px solid #91ddff;
+  border-radius: 18px;
+}
+
+/* =====================================
+   프로필 + 최근 번역 기록
+===================================== */
+
+.my-page-profile-panel {
+  position: relative;
+
+  width: 100%;
+  height: 143px;
+
+  background: #e5f2f6;
+
+  border-radius: 14px;
+}
+
+.my-page-profile {
+  position: absolute;
+  top: 32px;
+  left: 28%;
+
+  display: grid;
+  place-items: center;
+
+  width: 80px;
+  height: 80px;
+
+  color: #38c3f3;
+  background: #d4e5ed;
+
+  border-radius: 50%;
+
+  transform: translateX(-50%);
+}
+
+.my-page-profile-icon {
+  width: 52px;
+  height: 56px;
+}
+
+.my-page-history-button {
+  position: absolute;
+  top: 36px;
+  left: 73%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  min-width: 100px;
+
+  transform: translateX(-50%);
+}
+
+.my-page-history-button:active {
+  transform:
+    translateX(-50%)
+    scale(0.97);
+}
+
+.my-page-history-icon {
+  width: 50px;
+  height: 61px;
+
+  object-fit: contain;
+  user-select: none;
+}
+
+.my-page-history-button span {
+  margin-top: 3px;
+
+  color: #45585c;
+
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 18px;
+  letter-spacing: -0.35px;
+  white-space: nowrap;
+}
+
+/* =====================================
+   상황별 대화 분석 제목
+===================================== */
+
+.my-page-analysis-title {
+  margin: 18px 0 0;
+
+  color: #42575b;
+
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: -0.35px;
+}
+
+/* =====================================
+   벤 다이어그램 목업
+===================================== */
+
+.my-page-venn {
+  position: relative;
+
+  width: 238px;
+  height: 217px;
+  margin: 16px auto 0;
+
+  isolation: isolate;
+}
+
+.my-page-venn-circle {
+  position: absolute;
+
+  width: 142px;
+  height: 142px;
+
+  border-radius: 50%;
+}
+
+.my-page-venn-circle--work {
+  top: 0;
+  left: 48px;
+  z-index: 1;
+
+  background:
+    rgba(72, 178, 247, 0.58);
+}
+
+.my-page-venn-circle--travel {
+  top: 75px;
+  left: 0;
+  z-index: 2;
+
+  background:
+    rgba(190, 230, 166, 0.62);
+}
+
+.my-page-venn-circle--daily {
+  top: 75px;
+  left: 96px;
+  z-index: 3;
+
+  background:
+    rgba(211, 190, 235, 0.62);
+}
+
+.my-page-venn-main-label,
+.my-page-venn-overlap {
+  position: absolute;
+  z-index: 5;
+
+  text-align: center;
+}
+
+.my-page-venn-main-label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 18px;
+}
+
+.my-page-venn-main-label strong {
+  color: #53777b;
+
+  font-weight: 400;
+}
+
+.my-page-venn-main-label--work {
+  top: 23px;
+  left: 48px;
+
+  width: 142px;
+
+  color: #2d66a0;
+}
+
+.my-page-venn-main-label--travel {
+  top: 123px;
+  left: 4px;
+
+  width: 62px;
+
+  color: #67a45d;
+}
+
+.my-page-venn-main-label--daily {
+  top: 123px;
+  right: 2px;
+
+  width: 62px;
+
+  color: #a13dbb;
+}
+
+.my-page-venn-overlap {
+  color: #55767a;
+
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+}
+
+.my-page-venn-overlap--work-travel {
+  top: 91px;
+  left: 58px;
+
+  width: 50px;
+}
+
+.my-page-venn-overlap--work-daily {
+  top: 91px;
+  left: 133px;
+
+  width: 54px;
+}
+
+.my-page-venn-overlap--center {
+  top: 117px;
+  left: 94px;
+
+  width: 50px;
+}
+
+.my-page-venn-overlap--travel-daily {
+  top: 151px;
+  left: 94px;
+
+  width: 50px;
+}
+
+/* =====================================
+   상황별 비율 목록
+===================================== */
+
+.my-page-field-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  width: 254px;
+  max-width: calc(100% - 14px);
+  margin: 16px 0 0 14px;
+  padding: 0;
+
+  list-style: none;
+}
+
+.my-page-field-row {
+  display: grid;
+  grid-template-columns:
+    40px minmax(0, 205px);
+  gap: 9px;
+  align-items: center;
+
+  width: 100%;
+  height: 40px;
+}
+
+.my-page-field-icon-circle {
+  display: grid;
+  place-items: center;
+
+  width: 40px;
+  height: 40px;
+
+  border-radius: 50%;
+}
+
+.my-page-field-image {
+  width: 38px;
+  height: 38px;
+
+  object-fit: contain;
+  user-select: none;
+}
+
+.my-page-field-track {
+  display: grid;
+  grid-template-columns:
+    minmax(0, 1fr) 66px;
+  align-items: center;
+
+  width: 100%;
+  height: 35px;
+  padding-left: 16px;
+
+  background: #dfedf4;
+
+  border-radius: 15px;
+}
+
+.my-page-field-label,
+.my-page-field-value {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+}
+
+.my-page-field-label {
+  color: #3f5357;
+
+  letter-spacing: -0.3px;
+}
+
+.my-page-field-value {
+  color: #55777a;
+
+  text-align: center;
+}
+
+/* =====================================
+   하단 푸터
+===================================== */
+
+.my-page-footer {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  z-index: 1000;
+
+  display: grid;
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  width: min(100%, var(--malgo-frame-width));
+  height: 92px;
+  padding: 17px 33px 7px;
+
+  background: #e4f8ff;
+
+  border-radius: 18px 18px 0 0;
+
+  transform: translateX(-50%);
+}
+
+.my-page-footer-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 4px;
+
+  width: 100%;
+  height: 100%;
+}
+
+.my-page-footer-item:active
+.my-page-footer-icon-circle {
+  transform: scale(0.96);
+}
+
+.my-page-footer-icon-circle {
+  display: grid;
+  place-items: center;
+
+  width: 46px;
+  height: 46px;
+
+  border-radius: 50%;
+
+  transition:
+    transform 0.14s ease;
+}
+
+.my-page-footer-icon-circle--home {
+  color: #36c6f3;
+  background: #c8f1fb;
+}
+
+.my-page-footer-icon-circle--profile {
+  color: #879ba1;
+  background: #cbd6da;
+}
+
+.my-page-footer-home-icon {
+  width: 28px;
+  height: 28px;
+}
+
+.my-page-footer-profile-icon {
+  width: 32px;
+  height: 32px;
+}
+
+.my-page-footer-label {
+  color: #43575b;
+
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: -0.35px;
+}
+/* ==============================
+마이페이지 공통 레이아웃 충돌 수정
+
+footer-layout 하나만 전체 스크롤을 담당하고
+마이페이지 내부에는 별도의 스크롤을 만들지 않습니다.
+================================ */
+
+#root
+  .footer-layout
+  > .app-page-content
+  > .malgo-my-page {
+  position: relative;
+
+  width: 100%;
+  height: auto;
+  min-height: 0;
+
+  margin: 0;
+
+  overflow: visible;
+}
+
+/* ==============================
+상단부터 정상적으로 표시되도록
+마이페이지 전체 높이를 콘텐츠 기준으로 설정
+================================ */
+
+#root
+  .footer-layout
+  .malgo-my-page-content {
+  min-height: 0;
+
+  padding:
+    57px
+    0
+    17px;
+}
+
+/* =====================================
+   작은 화면 안전 처리
+===================================== */
+
+@media (max-width: 350px) {
+  .my-page-analysis-card {
+    width: calc(100% - 30px);
+    padding-right: 14px;
+    padding-left: 14px;
+  }
+
+  .my-page-venn {
+    left: 50%;
+
+    margin-right: 0;
+    margin-left: 0;
+
+    transform:
+      translateX(-50%)
+      scale(0.94);
+
+    transform-origin: top center;
+  }
+
+  .my-page-field-list {
+    max-width: 100%;
+    margin-left: 0;
+  }
+
+  .my-page-field-row {
+    grid-template-columns:
+      40px minmax(0, 1fr);
+  }
+}
+
+.my-page-api-status {
+  margin: 8px 24px 0;
+  color: #60777d;
+  font-size: 12px;
+  text-align: center;
+}
+
+.my-page-api-status--error {
+  color: #c55252;
+}

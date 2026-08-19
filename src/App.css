@@ -1,38 +1,469 @@
-.App {
-  text-align: center;
+/* ==============================
+   전체 공통 초기화
+================================ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+:root {
+  --malgo-frame-width: 390px;
+  --malgo-footer-height: 101px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+html,
+body,
+#root {
+  width: 100%;
+  min-height: 100%;
+
+  margin: 0;
+  padding: 0;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+body {
+  overflow-x: hidden;
+  overflow-y: auto;
+
+  background: #ffffff;
+}
+
+/*
+ * 각 페이지의 로고와 제목을 하나의 홈 링크로 묶되,
+ * 중간 요소를 만들지 않아 기존 Figma 배치를 보존합니다.
+ */
+.home-logo-link {
+  display: contents;
+}
+
+.home-logo-link > :is(img, h1) {
+  cursor: pointer;
+}
+
+.home-logo-link:focus-visible > :is(img, h1) {
+  outline: 2px solid #58c7f2;
+  outline-offset: 3px;
+}
+
+/* ==============================
+   모든 페이지 공통 레이아웃
+================================ */
+
+/*
+ * 페이지와 푸터를 일반 문서 흐름으로 배치합니다.
+ * 화면 높이만큼 강제로 늘리지 않습니다.
+ */
+
+#root .footer-layout {
+  position: relative;
+
+  display: block;
+
+  width: min(
+    100%,
+    var(--malgo-frame-width)
+  );
+
+  height: auto;
+  min-height: 0;
+
+  margin: 0 auto;
+  padding: 0;
+
+  overflow: visible;
+
+  background: transparent;
+}
+
+/* ==============================
+   라우팅 페이지 영역
+================================ */
+
+#root
+  .footer-layout
+  > .app-page-content {
+  display: block;
+
+  width: 100%;
+  height: auto;
+  min-height: 0;
+
+  margin: 0;
+  padding: 0;
+
+  overflow: visible;
+
+  background: transparent;
+}
+
+/*
+ * 모든 라우트는 같은 모바일 프레임 안에 렌더링합니다.
+ * 페이지별 콘텐츠 카드의 폭은 이 바깥 프레임과 구분합니다.
+ */
+#root
+  .footer-layout
+  > .app-page-content
+  > :is(
+    .splash,
+    .login-page,
+    .signup-screen,
+    .main-page-scroll,
+    .summary-page-scroll,
+    .malgo-my-page,
+    .translation-history-page,
+    .translation-detail-page
+  ) {
+  width: 100%;
+  max-width: var(--malgo-frame-width);
+
+  margin-right: auto;
+  margin-left: auto;
+}
+
+/*
+ * MainPage와 SummaryPage가
+ * 별도의 화면 높이를 만들지 않도록 합니다.
+ */
+
+#root
+  .footer-layout
+  > .app-page-content
+  > .main-page-scroll,
+#root
+  .footer-layout
+  > .app-page-content
+  > .summary-page-scroll {
+  width: 100%;
+
+  height: auto;
+  min-height: 0;
+
+  margin: 0;
+  padding-bottom: 0;
+
+  overflow: visible;
+
+  scroll-padding-bottom: 0;
+}
+
+/*
+ * 이전에 page-with-footer에 적용했던
+ * 푸터 높이만큼의 여백을 제거합니다.
+ */
+
+#root
+  .footer-layout
+  .page-with-footer {
+  padding-bottom: 0;
+  scroll-padding-bottom: 0;
+}
+
+/* ==============================
+   모든 페이지 공통 푸터
+================================ */
+
+/*
+ * 푸터는 화면에 고정하지 않고
+ * 페이지 콘텐츠 바로 다음에 표시됩니다.
+ */
+
+#root
+  .footer-layout
+  > .malgo-footer {
+  position: static;
+
+  top: auto;
+  right: auto;
+  bottom: auto;
+  left: auto;
+  inset: auto;
+
+  z-index: auto;
+
   display: flex;
+  align-items: center;
+  justify-content: space-around;
+
+  width: 100%;
+  max-width: 100%;
+
+  height: var(--malgo-footer-height);
+  min-height: var(--malgo-footer-height);
+  max-height: var(--malgo-footer-height);
+
+  margin: 0;
+  margin-top: 0;
+  padding: 8px 0 6px;
+
+  overflow: hidden;
+
+  background: #edfaff;
+
+  border-radius: 20px 20px 0 0;
+
+  transform: none;
+}
+
+/* 푸터 메뉴 */
+
+#root
+  .footer-layout
+  > .malgo-footer
+  .malgo-footer-item {
+  display: flex;
+  flex: 1 1 0;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  gap: 4px;
+
+  height: 100%;
+  min-height: 0;
+
+  margin: 0;
+  padding: 0;
+
+  color: #3f5055;
+  background: transparent;
+
+  border: none;
+
+  text-decoration: none;
 }
 
-.App-link {
-  color: #61dafb;
+/* 푸터 아이콘 원 */
+
+#root
+  .footer-layout
+  > .malgo-footer
+  .malgo-footer-icon-circle {
+  display: grid;
+  place-items: center;
+
+  width: 44px;
+  height: 44px;
+
+  border-radius: 50%;
 }
 
-@keyframes App-logo-spin {
+/* 홈 아이콘 */
+
+#root
+  .footer-layout
+  > .malgo-footer
+  .malgo-footer-home-icon {
+  display: block;
+
+  width: 29px;
+  height: 29px;
+
+  object-fit: contain;
+}
+
+/* 내정보 아이콘 */
+
+#root
+  .footer-layout
+  > .malgo-footer
+  .malgo-footer-profile-icon {
+  display: block;
+
+  width: 27px;
+  height: 27px;
+
+  object-fit: contain;
+}
+
+/* 푸터 글씨 */
+
+#root
+  .footer-layout
+  > .malgo-footer
+  .malgo-footer-label {
+  margin: 0;
+
+  color: #3f5055;
+
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 15px;
+}
+
+/* ==============================
+   공통 진입 모션
+================================ */
+
+:root {
+  --malgo-motion-ease:
+    cubic-bezier(0.22, 0.8, 0.24, 1);
+}
+
+@keyframes malgo-fade-up {
   from {
-    transform: rotate(0deg);
+    opacity: 0;
+    transform: translate3d(0, 9px, 0);
   }
+
   to {
-    transform: rotate(360deg);
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes malgo-fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes malgo-message-enter-left {
+  from {
+    opacity: 0;
+    transform: translate3d(-8px, 4px, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes malgo-message-enter-right {
+  from {
+    opacity: 0;
+    transform: translate3d(8px, 4px, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+/* 페이지 안의 위치 보정 transform은 건드리지 않고,
+   컨테이너 단위로만 짧게 등장시킵니다. */
+#root .main-page-scroll .main-header,
+#root .malgo-my-page .my-page-brand,
+#root .translation-history-page .translation-history-brand,
+#root .translation-detail-page .translation-detail-brand,
+#root .summary-page-scroll .summary-header,
+#root .login-page .login-page__branding,
+#root .signup-screen .signup-header {
+  animation: malgo-fade-up 0.46s var(--malgo-motion-ease) backwards;
+}
+
+#root .main-page-scroll .main-chat-container,
+#root .malgo-my-page .my-page-analysis-card,
+#root .translation-history-page .translation-history-board,
+#root .translation-detail-page .translation-detail-board,
+#root .summary-page-scroll .summary-panel,
+#root .login-page .login-form,
+#root .signup-screen .signup-form {
+  animation:
+    malgo-fade-up
+    0.52s
+    var(--malgo-motion-ease)
+    0.1s
+    backwards;
+}
+
+#root .main-page-scroll .conversation-summary-button,
+#root .translation-history-page .translation-history-pagination,
+#root .translation-detail-page .translation-detail-pagination,
+#root .summary-page-scroll .summary-memo-card {
+  animation:
+    malgo-fade-up
+    0.42s
+    var(--malgo-motion-ease)
+    0.2s
+    backwards;
+}
+
+#root .main-page-scroll .partner-item,
+#root .main-page-scroll .country-selection-card,
+#root .malgo-my-page .my-page-field-row {
+  animation:
+    malgo-fade-up
+    0.38s
+    var(--malgo-motion-ease)
+    backwards;
+}
+
+#root .main-page-scroll .partner-item:nth-child(2),
+#root .main-page-scroll .country-selection-card:nth-child(2),
+#root .malgo-my-page .my-page-field-row:nth-child(2) {
+  animation-delay: 0.07s;
+}
+
+#root .main-page-scroll .partner-item:nth-child(3),
+#root .main-page-scroll .country-selection-card:nth-child(3),
+#root .malgo-my-page .my-page-field-row:nth-child(3) {
+  animation-delay: 0.14s;
+}
+
+#root .malgo-my-page .my-page-field-row:nth-child(4) {
+  animation-delay: 0.21s;
+}
+
+#root .malgo-my-page .my-page-field-row:nth-child(5) {
+  animation-delay: 0.28s;
+}
+
+#root .main-page-scroll .message-row.user {
+  animation:
+    malgo-message-enter-right
+    0.34s
+    var(--malgo-motion-ease)
+    both;
+}
+
+#root .main-page-scroll .message-row.bot:not(.initial-message) {
+  animation:
+    malgo-message-enter-left
+    0.34s
+    var(--malgo-motion-ease)
+    both;
+}
+
+/* 변형(scale)을 이미 사용하는 커스터마이징 패널은 투명도만 전환합니다. */
+#root .main-page-scroll .ai-customization-viewport,
+#root .subscription-overlay,
+#root .summary-loading-overlay {
+  animation: malgo-fade-in 0.26s ease-out both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #root .main-page-scroll .main-header,
+  #root .malgo-my-page .my-page-brand,
+  #root .translation-history-page .translation-history-brand,
+  #root .translation-detail-page .translation-detail-brand,
+  #root .summary-page-scroll .summary-header,
+  #root .login-page .login-page__branding,
+  #root .signup-screen .signup-header,
+  #root .main-page-scroll .main-chat-container,
+  #root .malgo-my-page .my-page-analysis-card,
+  #root .translation-history-page .translation-history-board,
+  #root .translation-detail-page .translation-detail-board,
+  #root .summary-page-scroll .summary-panel,
+  #root .login-page .login-form,
+  #root .signup-screen .signup-form,
+  #root .main-page-scroll .conversation-summary-button,
+  #root .translation-history-page .translation-history-pagination,
+  #root .translation-detail-page .translation-detail-pagination,
+  #root .summary-page-scroll .summary-memo-card,
+  #root .main-page-scroll .partner-item,
+  #root .main-page-scroll .country-selection-card,
+  #root .malgo-my-page .my-page-field-row,
+  #root .main-page-scroll .message-row,
+  #root .main-page-scroll .ai-customization-viewport,
+  #root .subscription-overlay,
+  #root .summary-loading-overlay {
+    animation: none;
   }
 }

@@ -1,89 +1,154 @@
 /* ==============================
-   푸터가 콘텐츠를 가리지 않도록
-   확보하는 하단 공간
+   푸터 스페이서 제거
+
+   푸터가 일반 문서 흐름에 들어가므로
+   별도의 하단 공간이 필요하지 않습니다.
 ================================ */
 
 .malgo-footer-spacer {
-  flex: 0 0 164px;
+  display: none;
 
-  width: 100%;
-  height: 164px;
+  flex: 0 0 0;
+
+  width: 0;
+  height: 0;
+
+  margin: 0;
+  padding: 0;
 
   pointer-events: none;
 }
 
 /* ==============================
-   하단 푸터
-   피그마: 402 × 164
+   로그인 전 화면
+
+   피그마의 스플래시·로그인·회원가입 프레임에는
+   하단 탭 바가 없으므로 해당 화면에서만 숨깁니다.
+   라우팅/JSX 구조는 그대로 유지합니다.
 ================================ */
 
-.malgo-footer {
-  position: fixed;
-  bottom: 0;
-  left: 50%;
-  z-index: 1000;
+#root
+  .footer-layout:has(
+    > .app-page-content
+    > :is(
+      .splash,
+      .login-page,
+      .signup-screen
+    )
+  )
+  > :is(
+    .malgo-footer-spacer,
+    .malgo-footer
+  ) {
+  display: none;
+}
+
+/* ==============================
+   하단 푸터
+
+   화면에 고정하지 않고
+   페이지 콘텐츠 바로 다음에 표시합니다.
+================================ */
+
+#root .footer-layout > .malgo-footer {
+  position: static;
+
+  top: auto;
+  right: auto;
+  bottom: auto;
+  left: auto;
+  inset: auto;
+
+  z-index: auto;
 
   display: grid;
   grid-template-columns:
     repeat(2, minmax(0, 1fr));
 
-  width: min(100%, 402px);
-  height: 164px;
+  flex: 0 0 auto;
 
-  padding: 22px 0 18px;
+  width: 100%;
+  max-width: var(--malgo-frame-width);
+
+  height: var(--malgo-footer-height);
+  min-height: var(--malgo-footer-height);
+  max-height: var(--malgo-footer-height);
+
+  margin: 0 auto;
+  padding: 20px 16px 0 18px;
+
   overflow: hidden;
 
-  background:
-    linear-gradient(
-      100deg,
-      #effcff 0%,
-      #e5f9ff 52%,
-      #f1fcff 100%
-    );
+  background-color: #f2fcff;
+  background-image: linear-gradient(
+    180deg,
+    #ccf2ff 0%,
+    #ffffff 100%
+  );
+  background-repeat: no-repeat;
+  background-position: 0 -118px;
+  background-size: 100% 296px;
 
-  border-radius:
-    24px 24px 0 0;
+  border-radius: 19px 22px 0 0;
 
-  transform: translateX(-50%);
+  transform: none;
 }
 
 /* ==============================
    메뉴 공통
 ================================ */
 
-.malgo-footer-item {
+#root
+  .footer-layout
+  > .malgo-footer
+  .malgo-footer-item {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  gap: 7px;
+
+  gap: 6px;
 
   width: 100%;
   height: 100%;
+  min-width: 0;
+  min-height: 0;
 
+  margin: 0;
   padding: 0;
 
-  color: #4b5d61;
+  color: #344846;
   background: transparent;
 
   border: none;
+  outline: none;
 
   cursor: pointer;
+
+  text-decoration: none;
+
+  -webkit-tap-highlight-color: transparent;
 }
 
 /* ==============================
    아이콘 원
 ================================ */
 
-.malgo-footer-icon-circle {
-  display: grid;
-  place-items: center;
+#root
+  .footer-layout
+  > .malgo-footer
+  .malgo-footer-icon-circle {
+  position: relative;
 
-  width: 58px;
-  height: 58px;
+  display: block;
 
-  color: #8fa4ab;
-  background: #cbd5d8;
+  flex: 0 0 46px;
+
+  width: 46px;
+  height: 46px;
+
+  color: inherit;
+  background: transparent;
 
   border-radius: 50%;
 
@@ -93,22 +158,133 @@
     background-color 0.15s ease;
 }
 
-/* 선택된 메뉴 */
-.malgo-footer-item.active
-.malgo-footer-icon-circle {
-  color: #36c9f6;
-  background: #dcf8ff;
+/* Figma 푸터는 모든 페이지에서 같은 아이콘 색을 사용합니다. */
+
+#root
+  .footer-layout
+  > .malgo-footer
+  .malgo-footer-item:first-child
+  .malgo-footer-icon-circle {
+  background: #ccf2ff;
+}
+
+#root
+  .footer-layout
+  > .malgo-footer
+  .malgo-footer-item:last-child
+  .malgo-footer-icon-circle {
+  background: #c4cdd0;
+}
+
+#root
+  .footer-layout
+  > .malgo-footer
+  :is(
+    .malgo-footer-home-icon,
+    .malgo-footer-profile-icon
+  ) {
+  display: none;
+}
+
+#root
+  .footer-layout
+  > .malgo-footer
+  .malgo-footer-item:first-child
+  .malgo-footer-icon-circle::before,
+#root
+  .footer-layout
+  > .malgo-footer
+  .malgo-footer-item:first-child
+  .malgo-footer-icon-circle::after,
+#root
+  .footer-layout
+  > .malgo-footer
+  .malgo-footer-item:last-child
+  .malgo-footer-icon-circle::before,
+#root
+  .footer-layout
+  > .malgo-footer
+  .malgo-footer-item:last-child
+  .malgo-footer-icon-circle::after {
+  position: absolute;
+
+  display: block;
+
+  content: "";
+
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 100% 100%;
+}
+
+#root
+  .footer-layout
+  > .malgo-footer
+  .malgo-footer-item:first-child
+  .malgo-footer-icon-circle::before {
+  top: 7px;
+  left: 8px;
+
+  width: 30px;
+  height: 29px;
+
+  background-image: url("../img/figma-footer-home-icon.svg");
+}
+
+#root
+  .footer-layout
+  > .malgo-footer
+  .malgo-footer-item:first-child
+  .malgo-footer-icon-circle::after {
+  top: 20px;
+  left: 18px;
+
+  width: 10px;
+  height: 4px;
+
+  background-image: url("../img/figma-footer-home-detail.svg");
+}
+
+#root
+  .footer-layout
+  > .malgo-footer
+  .malgo-footer-item:last-child
+  .malgo-footer-icon-circle::before {
+  top: 8px;
+  left: 17px;
+
+  width: 11.5594px;
+  height: 11.5594px;
+
+  background-image: url("../img/figma-footer-profile-head.svg");
+}
+
+#root
+  .footer-layout
+  > .malgo-footer
+  .malgo-footer-item:last-child
+  .malgo-footer-icon-circle::after {
+  top: 22px;
+  left: 14px;
+
+  width: 18px;
+  height: 10px;
+
+  background-image: url("../img/figma-footer-profile-body.svg");
 }
 
 /* ==============================
    홈 아이콘
 ================================ */
 
-.malgo-footer-home-icon {
-  display: block;
+#root
+  .footer-layout
+  > .malgo-footer
+  .malgo-footer-home-icon {
+  display: none;
 
-  width: 38px;
-  height: 38px;
+  width: 31px;
+  height: 31px;
 
   object-fit: contain;
 
@@ -118,8 +294,12 @@
 }
 
 /* 홈 메뉴가 선택되지 않았을 때 */
-.malgo-footer-item:not(.active)
-.malgo-footer-home-icon {
+
+#root
+  .footer-layout
+  > .malgo-footer
+  .malgo-footer-item:not(.active)
+  .malgo-footer-home-icon {
   opacity: 0.58;
 
   filter: grayscale(1);
@@ -129,75 +309,65 @@
    내정보 아이콘
 ================================ */
 
-.malgo-footer-profile-icon {
-  display: block;
+#root
+  .footer-layout
+  > .malgo-footer
+  .malgo-footer-profile-icon {
+  display: none;
 
-  width: 36px;
-  height: 36px;
+  width: 29px;
+  height: 29px;
+
+  object-fit: contain;
 }
 
 /* ==============================
    메뉴 글자
 ================================ */
 
-.malgo-footer-label {
-  color: #485a5e;
+#root
+  .footer-layout
+  > .malgo-footer
+  .malgo-footer-label {
+  display: block;
 
-  font-size: 17px;
-  font-weight: 500;
-  line-height: 22px;
-  letter-spacing: -0.45px;
+  margin: 0;
+
+  color: #344846;
+
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 17px;
+  letter-spacing: -0.3px;
+
+  white-space: nowrap;
 }
 
 /* ==============================
    클릭 및 키보드 효과
 ================================ */
 
-.malgo-footer-item:active
-.malgo-footer-icon-circle {
+#root
+  .footer-layout
+  > .malgo-footer
+  .malgo-footer-item:active
+  .malgo-footer-icon-circle {
   transform: scale(0.95);
 }
 
-.malgo-footer-item:focus-visible {
+#root
+  .footer-layout
+  > .malgo-footer
+  .malgo-footer-item:focus-visible {
   outline: none;
 }
 
-.malgo-footer-item:focus-visible
-.malgo-footer-icon-circle {
+#root
+  .footer-layout
+  > .malgo-footer
+  .malgo-footer-item:focus-visible
+  .malgo-footer-icon-circle {
   box-shadow:
     0 0 0 3px
     rgba(88, 199, 242, 0.24);
-}
-
-/* ==============================
-   작은 모바일 화면
-================================ */
-
-@media (max-width: 360px) {
-  .malgo-footer-spacer {
-    flex-basis: 150px;
-
-    height: 150px;
-  }
-
-  .malgo-footer {
-    height: 150px;
-
-    padding-top: 18px;
-  }
-
-  .malgo-footer-icon-circle {
-    width: 54px;
-    height: 54px;
-  }
-
-  .malgo-footer-home-icon {
-    width: 35px;
-    height: 35px;
-  }
-
-  .malgo-footer-profile-icon {
-    width: 33px;
-    height: 33px;
-  }
 }

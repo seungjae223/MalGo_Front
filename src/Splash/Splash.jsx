@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import "./Splash.css";
+import { getMemberId } from "../api/auth";
 
 import puzzleKr from "../img/퍼즐1.svg";
 import puzzleEn from "../img/퍼즐2.svg";
@@ -11,7 +12,11 @@ function Splash() {
 
   const handleStart = () => {
     // 시작하기 버튼 클릭 시 로그인 페이지로 이동
-    navigate("/login");
+    const memberId = getMemberId();
+
+    navigate(memberId === null ? "/login" : "/main", {
+      replace: true,
+    });
   };
 
   return (

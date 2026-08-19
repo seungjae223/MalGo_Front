@@ -4,7 +4,7 @@
 }
 
 /*
- * 컴퓨터에서는 402px 모바일 화면을 가운데 배치합니다.
+ * 컴퓨터에서는 390px 모바일 화면을 가운데 배치합니다.
  */
 .signup-screen {
   display: flex;
@@ -19,13 +19,13 @@
 }
 
 /*
- * 피그마 모바일 프레임 기준: 402px × 895px
+ * 피그마 모바일 프레임 기준: 390px × 895px
  */
 .signup-page {
   display: flex;
   flex-direction: column;
 
-  width: 402px;
+  width: var(--malgo-frame-width);
   max-width: 100%;
 
   height: min(895px, 100vh);
@@ -38,7 +38,7 @@
 
 /*
  * 상단 회원가입 영역
- * 피그마 기준: 402px × 112px
+ * 피그마 기준: 390px × 112px
  */
 .signup-header {
   position: relative;
@@ -368,16 +368,16 @@
 }
 
 /*
- * 402px보다 작은 모바일 화면
+ * 390px보다 작은 모바일 화면
  */
-@media (max-width: 402px) {
+@media (max-width: 390px) {
   .signup-screen {
     background-color: #ffffff;
   }
 
   .signup-page {
     width: 100%;
-    max-width: 402px;
+    max-width: var(--malgo-frame-width);
   }
 
   .signup-form {

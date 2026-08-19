@@ -179,11 +179,11 @@
 /* KR 퍼즐 */
 
 .summary-loading-puzzle-kr {
-  top: 5px;
-  left: 39px;
+  top: -8px;
+  left: 23px;
 
-  width: 112px;
-  height: 112px;
+  width: 145px;
+  height: 145px;
 
   transform-origin: 64% 58%;
 
@@ -197,11 +197,11 @@
 /* EN 퍼즐 */
 
 .summary-loading-puzzle-en {
-  top: 29px;
-  right: 34px;
+  top: 13px;
+  right: 18px;
 
-  width: 105px;
-  height: 105px;
+  width: 138px;
+  height: 138px;
 
   transform-origin: 35% 45%;
 

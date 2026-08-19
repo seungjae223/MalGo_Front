@@ -254,6 +254,9 @@ npm install
 
 ### 4. 개발 서버 실행
 
+백엔드가 기본 주소(`http://localhost:8081`)가 아닌 곳에서 실행된다면
+`.env.example`을 `.env`로 복사한 뒤 `REACT_APP_API_BASE_URL`을 변경합니다.
+
 ```bash
 npm start
 ```

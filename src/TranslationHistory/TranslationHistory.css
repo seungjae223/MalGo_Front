@@ -1,0 +1,879 @@
+/* ==============================
+최근 번역 기록 페이지 기본 설정
+================================ */
+
+.translation-history-page,
+.translation-history-page * {
+  box-sizing: border-box;
+}
+
+.translation-history-page {
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+
+  overflow-x: hidden;
+  overflow-y: auto;
+
+  background: #dceff3;
+
+  scrollbar-width: none;
+  overscroll-behavior-y: contain;
+
+  -webkit-overflow-scrolling: touch;
+}
+
+.translation-history-page::-webkit-scrollbar {
+  display: none;
+}
+
+.translation-history-page button {
+  margin: 0;
+  padding: 0;
+
+  color: inherit;
+  font: inherit;
+  background: transparent;
+
+  border: none;
+
+  cursor: pointer;
+
+  -webkit-tap-highlight-color: transparent;
+}
+
+.translation-history-visually-hidden {
+  position: absolute;
+
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+}
+
+.translation-history-page img,
+.translation-history-page svg {
+  display: block;
+}
+
+/* ==============================
+모바일 프레임
+================================ */
+
+.translation-history-page-frame {
+  position: relative;
+
+  width: min(100%, var(--malgo-frame-width));
+  min-height: 100%;
+
+  margin: 0 auto;
+  overflow: hidden;
+
+  color: #465c61;
+  background:
+    linear-gradient(
+      180deg,
+      #e6fdff 0%,
+      #effdff 48%,
+      #f8feff 79%,
+      #ffffff 100%
+    );
+
+  font-family:
+    "Pretendard",
+    "Noto Sans KR",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+}
+
+/* ==============================
+전체 콘텐츠
+
+383px 이하에서는 사진 비율에 맞춰
+화면 전체가 자연스럽게 축소됩니다.
+================================ */
+
+.translation-history-page-content {
+  position: relative;
+
+  width: 100%;
+  min-height: 100%;
+
+  padding:
+    min(14.88vw, 57px)
+    0
+    min(2.35vw, 9px);
+}
+
+/* ==============================
+오른쪽 위 아이콘
+================================ */
+
+.translation-history-sync-badge {
+  position: absolute;
+  top: min(15.14vw, 58px);
+  right: min(6.53vw, 25px);
+  z-index: 5;
+
+  display: grid;
+  place-items: center;
+
+  width: min(9.4vw, 36px);
+  height: min(9.66vw, 37px);
+
+  background: transparent;
+
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.translation-history-sync-badge img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.translation-history-sync-badge:active {
+  transform: scale(0.94);
+}
+
+.translation-history-sync-badge:focus-visible {
+  outline: 2px solid #58c7f2;
+  outline-offset: 3px;
+}
+
+/* ==============================
+상단 Malgo 로고
+================================ */
+
+.translation-history-brand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  width: 100%;
+  height: min(26.63vw, 102px);
+}
+
+.translation-history-logo {
+  width: min(29.24vw, 112px);
+  height: min(17.49vw, 67px);
+
+  object-fit: contain;
+
+  filter:
+    drop-shadow(
+      0 min(0.78vw, 3px)
+      min(1.31vw, 5px)
+      rgba(83, 116, 132, 0.24)
+    );
+
+  user-select: none;
+}
+
+.translation-history-brand-name {
+  margin:
+    min(1.56vw, 6px)
+    0
+    0;
+
+  color: #435255;
+
+  font-size: min(6.27vw, 24px);
+  font-weight: 500;
+  line-height: min(7.57vw, 29px);
+  letter-spacing: min(-0.1vw, -0.4px);
+}
+
+/* ==============================
+최근 번역 기록 전체 영역
+
+피그마:
+356 × 774
+배경: #D1EBFA 20%
+테두리: #B0E2FF
+모서리: 19
+================================ */
+
+.translation-history-board {
+  position: relative;
+
+  width:
+    min(
+      calc(100% - 46px),
+      356px
+    );
+
+  aspect-ratio: 356 / 774;
+
+  margin:
+    min(6vw, 23px)
+    auto
+    0;
+
+  background:
+    rgba(209, 235, 250, 0.2);
+
+  border: 1px solid #b0e2ff;
+  border-radius: min(4.96vw, 19px);
+}
+
+.translation-history-status {
+  position: absolute;
+  top: 44%;
+  left: 24px;
+  right: 24px;
+  margin: 0;
+  color: #60777d;
+  font-size: 14px;
+  line-height: 1.5;
+  text-align: center;
+}
+
+.translation-history-status--error {
+  color: #c55252;
+}
+
+/* ==============================
+상단 뒤로가기 버튼
+================================ */
+
+.translation-history-back-button {
+  position: absolute;
+  /* Figma 기준: X 48, Y 203, 16 × 16 */
+  top: 2.7132%;
+  left: 7.0225%;
+  z-index: 10;
+
+  width: 4.4944%;
+  aspect-ratio: 1;
+
+  transition:
+    opacity 0.14s ease,
+    transform 0.14s ease;
+}
+
+.translation-history-back-button img {
+  width: 100%;
+  height: 100%;
+
+  object-fit: contain;
+}
+
+.translation-history-back-button:active {
+  opacity: 0.7;
+
+  transform: scale(0.94);
+}
+
+/* ==============================
+날짜 및 메모 아이콘
+================================ */
+
+.translation-history-date-row {
+  position: absolute;
+  left: 8.0925%;
+  right: 5.7803%;
+  z-index: 6;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  height: min(6vw, 23px);
+
+  color: #576f74;
+
+  font-size: min(3.66vw, 14px);
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: min(0.04vw, 0.15px);
+}
+
+.translation-history-date-row--first {
+  top: 5.5851%;
+}
+
+.translation-history-date-row--second {
+  top: 53.0585%;
+}
+
+.translation-history-memo-button {
+  display: grid;
+  place-items: center;
+
+  width: min(5.74vw, 22px);
+  height: min(6.01vw, 23px);
+
+  transition:
+    opacity 0.14s ease,
+    transform 0.14s ease;
+}
+
+.translation-history-memo-button img {
+  width: 100%;
+  height: 100%;
+
+  object-fit: contain;
+}
+
+.translation-history-memo-button:active {
+  opacity: 0.7;
+
+  transform: scale(0.94);
+}
+
+/* ==============================
+날짜별 번역 카드
+
+피그마:
+302 × 311
+배경: #DDF0FA
+모서리: 10
+================================ */
+
+.translation-history-record-card {
+  position: absolute;
+  left: 6.3584%;
+
+  width: 87.2832%;
+  aspect-ratio: 302 / 311;
+
+  overflow: hidden;
+
+  background: #ddf0fa;
+
+  border-radius: min(2.61vw, 10px);
+}
+
+.translation-history-record-card--first {
+  top: 9.5745%;
+}
+
+.translation-history-record-card--second {
+  top: 56.6489%;
+}
+
+/*
+ * 한 묶음의 기록만 가로로 전환합니다.
+ * 카드 내부의 절대 위치는 그대로 유지합니다.
+ */
+.translation-history-page-set {
+  position: absolute;
+  inset: 0;
+
+  animation-duration: 0.22s;
+  animation-timing-function: ease-out;
+  animation-fill-mode: both;
+}
+
+.translation-history-page-set--next {
+  animation-name: translation-history-page-enter-next;
+}
+
+.translation-history-page-set--previous {
+  animation-name: translation-history-page-enter-previous;
+}
+
+@keyframes translation-history-page-enter-next {
+  from {
+    opacity: 0;
+    transform: translateX(14px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes translation-history-page-enter-previous {
+  from {
+    opacity: 0;
+    transform: translateX(-14px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* ==============================
+사용자가 입력한 메시지
+================================ */
+
+.translation-history-user-message {
+  position: absolute;
+  z-index: 3;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+
+  padding:
+    min(2.87vw, 11px)
+    min(3.13vw, 12px);
+
+  color: #ffffff;
+  background: #5dc4fc;
+
+  border-radius: min(2.61vw, 10px);
+
+  box-shadow:
+    0 min(0.52vw, 2px)
+    min(1.04vw, 4px)
+    rgba(64, 139, 180, 0.2);
+
+  font-size: min(3.13vw, 12px);
+  font-weight: 400;
+  line-height: min(4.18vw, 16px);
+  letter-spacing: min(-0.04vw, -0.15px);
+
+  /* 긴 원문도 카드 안에서 줄바꿈해 가로로 넘치지 않게 합니다. */
+  overflow-wrap: anywhere;
+  word-break: normal;
+}
+
+.translation-history-user-message span {
+  display: block;
+
+  white-space: normal;
+}
+
+/* 첫 번째 메시지 */
+
+.translation-history-user-message--first {
+  top: 4.8232%;
+  left: 17.5497%;
+
+  width: 78.1457%;
+  height: 28.2958%;
+}
+
+/* 두 번째 메시지 */
+
+.translation-history-user-message--second {
+  top: 4.8232%;
+  left: 15.2318%;
+
+  width: 78.1457%;
+  height: 17.6849%;
+}
+
+/* ==============================
+번역 결과 카드
+
+기준:
+238 × 133
+================================ */
+
+.translation-history-result {
+  position: absolute;
+  z-index: 3;
+
+  left: 7.2848%;
+
+  width: 78.8079%;
+  height: 42.7653%;
+
+  padding:
+    min(3.39vw, 13px)
+    min(2.87vw, 11px)
+    min(2.61vw, 10px);
+
+  color: #43595e;
+  background: #f1f9ff;
+
+  border: 1px solid #cadfea;
+  border-radius: min(2.61vw, 10px);
+
+  box-shadow:
+    0 min(0.26vw, 1px)
+    min(0.78vw, 3px)
+    rgba(87, 129, 149, 0.08);
+}
+
+.translation-history-result--first {
+  top: 36.9775%;
+}
+
+.translation-history-result--second {
+  top: 26.6881%;
+}
+
+/* 번역 결과 안내 문구 */
+
+.translation-history-result-description {
+  margin: 0;
+
+  overflow: hidden;
+
+  font-size: min(3vw, 11.5px);
+  font-weight: 400;
+  line-height: min(4.44vw, 17px);
+  letter-spacing: min(-0.04vw, -0.15px);
+  white-space: nowrap;
+  text-overflow: clip;
+}
+
+/* 안내 문구 아래 선 */
+
+.translation-history-result-divider {
+  width: 100%;
+  height: 1px;
+
+  margin:
+    min(1.83vw, 7px)
+    0
+    min(1.04vw, 4px);
+
+  background: #b7d3e3;
+}
+
+/* 추천 번역 영역 */
+
+.translation-history-recommendation {
+  display: flex;
+  align-items: center;
+
+  width: 100%;
+  height: min(7.31vw, 28px);
+}
+
+.translation-history-result-icon {
+  flex: 0 0 auto;
+
+  width: min(7.83vw, 30px);
+  height: min(7.31vw, 28px);
+
+  margin-left: min(-0.52vw, -2px);
+  margin-right: min(1.04vw, 4px);
+
+  object-fit: contain;
+}
+
+.translation-history-recommendation span {
+  color: #486166;
+
+  font-size: min(3vw, 11.5px);
+  font-weight: 400;
+  line-height: 1;
+}
+
+/* 영어 번역 내용 */
+
+.translation-history-translated-text {
+  display: flex;
+  flex-direction: column;
+
+  max-height: min(11.76vw, 45px);
+  
+  margin:
+    min(0.52vw, 2px)
+    0
+    0;
+
+  overflow: hidden;
+  overflow-wrap: anywhere;
+
+  color: #455d62;
+
+  font-size: min(3.24vw, 12.4px);
+  font-weight: 400;
+  line-height: min(3.92vw, 15px);
+  letter-spacing: min(-0.04vw, -0.15px);
+}
+
+.translation-history-translated-text span {
+  display: block;
+
+  white-space: normal;
+  word-break: break-word;
+}
+
+/* ==============================
+더보기 영역
+================================ */
+
+.translation-history-more-divider {
+  position: absolute;
+  top: 82.9582%;
+  left: 5.9603%;
+
+  width: 88.0795%;
+  height: 1px;
+
+  background: #c3dce8;
+}
+
+.translation-history-more-button {
+  position: absolute;
+  top: 86.4952%;
+  left: 0;
+
+  display: grid;
+  place-items: center;
+
+  width: 100%;
+  height: 11%;
+
+  color: #7b9296;
+
+  font-size: min(3.66vw, 14px);
+  font-weight: 400;
+  line-height: 1;
+
+  transition:
+    color 0.14s ease,
+    opacity 0.14s ease;
+}
+
+.translation-history-more-button:active {
+  color: #526d72;
+
+  opacity: 0.7;
+}
+
+/* ==============================
+하단 페이지 이동 버튼
+================================ */
+
+.translation-history-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  width: 100%;
+
+  margin-top: min(4.05vw, 15.5px);
+
+  padding-left: min(16.45vw, 63px);
+  padding-right: min(14.1vw, 54px);
+}
+
+.translation-history-pagination-button {
+  display: grid;
+  place-items: center;
+
+  width: min(8.88vw, 34px);
+  height: min(8.88vw, 34px);
+
+  color: #829697;
+  background: rgba(255, 255, 255, 0.72);
+
+  border: 2px solid #829697;
+  border-radius: 50%;
+
+  transition:
+    color 0.14s ease,
+    border-color 0.14s ease,
+    transform 0.14s ease;
+}
+
+.translation-history-pagination-button:active {
+  color: #547579;
+
+  border-color: #547579;
+
+  transform: scale(0.94);
+}
+
+.translation-history-pagination-button:disabled {
+  cursor: default;
+  opacity: 0.35;
+}
+
+.translation-history-chevron {
+  width: 82%;
+  height: 82%;
+}
+
+.translation-history-chevron--next {
+  transform: rotate(180deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .translation-history-page-set {
+    animation: none;
+  }
+}
+
+/* ==============================
+아주 작은 화면 안전 처리
+================================ */
+
+@media (max-width: 335px) {
+  .translation-history-user-message {
+    padding:
+      8px
+      9px;
+
+    font-size: 10px;
+    line-height: 13px;
+  }
+
+  .translation-history-result {
+    padding:
+      9px
+      8px
+      7px;
+  }
+
+  .translation-history-result-description,
+  .translation-history-recommendation span {
+    font-size: 9.5px;
+  }
+
+  .translation-history-translated-text {
+    font-size: 10px;
+    line-height: 12px;
+  }
+}
+/* ==============================
+공통 FooterLayout과 스크롤 통합
+
+최근 번역 기록 페이지 내부에
+별도 스크롤이 생기지 않도록 합니다.
+================================ */
+
+.translation-history-page {
+  height: auto;
+  min-height: 100vh;
+  min-height: 100dvh;
+
+  overflow: visible;
+}
+
+.translation-history-page-frame {
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+/* ==============================
+번역 기록 메모 모달
+================================ */
+
+.translation-history-memo-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+
+  background: transparent;
+}
+
+.translation-history-memo-modal {
+  position: absolute;
+  left: 50%;
+
+  width: min(calc(100% + 4px), 360px);
+  max-width: 360px;
+  height: auto;
+  padding: 42px 14px 12px 20px;
+
+  color: #40575b;
+  background: rgba(225, 240, 248, 0.92);
+
+  border: 1px solid #a9c5d2;
+  border-radius: 10px;
+  box-shadow: 0 5px 16px rgba(73, 111, 126, 0.1);
+
+  aspect-ratio: 360 / 188;
+  transform: translateX(-50%);
+}
+
+.translation-history-memo-modal::before {
+  position: absolute;
+  top: 38px;
+  right: 32px;
+  bottom: 12px;
+  left: 20px;
+
+  content: "";
+  pointer-events: none;
+
+  background-image: linear-gradient(
+    to bottom,
+    transparent 24px,
+    rgba(166, 199, 213, 0.62) 24px,
+    rgba(166, 199, 213, 0.62) 25px
+  );
+  background-size: 100% 25px;
+}
+
+.translation-history-memo-modal--first {
+  top: 9.5745%;
+}
+
+.translation-history-memo-modal--second {
+  top: 56.6489%;
+}
+
+.translation-history-memo-modal textarea {
+  position: relative;
+  z-index: 1;
+
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  padding: 0 9px 0 2px;
+
+  resize: none;
+  overflow-y: auto;
+
+  color: #263f44;
+  background-color: transparent;
+
+  border: 0;
+  border-radius: 0;
+  outline: none;
+
+  font: inherit;
+  font-size: 13px;
+  line-height: 25px;
+
+  scrollbar-color: #c5d8e1 transparent;
+  scrollbar-width: thin;
+}
+
+.translation-history-memo-modal textarea::-webkit-scrollbar {
+  width: 5px;
+}
+
+.translation-history-memo-modal textarea::-webkit-scrollbar-thumb {
+  background: #c5d8e1;
+  border-radius: 999px;
+}
+
+.translation-history-memo-close {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  z-index: 2;
+
+  display: grid;
+  place-items: center;
+
+  width: 24px;
+  height: 24px;
+
+  color: #617478;
+
+  font-size: 27px;
+  font-weight: 300;
+  line-height: 1;
+}
+
+.translation-history-memo-close:disabled {
+  cursor: default;
+  opacity: 0.45;
+}
+
+.translation-history-memo-close:focus-visible {
+  outline: 2px solid #50bfe9;
+  outline-offset: 2px;
+}

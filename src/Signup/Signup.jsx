@@ -2,6 +2,9 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Signup.css";
 
+import { getNetworkErrorMessage } from "../api/client";
+import { authApi } from "../api/malgoApi";
+
 /*
  * 비밀번호 표시 상태에 따라
  * 눈 아이콘 모양을 변경합니다.
@@ -48,8 +51,11 @@ function PasswordEyeIcon({ visible }) {
 function Signup() {
   const navigate = useNavigate();
 
+  /*
+   * 백엔드 회원가입 페이로드와 동일한 필드명입니다.
+   */
   const [formData, setFormData] = useState({
-    userId: "",
+    username: "",
     password: "",
     passwordConfirm: "",
   });
@@ -57,8 +63,19 @@ function Signup() {
   /*
    * 각각의 비밀번호 입력창 표시 여부
    */
-  const [showPassword, setShowPassword] = useState(false);
-  const [showPasswordConfirm, setShowPasswordConfirm] =
+  const [showPassword, setShowPassword] =
+    useState(false);
+
+  const [
+    showPasswordConfirm,
+    setShowPasswordConfirm,
+  ] = useState(false);
+
+  /*
+   * 회원가입 요청 중인지 확인합니다.
+   * 버튼을 여러 번 누르는 중복 요청을 방지합니다.
+   */
+  const [isSubmitting, setIsSubmitting] =
     useState(false);
 
   const handleChange = (event) => {
@@ -70,36 +87,53 @@ function Signup() {
     }));
   };
 
+  /*
+   * 백엔드 Bean Validation과 같은 8~100자 범위를 확인합니다.
+   */
   const isValidPassword = (password) => {
-    const hasMinimumLength = password.length >= 8;
-    const hasLowercase = /[a-z]/.test(password);
-    const hasUppercase = /[A-Z]/.test(password);
-    const hasNumber = /[0-9]/.test(password);
-    const hasSpecialCharacter = /[^A-Za-z0-9\s]/.test(password);
-
     return (
-      hasMinimumLength &&
-      hasLowercase &&
-      hasUppercase &&
-      hasNumber &&
-      hasSpecialCharacter
+      password.length >= 8 &&
+      password.length <= 100
     );
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
-    const { userId, password, passwordConfirm } = formData;
+    if (isSubmitting) {
+      return;
+    }
 
-    if (!userId.trim() || !password || !passwordConfirm) {
-      alert("모든 항목을 입력해주세요.");
+    const username = formData.username.trim();
+    const password = formData.password;
+    const passwordConfirm =
+      formData.passwordConfirm;
+
+    /*
+     * 입력값 검증
+     */
+    if (!username) {
+      alert("아이디를 입력해주세요.");
+      return;
+    }
+
+    if (username.length > 30) {
+      alert("아이디는 30자 이하로 입력해주세요.");
+      return;
+    }
+
+    if (!password) {
+      alert("비밀번호를 입력해주세요.");
+      return;
+    }
+
+    if (!passwordConfirm) {
+      alert("비밀번호 확인을 입력해주세요.");
       return;
     }
 
     if (!isValidPassword(password)) {
-      alert(
-        "비밀번호는 8자 이상이며 영문 대소문자, 숫자, 특수문자를 포함해야 합니다."
-      );
+      alert("비밀번호는 8자 이상 100자 이하로 입력해주세요.");
       return;
     }
 
@@ -108,16 +142,46 @@ function Signup() {
       return;
     }
 
-    console.log("회원가입 정보", formData);
+    setIsSubmitting(true);
 
-    /*
-     * 나중에 백엔드 회원가입 API를 연결하면 됩니다.
-     *
-     * 회원가입 성공 후 로그인 페이지로 이동:
-     * navigate("/login");
-     */
+    try {
+      /*
+       * 회원가입 API 요청
+       *
+       * POST /api/v1/auth/signup
+       */
+      await authApi.signup({
+        username,
+        password,
+        passwordConfirm,
+      });
 
-    alert("회원가입 정보가 정상적으로 입력되었습니다.");
+      /*
+       * 회원가입 성공
+       */
+      alert("회원가입이 완료되었습니다.");
+
+      /*
+       * 회원가입 완료 후 로그인 페이지로 이동합니다.
+       */
+      navigate("/login", {
+        replace: true,
+      });
+    } catch (error) {
+      console.error("회원가입 요청 실패:", error);
+
+      /*
+       * fetch 자체가 실패한 경우
+       *
+       * 백엔드 미실행
+       * API 주소 오류
+       * CORS 오류
+       * 네트워크 오류
+       */
+      alert(getNetworkErrorMessage(error));
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -130,6 +194,7 @@ function Signup() {
             className="signup-back-button"
             onClick={() => navigate("/login")}
             aria-label="로그인 페이지로 돌아가기"
+            disabled={isSubmitting}
           >
             <svg
               width="24"
@@ -148,7 +213,9 @@ function Signup() {
             </svg>
           </button>
 
-          <h1 className="signup-title">회원가입</h1>
+          <h1 className="signup-title">
+            회원가입
+          </h1>
         </header>
 
         {/* 회원가입 폼 */}
@@ -162,20 +229,22 @@ function Signup() {
             <div className="signup-field signup-field-id">
               <label
                 className="signup-label"
-                htmlFor="userId"
+                htmlFor="username"
               >
                 아이디
               </label>
 
               <input
-                id="userId"
+                id="username"
                 className="signup-input"
-                name="userId"
-                type="email"
-                value={formData.userId}
+                name="username"
+                type="text"
+                value={formData.username}
                 onChange={handleChange}
-                placeholder="Ex. abcd@email.com"
+                placeholder="Ex. test123"
+                maxLength={30}
                 autoComplete="username"
+                disabled={isSubmitting}
               />
             </div>
 
@@ -194,11 +263,18 @@ function Signup() {
                     id="password"
                     className="signup-input signup-input-password"
                     name="password"
-                    type={showPassword ? "text" : "password"}
+                    type={
+                      showPassword
+                        ? "text"
+                        : "password"
+                    }
                     value={formData.password}
                     onChange={handleChange}
                     placeholder="비밀번호를 입력해주세요"
+                    minLength={8}
+                    maxLength={100}
                     autoComplete="new-password"
+                    disabled={isSubmitting}
                   />
 
                   <button
@@ -206,7 +282,8 @@ function Signup() {
                     className="signup-password-toggle"
                     onClick={() =>
                       setShowPassword(
-                        (previousState) => !previousState
+                        (previousState) =>
+                          !previousState
                       )
                     }
                     aria-label={
@@ -215,6 +292,7 @@ function Signup() {
                         : "비밀번호 보기"
                     }
                     aria-pressed={showPassword}
+                    disabled={isSubmitting}
                   >
                     <PasswordEyeIcon
                       visible={showPassword}
@@ -224,8 +302,7 @@ function Signup() {
               </div>
 
               <p className="signup-password-guide">
-                8자 이상, 영문 대소문자, 숫자, 특수문자를 포함해야
-                합니다.
+                비밀번호는 8자 이상 100자 이하로 입력해주세요.
               </p>
             </div>
 
@@ -244,12 +321,17 @@ function Signup() {
                   className="signup-input signup-input-password"
                   name="passwordConfirm"
                   type={
-                    showPasswordConfirm ? "text" : "password"
+                    showPasswordConfirm
+                      ? "text"
+                      : "password"
                   }
                   value={formData.passwordConfirm}
                   onChange={handleChange}
                   placeholder="비밀번호를 다시 입력해주세요"
+                  minLength={8}
+                  maxLength={100}
                   autoComplete="new-password"
+                  disabled={isSubmitting}
                 />
 
                 <button
@@ -257,7 +339,8 @@ function Signup() {
                   className="signup-password-toggle"
                   onClick={() =>
                     setShowPasswordConfirm(
-                      (previousState) => !previousState
+                      (previousState) =>
+                        !previousState
                     )
                   }
                   aria-label={
@@ -266,6 +349,7 @@ function Signup() {
                       : "비밀번호 확인 보기"
                   }
                   aria-pressed={showPasswordConfirm}
+                  disabled={isSubmitting}
                 >
                   <PasswordEyeIcon
                     visible={showPasswordConfirm}
@@ -279,10 +363,12 @@ function Signup() {
           <div className="signup-bottom">
             <p className="signup-login-message">
               이미 계정이 있으신가요?{" "}
+
               <button
                 type="button"
                 className="signup-login-link"
                 onClick={() => navigate("/login")}
+                disabled={isSubmitting}
               >
                 로그인
               </button>
@@ -291,8 +377,12 @@ function Signup() {
             <button
               type="submit"
               className="signup-start-button"
+              disabled={isSubmitting}
+              aria-busy={isSubmitting}
             >
-              시작하기
+              {isSubmitting
+                ? "가입 중..."
+                : "시작하기"}
             </button>
           </div>
         </form>

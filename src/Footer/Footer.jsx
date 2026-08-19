@@ -49,8 +49,25 @@ function Footer() {
     pathname === "/main" ||
     pathname.startsWith("/summary");
 
+  /*
+   * 마이페이지와 최근 번역 기록 화면에서는
+   * 내정보 메뉴를 활성화합니다.
+   */
   const isMyInfoActive =
-    pathname.startsWith("/mypage");
+    pathname === "/mypage" ||
+    pathname.startsWith("/mypage/") ||
+    pathname === "/translation-history" ||
+    pathname.startsWith(
+      "/translation-history/"
+    );
+
+  const handleHomeClick = () => {
+    navigate("/main");
+  };
+
+  const handleMyInfoClick = () => {
+    navigate("/mypage");
+  };
 
   return (
     <>
@@ -67,15 +84,18 @@ function Footer() {
         className="malgo-footer"
         aria-label="하단 메뉴"
       >
+        {/* 홈 */}
         <button
           type="button"
           className={`malgo-footer-item ${
             isHomeActive ? "active" : ""
           }`}
           aria-current={
-            isHomeActive ? "page" : undefined
+            isHomeActive
+              ? "page"
+              : undefined
           }
-          onClick={() => navigate("/main")}
+          onClick={handleHomeClick}
         >
           <span className="malgo-footer-icon-circle">
             <img
@@ -91,15 +111,18 @@ function Footer() {
           </span>
         </button>
 
+        {/* 내정보 */}
         <button
           type="button"
           className={`malgo-footer-item ${
             isMyInfoActive ? "active" : ""
           }`}
           aria-current={
-            isMyInfoActive ? "page" : undefined
+            isMyInfoActive
+              ? "page"
+              : undefined
           }
-          onClick={() => navigate("/mypage")}
+          onClick={handleMyInfoClick}
         >
           <span className="malgo-footer-icon-circle">
             <ProfileIcon />

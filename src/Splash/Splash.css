@@ -1,18 +1,19 @@
 /* 브라우저 기본 여백 제거 */
-html,
-body,
-#root {
+html:has(.splash),
+body:has(.splash),
+#root:has(.splash) {
   width: 100%;
   height: 100%;
   min-height: 100%;
   margin: 0;
 }
 
-* {
+.splash,
+.splash * {
   box-sizing: border-box;
 }
 
-body {
+body:has(.splash) {
   overflow: hidden;
   background-color: #ddeeff;
 }
@@ -21,7 +22,7 @@ body {
  * 스플래시 화면을 가로 중앙에 배치합니다.
  * 데스크톱과 노트북 모두 화면 높이에 맞춰 확대됩니다.
  */
-#root {
+#root:has(.splash) {
   display: flex;
   justify-content: center;
   align-items: flex-start;
@@ -42,14 +43,14 @@ body {
 .splash {
   position: relative;
 
-  /* dvh 미지원 브라우저용 */
-  width: min(100vw, 45.775vh);
-
-  /* 실제 브라우저 화면 높이에 맞춰 계산 */
-  width: min(100vw, 45.775dvh);
-
-  height: auto;
-  aspect-ratio: 390 / 852;
+  width: min(100%, var(--malgo-frame-width));
+  height: min(
+    100dvh,
+    calc(
+      min(100vw, var(--malgo-frame-width)) *
+        852 / 390
+    )
+  );
 
   flex: 0 0 auto;
   margin: 0 auto;
