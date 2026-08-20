@@ -1,0 +1,10 @@
+[build]
+  command = "npm run build"
+  publish = "build"
+
+# React Router의 클라이언트 라우팅을 위해
+# 모든 앱 경로를 React 진입점으로 제공합니다.
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
