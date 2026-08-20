@@ -394,3 +394,44 @@
     white-space: normal;
   }
 }
+
+/* 세로 길이가 짧은 휴대폰·가로 화면에서는 고정 높이 프레임 대신
+   페이지 자체를 스크롤합니다. 입력 폼과 CTA가 잘리지 않습니다. */
+@media (max-height: 760px) {
+  .signup-screen {
+    align-items: flex-start;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .signup-page {
+    height: auto;
+    min-height: 100dvh;
+    overflow-y: auto;
+  }
+
+  .signup-form {
+    flex: 0 0 auto;
+  }
+
+  .signup-bottom {
+    margin-top: 42px;
+  }
+}
+
+@media (max-width: 359px) {
+  .signup-form {
+    padding-right: 18px;
+    padding-left: 18px;
+  }
+
+  .signup-start-button {
+    max-width: 100%;
+  }
+}
+
+@media (min-width: 600px) and (max-width: 1024px) {
+  .signup-page {
+    box-shadow: 0 0 28px rgba(68, 112, 127, 0.1);
+  }
+}

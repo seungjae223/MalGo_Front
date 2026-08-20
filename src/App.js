@@ -1,4 +1,6 @@
 import {
+  lazy,
+  Suspense,
   useEffect,
   useState,
 } from "react";
@@ -13,14 +15,8 @@ import {
 import "./App.css";
 
 import Splash from "./Splash/Splash";
-import Login from "./Login/Login";
-import Signup from "./Signup/Signup";
-import MainPage from "./Mainpage/MainPage";
-import SummaryPage from "./Summarypage/SummaryPage";
-import MyPage from "./Mypage/MyPage";
-import TranslationHistory from "./TranslationHistory/TranslationHistory";
-import TranslationHistoryDetail from "./TranslationHistory/TranslationHistoryDetail";
 import Footer from "./Footer/Footer";
+import LoadingIndicator from "./Loading/LoadingIndicator";
 import { authApi } from "./api/malgoApi";
 import {
   AUTH_EXPIRED_EVENT,
@@ -28,6 +24,22 @@ import {
   clearStoredAuth,
   saveStoredAuth,
 } from "./api/auth";
+
+const Login = lazy(() => import("./Login/Login"));
+const Signup = lazy(() => import("./Signup/Signup"));
+const MainPage = lazy(() => import("./Mainpage/MainPage"));
+const SummaryPage = lazy(() => import("./Summarypage/SummaryPage"));
+const MyPage = lazy(() => import("./Mypage/MyPage"));
+const TranslationHistory = lazy(() =>
+  import("./TranslationHistory/TranslationHistory")
+);
+const TranslationHistoryDetail = lazy(() =>
+  import("./TranslationHistory/TranslationHistoryDetail")
+);
+
+function RouteLoadingFallback() {
+  return <LoadingIndicator className="route-loading" />;
+}
 
 function RequireAuth({ memberId }) {
   const [isAuthenticated, setIsAuthenticated] =
@@ -71,13 +83,15 @@ function RequireAuth({ memberId }) {
  */
 function FooterLayout() {
   return (
-    <div className="footer-layout">
-      <div className="app-page-content">
-        <Outlet />
-      </div>
+    <Suspense fallback={<RouteLoadingFallback />}>
+      <div className="footer-layout">
+        <div className="app-page-content">
+          <Outlet />
+        </div>
 
-      <Footer />
-    </div>
+        <Footer />
+      </div>
+    </Suspense>
   );
 }
 
@@ -151,7 +165,7 @@ function App() {
   }, []);
 
   if (isBootstrappingAuth) {
-    return <div />;
+    return <LoadingIndicator className="app-boot-loader" />;
   }
 
   return (

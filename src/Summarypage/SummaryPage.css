@@ -723,3 +723,30 @@ body:has(.summary-page-scroll) .footer-layout::-webkit-scrollbar {
     max-width: calc(100% - 58px);
   }
 }
+
+@media (max-width: 359px) {
+  .summary-page-shell {
+    padding:
+      24px
+      14px
+      calc(28px + env(safe-area-inset-bottom));
+  }
+
+  .summary-score-graph {
+    grid-template-columns: minmax(0, 1fr) 94px 28px;
+  }
+
+  .summary-situation-card {
+    max-width: calc(100% - 36px);
+  }
+}
+
+@media (orientation: landscape) and (max-height: 600px) {
+  #root
+    .footer-layout:has(
+      > .app-page-content
+      > .summary-page-scroll
+    ) {
+    height: 100dvh;
+  }
+}

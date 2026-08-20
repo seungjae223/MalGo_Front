@@ -415,3 +415,22 @@
     animation: none;
   }
 }
+
+/* 아주 낮은 화면에서는 로딩 모달 전체를 비율 유지 축소합니다. */
+@media (max-height: 360px) {
+  .summary-loading-overlay {
+    padding: 12px;
+  }
+
+  .summary-loading-modal {
+    animation: none;
+    transform: scale(0.86);
+  }
+}
+
+@media (max-width: 359px) {
+  .summary-loading-overlay {
+    padding-right: 12px;
+    padding-left: 12px;
+  }
+}

@@ -371,3 +371,40 @@
     0 0 0 3px
     rgba(88, 199, 242, 0.24);
 }
+
+/* 좁은 휴대폰에서도 두 메뉴의 터치 영역과 라벨이 겹치지 않게 합니다. */
+@media (max-width: 359px) {
+  #root .footer-layout > .malgo-footer {
+    padding:
+      14px
+      max(12px, env(safe-area-inset-right))
+      max(4px, env(safe-area-inset-bottom))
+      max(12px, env(safe-area-inset-left));
+  }
+
+  #root
+    .footer-layout
+    > .malgo-footer
+    .malgo-footer-icon-circle {
+    flex-basis: 40px;
+    width: 40px;
+    height: 40px;
+  }
+
+  #root
+    .footer-layout
+    > .malgo-footer
+    .malgo-footer-label {
+    font-size: 12px;
+    line-height: 15px;
+  }
+}
+
+@media (pointer: coarse) {
+  #root
+    .footer-layout
+    > .malgo-footer
+    .malgo-footer-item {
+    touch-action: manipulation;
+  }
+}

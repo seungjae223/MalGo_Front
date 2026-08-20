@@ -877,3 +877,30 @@
   outline: 2px solid #50bfe9;
   outline-offset: 2px;
 }
+
+/* 작은 모바일 화면에서 카드와 메모 모달이 안전 영역 밖으로 밀리지 않게 합니다. */
+@media (max-width: 359px) {
+  .translation-history-page-content {
+    padding-top: max(44px, env(safe-area-inset-top));
+    padding-bottom: calc(14px + env(safe-area-inset-bottom));
+  }
+
+  .translation-history-board {
+    width: calc(100% - 32px);
+  }
+
+  .translation-history-pagination {
+    padding-right: 42px;
+    padding-left: 42px;
+  }
+
+  .translation-history-memo-modal {
+    width: calc(100% - 12px);
+  }
+}
+
+@media (min-width: 600px) and (max-width: 1024px) {
+  .translation-history-page-frame {
+    box-shadow: 0 0 28px rgba(68, 112, 127, 0.1);
+  }
+}

@@ -355,3 +355,24 @@
     transform: translateX(-50%);
   }
 }
+
+/* 패널 기준 폭(402px)보다 작은 기기에서는 변환된 화면 밖의
+   레이아웃이 가로 스크롤을 만들지 않도록 차단합니다. */
+@media (max-width: 401px) {
+  .ai-customization-viewport {
+    overflow-x: hidden;
+  }
+}
+
+/* 낮은 높이의 가로 화면에서도 옵션과 저장 버튼까지 스크롤할 수 있습니다. */
+@media (max-height: 760px) {
+  .ai-customization-viewport {
+    overflow-y: auto;
+    overscroll-behavior-y: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .ai-customization-panel {
+    flex-shrink: 0;
+  }
+}

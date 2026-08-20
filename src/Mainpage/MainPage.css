@@ -1384,3 +1384,28 @@ button {
     margin-left: auto;
   }
 }
+
+/* 360px 이하 기기에서는 좌우 여백을 먼저 줄여 대화 카드와 입력창의
+   실제 사용 폭을 확보합니다. */
+@media (max-width: 359px) {
+  .main-page:not(.ai-customization-active) {
+    padding-right: 16px;
+    padding-bottom: calc(20px + env(safe-area-inset-bottom));
+    padding-left: 16px;
+  }
+
+  .main-chat-container,
+  .message-input-section {
+    max-width: 100%;
+  }
+}
+
+@media (orientation: landscape) and (max-height: 600px) {
+  #root
+    .footer-layout:has(
+      > .app-page-content
+      > .main-page-scroll
+    ) {
+    height: 100dvh;
+  }
+}

@@ -751,3 +751,29 @@
     font-size: 11px;
   }
 }
+
+@media (min-width: 351px) and (max-width: 359px) {
+  .translation-detail-content {
+    padding-right: 16px;
+    padding-left: 16px;
+  }
+
+  .translation-detail-board {
+    width: 100%;
+  }
+
+  .translation-detail-pagination {
+    padding-right: 40px;
+    padding-left: 40px;
+  }
+}
+
+@media (orientation: landscape) and (max-height: 600px) {
+  .translation-detail-page {
+    min-height: 100dvh;
+  }
+
+  .translation-detail-content {
+    padding-bottom: calc(22px + env(safe-area-inset-bottom));
+  }
+}

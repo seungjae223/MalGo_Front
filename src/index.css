@@ -11,3 +11,35 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+/* 모바일 브라우저가 텍스트를 임의로 확대하거나 넓은 콘텐츠를
+   가로로 밀어내지 않도록 공통 기준을 둡니다. */
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body,
+#root {
+  min-width: 0;
+}
+
+img,
+svg,
+video,
+canvas {
+  max-width: 100%;
+}
+
+button,
+input,
+textarea,
+select {
+  max-width: 100%;
+}
+
+@media (max-width: 359px) {
+  body {
+    overflow-wrap: anywhere;
+  }
+}

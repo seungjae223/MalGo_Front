@@ -515,7 +515,7 @@ input {
 }
 
 /*
- * 아이디 찾기 | 비밀번호 찾기 | 회원가입
+ * 회원가입
  *
  * 로그인 버튼과 간격: 13px
  */
@@ -562,21 +562,24 @@ input {
   text-decoration: underline;
 }
 
-.login-form__separator {
-  height: calc(
-    var(--login-frame-width) * 16 / 402
-  );
-  margin:
-    0
-    calc(
-      var(--login-frame-width) * 10 / 402
-    );
+/* 작은 화면과 가로 모드에서는 로그인 프레임 전체를 문서 흐름에서
+   스크롤할 수 있게 하여 하단 메뉴가 잘리지 않게 합니다. */
+@media (orientation: landscape) and (max-height: 600px) {
+  body:has(.login-page) {
+    overflow-y: auto;
+  }
 
-  color: #879597;
-  font-size: calc(
-    var(--login-frame-width) * 11 / 402
-  );
-  line-height: calc(
-    var(--login-frame-width) * 16 / 402
-  );
+  #root:has(.login-page) {
+    min-height: 100dvh;
+  }
+
+  .login-page {
+    flex-shrink: 0;
+  }
+}
+
+@media (min-width: 600px) and (max-width: 1024px) {
+  .login-page {
+    box-shadow: 0 0 28px rgba(68, 112, 127, 0.1);
+  }
 }

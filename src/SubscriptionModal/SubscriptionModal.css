@@ -211,12 +211,34 @@
 
 @media (max-height: 550px) {
   .subscription-modal {
+    animation: none;
     transform: scale(0.88);
+  }
+}
+
+@media (max-height: 420px) {
+  .subscription-overlay {
+    padding:
+      max(8px, env(safe-area-inset-top))
+      max(8px, env(safe-area-inset-right))
+      max(8px, env(safe-area-inset-bottom))
+      max(8px, env(safe-area-inset-left));
+  }
+
+  .subscription-modal {
+    transform: scale(0.72);
+  }
+}
+
+@media (max-width: 359px) {
+  .subscription-overlay {
+    padding-right: 8px;
+    padding-left: 8px;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .subscription-modal {
-    animation: none;
+  animation: none;
   }
 }

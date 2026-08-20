@@ -15,13 +15,11 @@ body:has(.splash),
 
 body:has(.splash) {
   overflow: hidden;
-  background-color: #ddeeff;
+  background: #ffffff;
 }
 
-/*
- * 스플래시 화면을 가로 중앙에 배치합니다.
- * 데스크톱과 노트북 모두 화면 높이에 맞춰 확대됩니다.
- */
+/* 화면의 가로·세로 중 먼저 닿는 변을 기준으로
+   390 × 852 디자인 비율을 유지합니다. */
 #root:has(.splash) {
   display: flex;
   justify-content: center;
@@ -30,26 +28,20 @@ body:has(.splash) {
   width: 100%;
   min-height: 100vh;
   min-height: 100dvh;
+
+  background: #ffffff;
 }
 
-/*
- * 기준 디자인 비율: 390px × 852px
- *
- * 390 ÷ 852 = 약 45.775%
- *
- * 화면 높이를 기준으로 너비를 계산하기 때문에
- * 모니터와 노트북에서도 동일한 비율로 확대됩니다.
- */
 .splash {
   position: relative;
 
-  width: min(100%, var(--malgo-frame-width));
+  width: min(
+    100vw,
+    calc(100vh * 390 / 852)
+  );
   height: min(
-    100dvh,
-    calc(
-      min(100vw, var(--malgo-frame-width)) *
-        852 / 390
-    )
+    100vh,
+    calc(100vw * 852 / 390)
   );
 
   flex: 0 0 auto;
@@ -58,10 +50,6 @@ body:has(.splash) {
   overflow: hidden;
   isolation: isolate;
 
-  /*
-   * #15BAFC 10% 투명도와
-   * 위쪽 파랑 → 아래쪽 연한색 그라데이션
-   */
   background:
     linear-gradient(
       rgba(21, 186, 252, 0.1),
@@ -74,7 +62,6 @@ body:has(.splash) {
     );
 }
 
-/* 모든 이미지 공통 */
 .splash img {
   display: block;
   max-width: none;
@@ -84,13 +71,11 @@ body:has(.splash) {
   -webkit-user-drag: none;
 }
 
-/* 오른쪽 위 언어 아이콘 */
 .splash__language {
   position: absolute;
-  z-index: 3;
-
   top: 7.16%;
   right: 8.46%;
+  z-index: 3;
 
   width: 11.28%;
   height: auto;
@@ -98,40 +83,204 @@ body:has(.splash) {
   pointer-events: none;
 }
 
-/* 퍼즐 공통 */
-.splash__puzzle {
-  position: absolute;
-  z-index: 1;
+@supports (height: 100svh) {
+  .splash {
+    width: min(
+      100vw,
+      calc(100svh * 390 / 852)
+    );
+    height: min(
+      100svh,
+      calc(100vw * 852 / 390)
+    );
+  }
+}
 
-  height: auto;
+.splash__intro-dots {
+  position: absolute;
+  top: 14.1%;
+  left: 11.3%;
+  z-index: 2;
+
+  display: flex;
+  align-items: center;
+  gap: min(4.1026vw, 1.8779svh);
+
+  pointer-events: none;
+}
+
+.splash__intro-dots span {
+  width: min(1.5385vw, 0.7042svh);
+  height: min(1.5385vw, 0.7042svh);
+
+  border-radius: 50%;
+  background: #a4e1e6;
+}
+
+.splash__intro-dots span:nth-child(2) {
+  margin-right: min(6.9231vw, 3.169svh);
+}
+
+.splash__headline {
+  position: absolute;
+  top: 14.9%;
+  left: 8.46%;
+  z-index: 2;
+
+  width: 86%;
+  margin: 0;
+
+  color: #ffffff;
+  font-size: min(6.6667vw, 3.0516svh);
+  font-weight: 400;
+  line-height: 1.25;
+  letter-spacing: -0.6px;
+  white-space: nowrap;
+}
+
+/* 퍼즐과 그 소품은 한 그룹으로 움직입니다. */
+.splash__character-group {
+  position: absolute;
+  z-index: 2;
 
   pointer-events: none;
   transform-origin: center;
   will-change: transform;
 }
 
-/* KR 퍼즐 */
-.splash__puzzle--kr {
-  top: 14.91%;
+.splash__character-group--kr {
+  top: 21.24%;
   left: -1.8%;
 
   width: 74.62%;
+  height: 37.09%;
 
   animation: floatPuzzleKr 5.2s ease-in-out infinite;
 }
 
-/* EN 퍼즐 */
-.splash__puzzle--en {
-  top: 40.49%;
+.splash__character-group--en {
+  top: 46.95%;
   left: 23.59%;
 
   width: 77.44%;
+  height: 30.05%;
 
   animation: floatPuzzleEn 6.1s ease-in-out infinite;
   animation-delay: -2.1s;
 }
 
-/* 위쪽 KR 퍼즐 두둥실 애니메이션 */
+.splash__puzzle {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+
+  width: 100%;
+  height: auto;
+
+  pointer-events: none;
+}
+
+.splash__decoration {
+  position: absolute;
+  display: block;
+
+  height: auto;
+
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-user-drag: none;
+}
+
+.splash__decoration--message {
+  top: 24.4%;
+  left: 44.87%;
+  z-index: 3;
+
+  width: 16.92%;
+}
+
+.splash__character-group--kr .splash__decoration--briefcase {
+  top: 32.28%;
+  left: 65%;
+  z-index: 3;
+
+  width: 36.77%;
+}
+
+.splash__decoration--chart {
+  top: 26.76%;
+  left: 70.51%;
+  z-index: 0;
+
+  width: 20.26%;
+}
+
+.splash__decoration--globe {
+  top: 40.6%;
+  left: 66.67%;
+  z-index: 0;
+
+  width: 29.74%;
+}
+
+.splash__decoration--envelope {
+  top: 50.59%;
+  left: 8.46%;
+  z-index: 2;
+
+  width: 25.13%;
+}
+
+.splash__decoration--mountain {
+  top: 62.44%;
+  left: 12.56%;
+  z-index: 0;
+
+  width: 22.82%;
+}
+
+.splash__decoration--orbit {
+  top: 65.4%;
+  left: 23.85%;
+  z-index: 0;
+
+  width: 67.4%;
+}
+
+.splash__character-group--en .splash__decoration--clipboard {
+  top: 11.33%;
+  left: 9.6%;
+  z-index: 3;
+
+  width: 17.88%;
+}
+
+.splash__tagline {
+  position: absolute;
+  top: 72.7%;
+  left: 0;
+  z-index: 2;
+
+  width: 100%;
+  margin: 0;
+
+  color: #344649;
+
+  font-size: min(6.1538vw, 2.8169svh);
+  font-weight: 400;
+  line-height: 1.3;
+  letter-spacing: -1.9px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.splash__tagline strong {
+  color: #1688fb;
+  font-weight: 500;
+}
+
 @keyframes floatPuzzleKr {
   0% {
     transform: translate3d(0, 0, 0) rotate(0deg);
@@ -154,7 +303,6 @@ body:has(.splash) {
   }
 }
 
-/* 아래쪽 EN 퍼즐 두둥실 애니메이션 */
 @keyframes floatPuzzleEn {
   0% {
     transform: translate3d(0, 0, 0) rotate(0deg);
@@ -177,13 +325,11 @@ body:has(.splash) {
   }
 }
 
-/* 시작하기 버튼 */
 .splash__start-button {
   position: absolute;
-  z-index: 4;
-
-  top: 74.18%;
+  top: 80.52%;
   left: 50%;
+  z-index: 4;
 
   width: 65.9%;
   height: auto;
@@ -211,21 +357,18 @@ body:has(.splash) {
   height: auto;
 }
 
-/* 버튼을 누르는 순간 */
 .splash__start-button:active {
   transform: translateX(-50%) scale(0.97);
 }
 
-/* 키보드로 버튼을 선택했을 때 */
 .splash__start-button:focus-visible {
   outline: 3px solid rgba(255, 255, 255, 0.95);
   outline-offset: 4px;
 }
 
-/* 모션 감소 설정 사용 시 애니메이션 정지 */
 @media (prefers-reduced-motion: reduce) {
-  .splash__puzzle--kr,
-  .splash__puzzle--en {
+  .splash__character-group--kr,
+  .splash__character-group--en {
     animation: none;
   }
 }

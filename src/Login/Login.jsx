@@ -225,32 +225,8 @@ function Login() {
 
           <nav
             className="login-form__account-menu"
-            aria-label="계정 메뉴"
+            aria-label="회원가입"
           >
-            <button
-              className="login-form__account-button"
-              type="button"
-              disabled={isSubmitting}
-            >
-              아이디 찾기
-            </button>
-
-            <span className="login-form__separator">
-              |
-            </span>
-
-            <button
-              className="login-form__account-button"
-              type="button"
-              disabled={isSubmitting}
-            >
-              비밀번호 찾기
-            </button>
-
-            <span className="login-form__separator">
-              |
-            </span>
-
             <button
               className="login-form__account-button"
               type="button"

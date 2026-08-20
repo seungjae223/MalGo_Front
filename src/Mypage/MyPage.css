@@ -671,3 +671,33 @@ footer-layout 하나만 전체 스크롤을 담당하고
 .my-page-api-status--error {
   color: #c55252;
 }
+
+/* 350px보다 조금 넓은 소형 기기도 Venn 차트와 분석 카드가
+   가로로 밀리지 않도록 같은 안전 여백을 적용합니다. */
+@media (min-width: 351px) and (max-width: 359px) {
+  .my-page-analysis-card {
+    width: calc(100% - 30px);
+    padding-right: 14px;
+    padding-left: 14px;
+  }
+
+  .my-page-venn {
+    left: 50%;
+    margin-right: 0;
+    margin-left: 0;
+    transform: translateX(-50%) scale(0.96);
+    transform-origin: top center;
+  }
+
+  .my-page-field-list {
+    max-width: 100%;
+    margin-left: 0;
+  }
+}
+
+@media (orientation: landscape) and (max-height: 600px) {
+  .malgo-my-page {
+    min-height: 100dvh;
+    scroll-padding-bottom: env(safe-area-inset-bottom);
+  }
+}

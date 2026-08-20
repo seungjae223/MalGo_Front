@@ -379,3 +379,28 @@
     animation: none;
   }
 }
+
+/* 가로 모드처럼 높이가 낮은 화면에서는 시트를 화면 높이에 맞추고
+   본문만 스크롤하여 결제 버튼을 항상 노출합니다. */
+@media (max-height: 520px) {
+  .payment-bottom-sheet {
+    height: 100dvh;
+    border-radius: 28px 28px 0 0;
+  }
+
+  .payment-sheet-content {
+    padding-top: 52px;
+    padding-bottom: 4px;
+  }
+
+  .payment-sheet-footer {
+    padding-bottom: max(12px, env(safe-area-inset-bottom));
+  }
+}
+
+@media (max-width: 359px) {
+  .payment-sheet-content {
+    padding-right: 24px;
+    padding-left: 24px;
+  }
+}
