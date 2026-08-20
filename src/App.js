@@ -155,7 +155,7 @@ function App() {
   }
 
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={process.env.PUBLIC_URL}>
       <Routes>
         {/*
          * 모든 실제 페이지를 FooterLayout 안에 배치해
