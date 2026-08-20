@@ -413,21 +413,25 @@
 
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: center;
 
   padding:
-    min(2.87vw, 11px)
-    min(3.13vw, 12px);
+    min(1.83vw, 7px)
+    min(4.18vw, 16px);
 
   color: #ffffff;
-  background: #5dc4fc;
+  background: #5fd2ff;
 
-  border-radius: min(2.61vw, 10px);
+  border-radius:
+    min(2.61vw, 10px)
+    0
+    min(2.61vw, 10px)
+    min(2.61vw, 10px);
 
   box-shadow:
-    0 min(0.52vw, 2px)
+    inset 0 min(1.04vw, 4px)
     min(1.04vw, 4px)
-    rgba(64, 139, 180, 0.2);
+    #e3fffc;
 
   font-size: min(3.13vw, 12px);
   font-weight: 400;
@@ -449,20 +453,20 @@
 
 .translation-history-user-message--first {
   top: 4.8232%;
-  left: 17.5497%;
+  left: 5.6291%;
 
-  width: 78.1457%;
-  height: 28.2958%;
+  width: 91.3907%;
+  min-height: min(7.83vw, 30px);
 }
 
 /* 두 번째 메시지 */
 
 .translation-history-user-message--second {
   top: 4.8232%;
-  left: 15.2318%;
+  left: 5.6291%;
 
-  width: 78.1457%;
-  height: 17.6849%;
+  width: 91.3907%;
+  min-height: min(7.83vw, 30px);
 }
 
 /* ==============================
@@ -648,38 +652,33 @@
   align-items: center;
   justify-content: space-between;
 
-  width: 100%;
+  width: min(72.06vw, 276px);
+  height: min(7.83vw, 30px);
 
   margin-top: min(4.05vw, 15.5px);
-
-  padding-left: min(16.45vw, 63px);
-  padding-right: min(14.1vw, 54px);
+  margin-right: auto;
+  margin-left: auto;
 }
 
 .translation-history-pagination-button {
-  display: grid;
-  place-items: center;
+  flex: 0 0 auto;
 
-  width: min(8.88vw, 34px);
-  height: min(8.88vw, 34px);
-
-  color: #829697;
-  background: rgba(255, 255, 255, 0.72);
-
-  border: 2px solid #829697;
-  border-radius: 50%;
+  width: min(7.83vw, 30px);
+  height: min(7.83vw, 30px);
 
   transition:
-    color 0.14s ease,
-    border-color 0.14s ease,
+    opacity 0.14s ease,
     transform 0.14s ease;
 }
 
+.translation-history-pagination-button img {
+  width: 100%;
+  height: 100%;
+
+  object-fit: contain;
+}
+
 .translation-history-pagination-button:active {
-  color: #547579;
-
-  border-color: #547579;
-
   transform: scale(0.94);
 }
 
@@ -688,13 +687,10 @@
   opacity: 0.35;
 }
 
-.translation-history-chevron {
-  width: 82%;
-  height: 82%;
-}
-
-.translation-history-chevron--next {
-  transform: rotate(180deg);
+.translation-history-pagination-button:focus-visible {
+  outline: 2px solid #58c7f2;
+  outline-offset: 3px;
+  border-radius: 50%;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -887,11 +883,6 @@
 
   .translation-history-board {
     width: calc(100% - 32px);
-  }
-
-  .translation-history-pagination {
-    padding-right: 42px;
-    padding-left: 42px;
   }
 
   .translation-history-memo-modal {

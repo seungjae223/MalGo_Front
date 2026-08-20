@@ -20,8 +20,11 @@ import HomeLogoLink from "../HomeLogoLink/HomeLogoLink";
 import malgoLogo from "../img/말고 로고.png";
 import translationResultIcon from "../img/번역결과 아이콘.svg";
 import memoIcon from "../img/메모.svg";
+import emptyMemoIcon from "../img/memo-empty.svg";
 import backIcon from "../img/뒤로가기.svg";
 import group62Icon from "../img/group-62.svg";
+import nextArrowIcon from "../img/translation-history-arrow-next.svg";
+import previousArrowIcon from "../img/translation-history-arrow-previous.svg";
 
 const PAGE_SIZE = 2;
 
@@ -65,42 +68,6 @@ function toHistoryRecord(item) {
 }
 
 /* ==============================
-하단 이전·다음 아이콘
-================================ */
-
-function ChevronIcon({ direction }) {
-  const isNext = direction === "next";
-
-  return (
-    <svg
-      viewBox="0 0 32 32"
-      fill="none"
-      aria-hidden="true"
-      className={`
-        translation-history-chevron
-        ${
-          isNext
-            ? "translation-history-chevron--next"
-            : ""
-        }
-      `}
-    >
-      <path
-        d="
-          M19.5 9
-          L12.5 16
-          L19.5 23
-        "
-        stroke="currentColor"
-        strokeWidth="2.4"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
-
-/* ==============================
 최근 번역 기록 한 개
 ================================ */
 
@@ -130,7 +97,7 @@ function HistoryRecord({
           onClick={() => onMemoClick(history, position)}
         >
           <img
-            src={memoIcon}
+            src={history.hasMemo ? memoIcon : emptyMemoIcon}
             alt=""
             aria-hidden="true"
             draggable={false}
@@ -639,7 +606,12 @@ function TranslationHistory() {
               onClick={() => handlePageChange(page - 1)}
               disabled={page === 0 || isLoading}
             >
-              <ChevronIcon direction="previous" />
+              <img
+                src={previousArrowIcon}
+                alt=""
+                aria-hidden="true"
+                draggable={false}
+              />
             </button>
 
             <button
@@ -649,7 +621,12 @@ function TranslationHistory() {
               onClick={() => handlePageChange(page + 1)}
               disabled={page >= lastPage || isLoading}
             >
-              <ChevronIcon direction="next" />
+              <img
+                src={nextArrowIcon}
+                alt=""
+                aria-hidden="true"
+                draggable={false}
+              />
             </button>
           </nav>
         </div>

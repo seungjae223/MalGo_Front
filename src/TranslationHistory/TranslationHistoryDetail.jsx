@@ -17,6 +17,8 @@ import HomeLogoLink from "../HomeLogoLink/HomeLogoLink";
 import malgoLogo from "../img/말고 로고.png";
 import chatbotIcon from "../img/챗봇아이콘.svg";
 import backIcon from "../img/뒤로가기.svg";
+import nextArrowIcon from "../img/translation-history-arrow-next.svg";
+import previousArrowIcon from "../img/translation-history-arrow-previous.svg";
 
 const TONE_LABELS = {
   friendliness: "친근함",
@@ -52,29 +54,6 @@ function TranslationCard({ title, children }) {
       <div className="translation-detail-result-divider" aria-hidden="true" />
       <div className="translation-detail-result-text">{children}</div>
     </section>
-  );
-}
-
-function PaginationArrow({ direction }) {
-  const isNext = direction === "next";
-
-  return (
-    <svg
-      viewBox="0 0 32 32"
-      fill="none"
-      aria-hidden="true"
-      className={`translation-detail-pagination-svg ${
-        isNext ? "translation-detail-pagination-svg--next" : ""
-      }`}
-    >
-      <path
-        d="M19.5 9 L12.5 16 L19.5 23"
-        stroke="currentColor"
-        strokeWidth="2.4"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
   );
 }
 
@@ -371,7 +350,12 @@ export default function TranslationHistoryDetail() {
               disabled={!previousId}
               aria-label="이전 번역 기록"
             >
-              <PaginationArrow direction="previous" />
+              <img
+                src={previousArrowIcon}
+                alt=""
+                aria-hidden="true"
+                draggable={false}
+              />
             </button>
             <button
               type="button"
@@ -380,7 +364,12 @@ export default function TranslationHistoryDetail() {
               disabled={!nextId}
               aria-label="다음 번역 기록"
             >
-              <PaginationArrow direction="next" />
+              <img
+                src={nextArrowIcon}
+                alt=""
+                aria-hidden="true"
+                draggable={false}
+              />
             </button>
           </nav>
         </div>

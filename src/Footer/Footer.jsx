@@ -5,37 +5,9 @@ import {
 
 import "./Footer.css";
 
-import homeIcon from "../img/챗봇아이콘.svg";
-
-function ProfileIcon() {
-  return (
-    <svg
-      viewBox="0 0 64 64"
-      aria-hidden="true"
-      className="malgo-footer-profile-icon"
-    >
-      <circle
-        cx="32"
-        cy="21"
-        r="10"
-        fill="currentColor"
-      />
-
-      <path
-        d="
-          M14 52
-          C14 41.5 22.1 34 32 34
-          C41.9 34 50 41.5 50 52
-          V54
-          H14
-          V52
-          Z
-        "
-        fill="currentColor"
-      />
-    </svg>
-  );
-}
+import inactiveHomeIcon from "../img/figma-footer-home-icon-inactive.svg";
+import activeProfileIcon from "../img/figma-footer-profile-icon-active.svg";
+import inactiveProfileIcon from "../img/figma-footer-profile-icon-inactive.svg";
 
 function Footer() {
   const navigate = useNavigate();
@@ -99,7 +71,7 @@ function Footer() {
         >
           <span className="malgo-footer-icon-circle">
             <img
-              src={homeIcon}
+              src={inactiveHomeIcon}
               alt=""
               aria-hidden="true"
               className="malgo-footer-home-icon"
@@ -125,7 +97,17 @@ function Footer() {
           onClick={handleMyInfoClick}
         >
           <span className="malgo-footer-icon-circle">
-            <ProfileIcon />
+            <img
+              src={
+                isMyInfoActive
+                  ? activeProfileIcon
+                  : inactiveProfileIcon
+              }
+              alt=""
+              aria-hidden="true"
+              draggable={false}
+              className="malgo-footer-profile-icon"
+            />
           </span>
 
           <span className="malgo-footer-label">
